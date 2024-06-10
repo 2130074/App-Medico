@@ -14,11 +14,10 @@
         <div class="flex items-center">
             <button class="text-blue px-4 py-2 rounded">Catálogo de productos</button>
             <div class="ml-4">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="location.href='/'">Cerrar sesión</button>
+                <a href="{{ route('logout') }}"><button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Cerrar sesión</button></a>
             </div>
         </div>
     </header>
-    
 
     <div class="flex justify-center mt-6">
         <div class="relative w-2/3 max-w-2xl">

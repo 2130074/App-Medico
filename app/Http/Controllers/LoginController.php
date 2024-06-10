@@ -12,6 +12,10 @@ class LoginController extends Controller
 {
     public function register(Request $request) {
         // Validar los datos
+        /*$request->validate([
+            'correo' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);*/
 
         $user = new User();
 
@@ -25,19 +29,16 @@ class LoginController extends Controller
 
         $user->save();
 
-        Auth::login($user);
+        //Auth::login($user);
+        //Auth::logout();
         
-        return redirect(route('doctor'));
+        return redirect(route('login'))->with('success', 'Registro exitoso. Por favor, inicia sesión.');
     }
 
     public function doLogin(Request $request){
 
-        $credentials = [
-            "correo" => $request->correo,
-            "password" => $request->password
-        ];
+        $credentials = $request->only('correo', 'password');
 
-        Auth::attempt($credentials);
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
 
@@ -48,8 +49,10 @@ class LoginController extends Controller
             } elseif ($usuario->tipoUsuario === 'Doctor') {
                 return redirect(route('doctor'));
             }
-        } else {
-            return redirect(route('login'));
+        } else { 
+            return redirect(route('login'))->withErrors([
+                'correo' => 'Las credenciales proporcionadas no coinciden con nuestros registros.',
+            ]);
         }
     }
 
@@ -57,10 +60,10 @@ class LoginController extends Controller
         Auth::logout();
 
         $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $request->session()->regenerateToken(); 
 
         return redirect(route('login'));
-    }
+    }    
 }
 
 ?>

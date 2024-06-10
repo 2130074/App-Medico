@@ -11,13 +11,13 @@
 <body style="background-image: url('img/fondo.jpg'); background-size: cover; background-position: center; height: 100vh; margin: 0; padding: 0;">
     <header class="flex justify-between items-center bg-opacity-75 bg-white p-4">
         <h1 class="text-2xl font-bold text-gray-800">SaludConecta</h1>
-        <button class="text-white px-4 py-2 rounded border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="location.href='/'">Cerrar sesión</button>
+        <a href="{{ route('logout') }}"><button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Cerrar sesión</button></a>
     </header>
 
     <div class="flex-grow flex items-center justify-center mt-20">
         <div class="bg-opacity-75 bg-white p-4 md:p-10 rounded-lg shadow-xl flex flex-col items-center w-full max-w-md">
             <h2 class="text-4xl font-bold mt-6 text-blue-600 hover:text-blue-500">Registro de servicios</h2>
-            <form class="mt-6 w-full" action="{{ route('registrar-cita') }}" method="POST">
+            <form class="mt-6 w-full" action="#" method="POST">
                 @csrf
 
                 <div class="mb-4">
@@ -49,7 +49,8 @@
                 </div>
 
                 <div class="flex-grow flex items-center justify-center mt-6">
-                    <button class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="location.href='/recepcionista'">
+                    <button type="button" 
+                        class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="location.href='/recepcionista'">
                         Regresar
                     </button>
                 </div>

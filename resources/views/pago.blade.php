@@ -12,8 +12,7 @@
     style="background-image: url('img/fondo.jpg'); background-size: cover; background-position: center; height: 100vh; margin: 0; padding: 0;">
     <header class="flex justify-between items-center bg-opacity-75 bg-white p-4">
         <h1 class="text-2xl font-bold text-gray-800">SaludConecta</h1>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="location.href='/'">Cerrar
-            sesión</button>
+        <a href="{{ route('logout') }}"><button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Cerrar sesión</button></a>
     </header>
 
     <div class="flex justify-center mt-6">

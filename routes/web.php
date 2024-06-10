@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('login');
-});
+})->name('login');
 
 // POST para los formularios 
 Route::get('logout',[LoginController::class,'logout'])->name('logout');
@@ -70,5 +70,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+//require __DIR__.'/auth.php';
 
