@@ -58,7 +58,12 @@ Route::get('/registroPacientes', function () {
 
 Route::get('/registroUsuarios', function () {
     return view('registroUsuarios');
+})->name('admin');
+
+Route::get('/verUsuarios', function () {
+    return view('verUsuarios');
 });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
