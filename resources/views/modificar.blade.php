@@ -19,7 +19,7 @@
                 <ul>
                     <li class="flex items-center mb-10">
                         <img src="img/usuario.png" alt="Registrar Icon" class="w-6 h-6 mr-2">
-                        <a href="#" class="text-lg">Registrar</a>
+                        <a href="/registroUsuarios" class="text-lg">Registrar</a>
                     </li>
                     <li class="flex items-center mb-10">
                         <img src="img/usuario.png" alt="Ver Usuarios Icon" class="w-6 h-6 mr-2">
@@ -96,6 +96,12 @@
                         <button type="submit"
                             class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             Registrar
+                        </button>
+                    </div>
+                    <div class="flex-grow flex items-center justify-center mt-3">
+                        <button type="button"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="location.href='/verUsuarios'">
+                            Regresar
                         </button>
                     </div>
 
