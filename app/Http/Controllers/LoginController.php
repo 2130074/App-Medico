@@ -39,33 +39,46 @@ class LoginController extends Controller
     public function doLogin(Request $request)
     {
         $credentials = $request->only('correo', 'password');
-
+    
         // Verificar si el correo y la contraseña son los de administrador
         if ($request->correo == 'admin@saludConecta.com' && $request->password == '12345') {
             // Redirigir al usuario a la vista de registroUsuarios
             return redirect(route('admin'));
         }
-
+    
         // Intentar autenticar con las credenciales proporcionadas
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
+    
             // Buscar al usuario por correo
-            $usuario = User::where('correo', $request->correo)->firstOrFail();
+            $usuario = User::where('correo', $request->correo)->first();
+    
+            // Verificar si el usuario existe
+            if (!$usuario) {
+                // Manejar el caso en que el usuario no se encuentra
+                return back()->withErrors([
+                    'correo' => 'El usuario no se encontró.',
+                ])->withInput();
+            }
+
             if ($usuario->tipoUsuario === 'Recepcionista') {
                 return redirect(route('recepcionista'));
             } elseif ($usuario->tipoUsuario === 'Doctor') {
                 return redirect(route('doctor'));
+            } else {
+                // Manejar otros casos, como usuarios sin tipo asignado
+                return back()->withErrors([
+                    'correo' => 'No se pudo determinar el tipo de usuario.',
+                ])->withInput();
             }
         } else {
             // Si las credenciales no son correctas, mostrar un error
-            return redirect(route('login'))->withErrors([
+            return back()->withErrors([
                 'correo' => 'Las credenciales proporcionadas no coinciden con nuestros registros.',
-            ]);
+            ])->withInput();
         }
     }
-
-
+    
     public function logout(Request $request)
     {
         Auth::logout();
