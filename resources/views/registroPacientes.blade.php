@@ -9,11 +9,40 @@
 </head>
 
 
-<body style="background-image: url('img/fondo.jpg'); background-size: cover; background-position: center; height: 100vh; margin: 0; padding: 0;">
-    <header class="flex justify-between items-center bg-opacity-75 bg-white p-4">
-        <h1 class="text-2xl font-bold text-gray-800">SaludConecta</h1>
-        <a href="{{ route('logout') }}"><button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Cerrar sesión</button></a>
-    </header>
+<body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
+    <div class="flex h-screen">
+        <div class="bg-blue-400 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
+            <div>
+                <div class="flex items-center mb-8">
+                    <img src="img/logo.png" alt="Logo" class="w-8 h-8 mr-2">
+                    <span class="text-2xl font-bold">Salud Conecta</span>
+                </div>
+                <ul>
+                    <li class="flex items-center mb-10">
+                        <img src="img/calendario.png" alt="Registrar Icon" class="w-6 h-6 mr-2">
+                        <a href="/recepcionista" class="text-lg">Agenda</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="img/calendario.png" alt="Registrar Icon" class="w-6 h-6 mr-2">
+                        <a href="/servicios" class="text-lg">Agregar servicio</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="img/calendario.png" alt="Registrar Icon" class="w-6 h-6 mr-2">
+                        <a href="/registroPacientes" class="text-lg">Agregar paciente</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="img/usuario.png" alt="Ver Usuarios Icon" class="w-6 h-6 mr-2">
+                        <a href="/verPacientes" class="text-lg">Ver pacientes</a>
+                    </li>
+                </ul>
+            </div>
+            <button
+                    class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    onclick="location.href='/'">
+                    Cerrar sesión
+            </button>
+        </div>
+    </div>
     
     <div class="flex items-center justify-center h-screen" style="margin-top: -68px;">
         <div class="bg-white bg-opacity-75 p-8 md:p-10 rounded-lg shadow-xl flex flex-col items-center w-full max-w-2xl"> 

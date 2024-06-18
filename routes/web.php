@@ -64,6 +64,9 @@ Route::get('/verUsuarios', function () {
     return view('verUsuarios');
 });
 
+Route::get('/verPacientes', function () {
+    return view('verPacientes');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
