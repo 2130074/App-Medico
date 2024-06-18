@@ -5,66 +5,93 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
-    <title>Expediente</title>
+    <title>Detalles Pacientes</title>
 </head>
 
-
-
-<body style="background-image: url('img/fondo.jpg'); background-size: cover; background-position: center; height: 100vh; margin: 0; padding: 0;">
-    <header class="flex justify-between items-center bg-opacity-75 bg-white p-4">
-        <h1 class="text-2xl font-bold text-gray-800">SaludConecta</h1>
-        <div class="flex items-center">
-            <button class="text-blue-500 px-4 py-2 rounded">Catálogo de productos</button>
-            <div class="ml-4">
-                <a href="{{ route('logout') }}"><button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Cerrar sesión</button></a>
+<body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
+    <div class="flex h-screen">
+        <div class="bg-blue-300 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
+            <div>
+                <div class="flex items-center mb-8">
+                    <img src="img/logo.png" alt="Logo" class="w-8 h-8 mr-2">
+                    <span class="text-2xl font-bold">Salud Conecta</span>
+                </div>
+                <ul>
+                    <li class="flex items-center mb-10">
+                        <img src="img/calendario.png" alt="Registrar Icon" class="w-6 h-6 mr-2">
+                        <a href="#" class="text-lg">Agenda</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="img/usuario.png" alt="Ver Usuarios Icon" class="w-6 h-6 mr-2">
+                        <a href="/docPacientes" class="text-lg">Ver pacientes</a>
+                    </li>
+                </ul>
             </div>
+            <button
+                class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                onclick="location.href='/'">
+                Cerrar sesión
+            </button>
         </div>
-    </header>
 
-    <div class="flex items-center justify-center h-screen" style="margin-top: -75px;">
-        <div class="bg-white bg-opacity-75 p-8 rounded-lg shadow-md w-full max-w-3xl">
-            <h2 class="text-3xl font-bold text-blue-600 text-center mb-4">Expediente Medico</h2>
-           
-            <div class="flex-grow flex items-center justify-center mt-6">
-                <div class="w-full max-w-xl bg-white bg-opacity-75 rounded-lg p-6">
-                    <table class="min-w-full bg-white border border-gray-300">
+        <div class="flex items-center justify-center w-3/4 ml-auto">
+            <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-xl">
+                <h2 class="text-3xl font-bold text-white text-center mb-4">Expediente Medico</h2>
+
+                <div class="flex-grow flex items-center justify-center mt-6">
+                    <table class="min-w-full bg-white bg-opacity-10 rounded-lg shadow-xl text-white">
                         <thead>
-                            <tr>
-                                <th class="py-2 px-4 border-b border-gray-300">Fecha de la cita</th>
-                                <th class="py-2 px-4 border-b border-gray-300">Más detalles</th>
+                            <tr class="bg-blue-500">
+                                <th class="py-2 px-4 text-left">Fecha cita</th>
+                                <th class="py-2 px-4 text-left">Más detalles</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="py-2 px-4 border-b border-gray-300 text-center">12/08/2023</td>
-                                <td class="py-2 px-4 border-b border-gray-300 text-center"><button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="location.href='/detallesCita'">ver detalles</button></td>
+                            <tr class="hover:bg-blue-600">
+                                <td class="py-2 px-4 text-center">20/05/2024</td>
+                                <td class="py-2 px-4 text-center">
+                                    <button
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/detallesCita'">Ver
+                                        detalles</button>
+                                </td>
                             </tr>
-                            <tr>
-                                <td class="py-2 px-4 border-b border-gray-300 text-center">12/08/2023</td>
-                                <td class="py-2 px-4 border-b border-gray-300 text-center"><button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"  onclick="location.href='/detallesCita'">ver detalles</button></td>
+                            <tr class="hover:bg-blue-600">
+                                <td class="py-2 px-4 text-center">20/05/2024</td>
+                                <td class="py-2 px-4 text-center">
+                                    <button
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/detallesCita'">Ver
+                                        detalles</button>
+                                </td>
                             </tr>
-                            <tr>
-                                <td class="py-2 px-4 border-b border-gray-300 text-center">12/08/2023</td>
-                                <td class="py-2 px-4 border-b border-gray-300 text-center"><button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"  onclick="location.href='/detallesCita'">ver detalles</button></td>
+                            <tr class="hover:bg-blue-600">
+                                <td class="py-2 px-4 text-center">20/05/2024</td>
+                                <td class="py-2 px-4 text-center">
+                                    <button
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/detallesCita'">Ver
+                                        detalles</button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
 
-            <div class="col-span-2 flex justify-between mt-6">
-                <button type="button"
-                    style="margin-right: 16px;" 
-                    class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    Enviar expediente
-                </button>
-                <button type="button"
-                    class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="location.href='/doctor'">
-                    Regresar al inicio
-                </button>
+                <div class="col-span-2 flex justify-between mt-6">
+                    <button type="button" style="margin-right: 16px;"
+                        class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="location.href='/detallesPacientes'">
+                        Regresar
+                    </button>
+                    <button type="button"
+                        class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        onclick="location.href='/docPacientes'">
+                        Regresar al inicio
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+
+
 </body>
 
 </html>
+
