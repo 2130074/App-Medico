@@ -68,6 +68,10 @@ Route::get('/verPacientes', function () {
     return view('verPacientes');
 });
 
+Route::get('/docPacientes', function () {
+    return view('docPacientes');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

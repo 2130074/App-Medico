@@ -23,7 +23,7 @@
                     </li>
                     <li class="flex items-center mb-10">
                         <img src="img/usuario.png" alt="Ver Usuarios Icon" class="w-6 h-6 mr-2">
-                        <a href="/verUsuarios" class="text-lg">Ver pacientes</a>
+                        <a href="/docPacientes" class="text-lg">Ver pacientes</a>
                     </li>
                 </ul>
             </div>
