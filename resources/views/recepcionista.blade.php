@@ -42,9 +42,12 @@
             </button>
         </div>
 
-        <div class="flex items-center justify-center ml-auto">
-            @include('calendario')
+        <div class="flex items-center justify-center w-4/5 p-6">
+            <div class="bg-white rounded-lg shadow-lg p-4 max-w-3xl w-full">
+                @include('calendario')
+            </div>
         </div>
+    </div>
 </body>
 
 </html>
