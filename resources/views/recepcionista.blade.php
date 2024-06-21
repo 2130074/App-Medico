@@ -140,7 +140,7 @@
             </button>
         </div>
 
-        <div class="flex-1 p-6">
+        <div class="flex-1 p-8 mt-24"> 
             <div class="bg-white shadow-md rounded-lg p-4">
                 <div class="flex justify-between mb-4">
                     <button id="prev" class="text-blue-600 hover:underline mr-2">&lt;</button>

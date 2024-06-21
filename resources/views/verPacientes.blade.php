@@ -62,9 +62,11 @@
                         <tr class="bg-blue-500">
                             <th class="py-2 px-4 text-left">Nombre</th>
                             <th class="py-2 px-4 text-left">Correo</th>
-                            <th class="py-2 px-4 text-left">Última cita</th>
-                            <th class="py-2 px-4 text-left">Próxima cita</th>
-                            <th class="py-2 px-4 text-left">Total de pago</th>
+                            <th class="py-2 px-4 text-center">Última cita</th>
+                            <th class="py-2 px-4 text-center">Próxima cita</th>
+                            <th class="py-2 px-4 text-center">Total de pago</th>
+                            <th class="py-2 px-4 text-center">Modificar</th>
+                            <th class="py-2 px-4 text-center">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,16 +80,13 @@
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">Ver
                                     pago</button>
                             </td>
-                        </tr>
-                        <tr class="hover:bg-blue-600">
-                            <td class="py-2 px-4">Luisana Guadalupe</td>
-                            <td class="py-2 px-4">2130074@gmail.com</td>
-                            <td class="py-2 px-4 text-center">12/08/2023</td>
-                            <td class="py-2 px-4 text-center">20/05/2024</td>
                             <td class="py-2 px-4 text-center">
                                 <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">Ver
-                                    pago</button>
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/modificarPacientes'">Modificar</button>
+                            </td>
+                            <td class="py-2 px-4 text-center">
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" >Eliminar</button>
                             </td>
                         </tr>
                         <tr class="hover:bg-blue-600">
@@ -99,6 +98,52 @@
                                 <button
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">Ver
                                     pago</button>
+                            </td>
+                            <td class="py-2 px-4 text-center">
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/modificarPacientes'">Modificar</button>
+                            </td>
+                            <td class="py-2 px-4 text-center">
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" >Eliminar</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-blue-600">
+                            <td class="py-2 px-4">Luisana Guadalupe</td>
+                            <td class="py-2 px-4">2130074@gmail.com</td>
+                            <td class="py-2 px-4 text-center">12/08/2023</td>
+                            <td class="py-2 px-4 text-center">20/05/2024</td>
+                            <td class="py-2 px-4 text-center">
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">Ver
+                                    pago</button>
+                            </td>
+                            <td class="py-2 px-4 text-center">
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/modificarPacientes'">Modificar</button>
+                            </td>
+                            <td class="py-2 px-4 text-center">
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" >Eliminar</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-blue-600">
+                            <td class="py-2 px-4">Luisana Guadalupe</td>
+                            <td class="py-2 px-4">2130074@gmail.com</td>
+                            <td class="py-2 px-4 text-center">12/08/2023</td>
+                            <td class="py-2 px-4 text-center">20/05/2024</td>
+                            <td class="py-2 px-4 text-center">
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">Ver
+                                    pago</button>
+                            </td>
+                            <td class="py-2 px-4 text-center">
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/modificarPacientes'">Modificar</button>
+                            </td>
+                            <td class="py-2 px-4 text-center">
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" >Eliminar</button>
                             </td>
                         </tr>
                     </tbody>

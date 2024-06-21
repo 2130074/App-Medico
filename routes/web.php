@@ -76,6 +76,10 @@ Route::get('/modificar', function () {
     return view('modificar');
 });
 
+Route::get('/modificarPacientes', function () {
+    return view('modificarPacientes');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

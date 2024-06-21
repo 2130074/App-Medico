@@ -6,6 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
     <title>Bienvenido doctor</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const date = new Date();
+            let currentMonth = date.getMonth();
+            let currentYear = date.getFullYear();
+
+            const months = [
+                'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+            ];
+
+            function renderCalendar(month, year) {
+                const firstDay = new Date(year, month).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                const calendarBody = document.getElementById('calendar-body');
+                calendarBody.innerHTML = '';
+
+                let date = 1;
+                for (let i = 0; i < 6; i++) {
+                    const row = document.createElement('tr');
+
+                    for (let j = 0; j < 7; j++) {
+                        const cell = document.createElement('td');
+                        cell.classList.add('border', 'p-2', 'text-center', 'cursor-pointer');
+
+                        if (i === 0 && j < firstDay) {
+                            const cellText = document.createTextNode('');
+                            cell.appendChild(cellText);
+                        } else if (date > daysInMonth) {
+                            break;
+                        } else {
+                            const cellText = document.createTextNode(date);
+                            cell.appendChild(cellText);
+                            cell.setAttribute('data-date', `${year}-${month + 1}-${date}`);
+                            cell.addEventListener('click', openModal);
+                            date++;
+                        }
+
+                        row.appendChild(cell);
+                    }
+
+                    calendarBody.appendChild(row);
+                }
+
+                document.getElementById('monthAndYear').innerText = `${months[month]} ${year}`;
+            }
+        });
+    </script>
 </head>
 
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
@@ -34,9 +83,30 @@
             </button>
         </div>
 
-        <div class="flex items-center justify-center w-3/4 ml-auto">
-            <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-xl">
-                @include('calendario')
+        <div class="flex-1 p-8 mt-24"> 
+            <div class="bg-white shadow-md rounded-lg p-4">
+                <div class="flex justify-between mb-4">
+                    <button id="prev" class="text-blue-600 hover:underline mr-2">&lt;</button>
+                    <h2 id="monthAndYear" class="text-xl font-bold">Enero 2022</h2>
+                    <button id="next" class="text-blue-600 hover:underline mr-2">&gt;</button>
+                    <button id="today" class="bg-blue-600 text-white py-1 px-3 rounded">Hoy</button>
+                </div>
+                <table class="table-auto w-full">
+                    <thead>
+                        <tr>
+                            <th class="p-2">Lun</th>
+                            <th class="p-2">Mar</th>
+                            <th class="p-2">Mié</th>
+                            <th class="p-2">Jue</th>
+                            <th class="p-2">Vie</th>
+                            <th class="p-2">Sáb</th>
+                            <th class="p-2">Dom</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-body" class="text-center">
+                        <!-- Los días del calendario se generarán aquí -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
