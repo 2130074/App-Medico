@@ -19,7 +19,7 @@
                 <ul>
                     <li class="flex items-center mb-10">
                         <img src="img/usuario.png" alt="Registrar Icon" class="w-6 h-6 mr-2">
-                        <a href="#" class="text-lg">Registrar</a>
+                        <a href="/registroUsuarios" class="text-lg">Registrar</a>
                     </li>
                     <li class="flex items-center mb-10">
                         <img src="img/usuario.png" alt="Ver Usuarios Icon" class="w-6 h-6 mr-2">
