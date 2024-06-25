@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\CitasController;
+use App\Http\Controllers\ServicioController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,10 @@ Route::post('/validar-registro',[LoginController::class, 'register'])->name('val
 Route::post('/verificar-login', [LoginController::class, 'doLogin'])->name('verificar-login');
 Route::post('/registrar-pacientes', [PacienteController::class, 'registerPatient'])->name('registrar-pacientes');
 Route::post('/registrar-cita',[CitasController::class, 'registrarCita'])->name('registrar-cita');
+
+Route::get('/servicios', [ServicioController::class, 'create'])->name('servicios.create');
+Route::post('/servicios', [ServicioController::class, 'store'])->name('servicios.store');
+
 
 // Vistas para navegación entre ventanas 
 Route::get('/recepcionista', function () {

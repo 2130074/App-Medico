@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite('resources/css/app.css')
-    <title>Servicios</title>
+    <title>Registro de Servicios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
@@ -36,16 +36,21 @@
                 </ul>
             </div>
             <button
-                    class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    onclick="location.href='/'">
-                    Cerrar sesión
+                class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                onclick="location.href='/'">
+                Cerrar sesión
             </button>
         </div>
 
         <div class="flex items-center justify-center w-3/4 ml-auto">
             <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-sm">
                 <h2 class="text-3xl font-bold text-white text-center mb-6">Registro de servicios</h2>
-                <form action="" method="POST">
+                @if(session('success'))
+                <div class="bg-green-500 text-white p-4 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+                @endif
+                <form action="{{ route('servicios.store') }}" method="POST">
                     @csrf
                     <fieldset class="mb-4">
                         <legend class="sr-only">Información del servicio</legend>
@@ -55,18 +60,27 @@
                                 class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                                 placeholder="Nombre del servicio" required>
                         </div>
+                        @error('nombre')
+                        <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
+                        @enderror
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/user.png" alt="Costo Icon" class="w-6 h-6 ml-2">
-                            <input type="number" name="costo" id="costo"
+                            <input type="number" name="precio" id="precio"
                                 class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                                 placeholder="Costo" required>
                         </div>
+                        @error('precio')
+                        <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
+                        @enderror
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/calendarioyhora.png" alt="calendario Icon" class="w-6 h-6 ml-2">
                             <input type="text" name="time" id="time"
                                 class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                                 placeholder="Duración del servicio" required>
                         </div>
+                        @error('time')
+                        <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
+                        @enderror
                     </fieldset>
                     <div class="flex-grow flex items-center justify-center mt-6">
                         <button type="submit"
@@ -75,9 +89,11 @@
                         </button>
                     </div>
                 </form>
+                
             </div>
         </div>
     </div>
 </body>
 
 </html>
+
