@@ -17,6 +17,13 @@
                 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
             ];
 
+            // Simulando horas ocupadas para cada fecha (esto debería venir de una base de datos)
+            const occupiedHours = {
+                '2024-06-24': ['08:00', '09:00'],
+                '2024-06-25': ['10:00', '11:00'],
+                // Agregar más fechas y horas ocupadas según sea necesario
+            };
+
             function renderCalendar(month, year) {
                 const firstDay = new Date(year, month).getDay();
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -40,8 +47,14 @@
                         } else {
                             const cellText = document.createTextNode(date);
                             cell.appendChild(cellText);
-                            cell.setAttribute('data-date', `${year}-${month + 1}-${date}`);
-                            cell.addEventListener('click', openModal);
+                            const fullDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+                            cell.setAttribute('data-date', fullDate);
+
+                            if (new Date(fullDate) < new Date().setHours(0, 0, 0, 0)) {
+                                cell.classList.add('text-gray-400', 'cursor-not-allowed');
+                            } else {
+                                cell.addEventListener('click', openModal);
+                            }
                             date++;
                         }
 
@@ -58,7 +71,27 @@
                 const modal = document.getElementById('modal');
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
-                document.getElementById('selected-date').value = event.target.getAttribute('data-date');
+                const selectedDate = event.target.getAttribute('data-date');
+                document.getElementById('selected-date').value = selectedDate;
+
+                // Actualizar las opciones de hora según la disponibilidad
+                const timeSelect = document.getElementById('selected-time');
+                const availableHours = [
+                    '08:00', '09:00', '10:00', '11:00', '12:00',
+                    '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'
+                ];
+                timeSelect.innerHTML = ''; // Limpiar opciones anteriores
+                availableHours.forEach(time => {
+                    const option = document.createElement('option');
+                    option.value = time;
+                    option.text = time;
+
+                    if (occupiedHours[selectedDate] && occupiedHours[selectedDate].includes(time)) {
+                        option.disabled = true;
+                    }
+
+                    timeSelect.appendChild(option);
+                });
             }
 
             function closeModal() {
@@ -72,10 +105,17 @@
                 const appointmentReason = document.getElementById('appointment-reason').value;
                 const serviceType = document.getElementById('service-type').value;
                 const selectedDate = document.getElementById('selected-date').value;
+                const selectedTime = document.getElementById('selected-time').value;
 
-                if (!patientName || !appointmentReason || !serviceType || !selectedDate) {
+                if (!patientName || !appointmentReason || !serviceType || !selectedDate || !selectedTime) {
                     event.preventDefault();
                     alert('Por favor, completa todos los campos.');
+                    return;
+                }
+
+                if (occupiedHours[selectedDate] && occupiedHours[selectedDate].includes(selectedTime)) {
+                    event.preventDefault();
+                    alert('La hora seleccionada ya está ocupada.');
                 }
             }
 
@@ -98,7 +138,6 @@
             });
 
             document.getElementById('close-modal').addEventListener('click', closeModal);
-            document.getElementById('modal-back-button').addEventListener('click', closeModal);
             document.getElementById('register-button').addEventListener('click', validateForm);
 
             renderCalendar(currentMonth, currentYear);
@@ -169,7 +208,8 @@
     </div>
 
     <div id="modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
-        <div class="bg-white rounded-lg p-6 w-1/3">
+        <div class="bg-white rounded-lg p-6 w-1/3 relative">
+            <button id="close-modal" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900">&times;</button>
             <h2 class="text-2xl font-bold mb-4">Agendar servicio</h2>
             <form id="appointment-form">
                 <div class="mb-4">
@@ -185,19 +225,29 @@
                     <input type="text" id="service-type" class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
                 </div>
                 <div class="mb-4">
-                    <label for="selected-date" class="block text-sm font-medium text-gray-700">Fecha y hora</label>
+                    <label for="selected-date" class="block text-sm font-medium text-gray-700">Fecha</label>
                     <input type="text" id="selected-date" class="mt-1 p-2 block w-full border border-gray-300 rounded-md" readonly>
+                </div>
+                <div class="mb-4">
+                    <label for="selected-time" class="block text-sm font-medium text-gray-700">Hora</label>
+                    <select id="selected-time" class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                        <option value="08:00">08:00 AM</option>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="13:00">01:00 PM</option>
+                        <option value="14:00">02:00 PM</option>
+                        <option value="15:00">03:00 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                        <option value="17:00">05:00 PM</option>
+                        <option value="18:00">06:00 PM</option>
+                    </select>
                 </div>
                 <div class="flex-grow flex items-center justify-center mt-6">
                     <button type="submit" id="register-button"
                         class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         Registrar
-                    </button>
-                </div>
-                <div class="flex-grow flex items-center justify-center mt-3">
-                    <button type="button" id="modal-back-button"
-                        class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        Regresar
                     </button>
                 </div>
             </form>

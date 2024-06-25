@@ -17,6 +17,13 @@
                 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
             ];
 
+            // Simulando horas ocupadas para cada fecha (esto debería venir de una base de datos)
+            const occupiedHours = {
+                '2024-06-24': ['08:00', '09:00'],
+                '2024-06-25': ['10:00', '11:00'],
+                // Agregar más fechas y horas ocupadas según sea necesario
+            };
+
             function renderCalendar(month, year) {
                 const firstDay = new Date(year, month).getDay();
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -40,8 +47,14 @@
                         } else {
                             const cellText = document.createTextNode(date);
                             cell.appendChild(cellText);
-                            cell.setAttribute('data-date', `${year}-${month + 1}-${date}`);
-                            cell.addEventListener('click', openModal);
+                            const fullDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+                            cell.setAttribute('data-date', fullDate);
+
+                            if (new Date(fullDate) < new Date().setHours(0, 0, 0, 0)) {
+                                cell.classList.add('text-gray-400', 'cursor-not-allowed');
+                            } else {
+                                cell.addEventListener('click', openModal);
+                            }
                             date++;
                         }
 
@@ -53,6 +66,81 @@
 
                 document.getElementById('monthAndYear').innerText = `${months[month]} ${year}`;
             }
+
+            function openModal(event) {
+                const modal = document.getElementById('modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                const selectedDate = event.target.getAttribute('data-date');
+                document.getElementById('selected-date').value = selectedDate;
+
+                // Actualizar las opciones de hora según la disponibilidad
+                const timeSelect = document.getElementById('selected-time');
+                const availableHours = [
+                    '08:00', '09:00', '10:00', '11:00', '12:00',
+                    '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'
+                ];
+                timeSelect.innerHTML = ''; // Limpiar opciones anteriores
+                availableHours.forEach(time => {
+                    const option = document.createElement('option');
+                    option.value = time;
+                    option.text = time;
+
+                    if (occupiedHours[selectedDate] && occupiedHours[selectedDate].includes(time)) {
+                        option.disabled = true;
+                    }
+
+                    timeSelect.appendChild(option);
+                });
+            }
+
+            function closeModal() {
+                const modal = document.getElementById('modal');
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }
+
+            function validateForm(event) {
+                const patientName = document.getElementById('patient-name').value;
+                const appointmentReason = document.getElementById('appointment-reason').value;
+                const serviceType = document.getElementById('service-type').value;
+                const selectedDate = document.getElementById('selected-date').value;
+                const selectedTime = document.getElementById('selected-time').value;
+
+                if (!patientName || !appointmentReason || !serviceType || !selectedDate || !selectedTime) {
+                    event.preventDefault();
+                    alert('Por favor, completa todos los campos.');
+                    return;
+                }
+
+                if (occupiedHours[selectedDate] && occupiedHours[selectedDate].includes(selectedTime)) {
+                    event.preventDefault();
+                    alert('La hora seleccionada ya está ocupada.');
+                }
+            }
+
+            document.getElementById('next').addEventListener('click', function () {
+                currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
+                currentMonth = (currentMonth + 1) % 12;
+                renderCalendar(currentMonth, currentYear);
+            });
+
+            document.getElementById('prev').addEventListener('click', function () {
+                currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
+                currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+                renderCalendar(currentMonth, currentYear);
+            });
+
+            document.getElementById('today').addEventListener('click', function () {
+                currentMonth = date.getMonth();
+                currentYear = date.getFullYear();
+                renderCalendar(currentMonth, currentYear);
+            });
+
+            document.getElementById('close-modal').addEventListener('click', closeModal);
+            document.getElementById('register-button').addEventListener('click', validateForm);
+
+            renderCalendar(currentMonth, currentYear);
         });
     </script>
 </head>
@@ -113,9 +201,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
