@@ -93,7 +93,7 @@
                     <thead>
                         <tr class="bg-blue-500">
                             <th class="py-2 px-4 text-left">Nombre</th>
-                            <th class="py-2 px-4 text-left">Correo</th>
+                            <th class="py-2 px-4 text-left">Costo</th>
                             <th class="py-2 px-4 text-center">Modificar</th>
                             <th class="py-2 px-4 text-center">Eliminar</th>
                         </tr>
