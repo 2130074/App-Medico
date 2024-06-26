@@ -28,7 +28,8 @@
                 </ul>
             </div>
             <button
-                class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"  onclick="location.href='/'">
+                class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                onclick="location.href='/'">
                 Cerrar sesión
             </button>
         </div>
@@ -58,45 +59,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="hover:bg-blue-600">
-                            <td class="py-2 px-4">Luisana Guadalupe</td>
-                            <td class="py-2 px-4">2130074@gmail.com</td>
-                            <td class="py-2 px-4 text-center">8341494966</td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/modificar'">Modificar</button>
-                            </td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-blue-600">
-                            <td class="py-2 px-4">Luisana Guadalupe</td>
-                            <td class="py-2 px-4">2130074@gmail.com</td>
-                            <td class="py-2 px-4 text-center">8341494966</td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">Modificar</button>
-                            </td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-blue-600">
-                            <td class="py-2 px-4">Luisana Guadalupe</td>
-                            <td class="py-2 px-4">2130074@gmail.com</td>
-                            <td class="py-2 px-4 text-center">8341494966</td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">Modificar</button>
-                            </td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">Eliminar</button>
-                            </td>
-                        </tr>
+                        @if (isset($usuarios))
+                            @foreach ($usuarios as $usuario)
+                            <tr class="hover:bg-blue-600">
+                                <td class="py-2 px-4">{{ $usuario->nombre }}</td>
+                                <td class="py-2 px-4">{{ $usuario->correo }}</td>
+                                <td class="py-2 px-4 text-center">{{ $usuario->telefono ?? 'N/A' }}</td>
+                                <td class="py-2 px-4 text-center">
+                                    <button
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                                        onclick="location.href='/modificar/{{ $usuario->id }}'">Modificar</button>
+                                </td>
+                                <td class="py-2 px-4 text-center">
+                                    <button
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                                        onclick="location.href='/eliminar/{{ $usuario->id }}'">Eliminar</button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>

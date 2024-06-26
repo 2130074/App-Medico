@@ -10,7 +10,6 @@
 
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
     <div class="flex h-screen">
-        <!-- Sidebar -->
         <div class="bg-blue-600 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center mb-8">
@@ -43,7 +42,6 @@
             </button>
         </div>
 
-        <!-- Main content -->
         <div class="flex items-center justify-center w-3/4 ml-auto">
             <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-md">
                 <h2 class="text-3xl font-bold text-white text-center mb-6">Registro de pacientes</h2>

@@ -4,9 +4,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PacienteController;
-use App\Http\Controllers\CitasController;
 use App\Http\Controllers\ServicioController;
-
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,7 +17,9 @@ Route::get('logout',[LoginController::class,'logout'])->name('logout');
 Route::post('/validar-registro',[LoginController::class, 'register'])->name('validar-registro');
 Route::post('/verificar-login', [LoginController::class, 'doLogin'])->name('verificar-login');
 Route::post('/registrar-pacientes', [PacienteController::class, 'registerPatient'])->name('registrar-pacientes');
-Route::post('/registrar-cita',[CitasController::class, 'registrarCita'])->name('registrar-cita');
+
+//Para que funcionen las tablas
+Route::get('/verUsuarios', [UserController::class, 'index'])->name('verUsuarios');
 
 Route::get('/servicios', [ServicioController::class, 'create'])->name('servicios.create');
 Route::post('/servicios', [ServicioController::class, 'store'])->name('servicios.store');
@@ -65,9 +66,7 @@ Route::get('/registroUsuarios', function () {
     return view('registroUsuarios');
 })->name('admin');
 
-Route::get('/verUsuarios', function () {
-    return view('verUsuarios');
-});
+
 
 Route::get('/verPacientes', function () {
     return view('verPacientes');

@@ -17,11 +17,9 @@
                 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
             ];
 
-            // Simulando horas ocupadas para cada fecha (esto debería venir de una base de datos)
             const occupiedHours = {
                 '2024-06-24': ['08:00', '09:00'],
                 '2024-06-25': ['10:00', '11:00'],
-                // Agregar más fechas y horas ocupadas según sea necesario
             };
 
             function renderCalendar(month, year) {
@@ -74,13 +72,12 @@
                 const selectedDate = event.target.getAttribute('data-date');
                 document.getElementById('selected-date').value = selectedDate;
 
-                // Actualizar las opciones de hora según la disponibilidad
                 const timeSelect = document.getElementById('selected-time');
                 const availableHours = [
                     '08:00', '09:00', '10:00', '11:00', '12:00',
                     '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'
                 ];
-                timeSelect.innerHTML = ''; // Limpiar opciones anteriores
+                timeSelect.innerHTML = '';
                 availableHours.forEach(time => {
                     const option = document.createElement('option');
                     option.value = time;
@@ -192,7 +189,7 @@
                         </tr>
                     </thead>
                     <tbody id="calendar-body" class="text-center">
-                        <!-- Los días del calendario se generarán aquí -->
+                        <!-- Los días se generan aqui -->
                     </tbody>
                 </table>
             </div>

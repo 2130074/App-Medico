@@ -42,20 +42,15 @@ class LoginController extends Controller
     
         // Verificar si el correo y la contraseña son los de administrador
         if ($request->correo == 'admin@saludConecta.com' && $request->password == '12345') {
-            // Redirigir al usuario a la vista de registroUsuarios
             return redirect(route('admin'));
         }
     
-        // Intentar autenticar con las credenciales proporcionadas
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
     
-            // Buscar al usuario por correo
             $usuario = User::where('correo', $request->correo)->first();
     
-            // Verificar si el usuario existe
             if (!$usuario) {
-                // Manejar el caso en que el usuario no se encuentra
                 return back()->withErrors([
                     'correo' => 'El usuario no se encontró.',
                 ])->withInput();
@@ -66,13 +61,11 @@ class LoginController extends Controller
             } elseif ($usuario->tipoUsuario === 'Doctor') {
                 return redirect(route('doctor'));
             } else {
-                // Manejar otros casos, como usuarios sin tipo asignado
                 return back()->withErrors([
                     'correo' => 'No se pudo determinar el tipo de usuario.',
                 ])->withInput();
             }
         } else {
-            // Si las credenciales no son correctas, mostrar un error
             return back()->withErrors([
                 'correo' => 'Las credenciales proporcionadas no coinciden con nuestros registros.',
             ])->withInput();
