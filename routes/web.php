@@ -27,6 +27,8 @@ Route::get('/verPacientes', [PacientesController::class, 'index'])->name('verPac
 Route::delete('/eliminar/{id}', [PacientesController::class, 'destroy'])->name('pacientes.eliminar');
 Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
 
+Route::get('/detallesPacientes/{id}', [PacientesDoctorController::class, 'show'])->name('pacientes.show');
+
 Route::get('/servicios', [ServicioController::class, 'create'])->name('servicios.create');
 Route::post('/servicios', [ServicioController::class, 'store'])->name('servicios.store');
 
@@ -58,7 +60,7 @@ Route::get('/detallesCita', function () {
 
 Route::get('/detallesPacientes', function () {
     return view('detallesPacientes');
-});
+})->name('detallesPacientes');
 
 Route::get('/expediente', function () {
     return view('expediente');

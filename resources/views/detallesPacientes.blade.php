@@ -13,16 +13,16 @@
         <div class="bg-blue-600 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center mb-8">
-                    <img src="img/logo.png" alt="Logo" class="w-8 h-8 mr-2">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-8 h-8 mr-2">
                     <span class="text-2xl font-bold">Salud Conecta</span>
                 </div>
                 <ul>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Registrar Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Registrar Icon" class="w-6 h-6 mr-2">
                         <a href="/doctor" class="text-lg">Agenda</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/usuario.png" alt="Ver Usuarios Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/usuario.png') }}" alt="Ver Usuarios Icon" class="w-6 h-6 mr-2">
                         <a href="/docPacientes" class="text-lg">Ver pacientes</a>
                     </li>
                 </ul>
@@ -39,44 +39,44 @@
                 <h2 class="text-3xl font-bold  text-blue-800 text-center mb-4">Detalles del paciente</h2>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="mb-2">
-                        <label class="block font-medium  text-blue-800">Nombre(s):</label>
-                        <p class="text-gray-900">Luisana Guadalupe</p>
+                        <label class="block font-medium text-blue-800">Nombre(s):</label>
+                        <p class="text-gray-900">{{ $paciente->nombre }}</p>
                     </div>
                     <div class="mb-2">
-                        <label class="block font-medium   text-blue-800">Apellidos(s):</label>
-                        <p class="text-gray-900">Rodriguez Salas</p>
+                        <label class="block font-medium text-blue-800">Apellido(s):</label>
+                        <p class="text-gray-900">{{ $paciente->apellidos }}</p>
                     </div>
                     <div class="mb-2">
                         <label class="block font-medium text-blue-800">Edad:</label>
-                        <p class="text-gray-900">20</p>
+                        <p class="text-gray-900">{{ $paciente->edad }}</p>
                     </div>
                     <div class="mb-2">
-                        <label class="block font-medium  text-blue-800">Género:</label>
-                        <p class="text-gray-900">Femenino</p>
+                        <label class="block font-medium text-blue-800">Género:</label>
+                        <p class="text-gray-900">{{ $paciente->genero }}</p>
                     </div>
                     <div class="mb-2">
                         <label class="block font-medium text-blue-800">Altura:</label>
-                        <p class="text-gray-900">1.48</p>
+                        <p class="text-gray-900">{{ $paciente->altura }}</p>
                     </div>
                     <div class="mb-2">
                         <label class="block font-medium text-blue-800">Peso:</label>
-                        <p class="text-gray-900">60kg</p>
+                        <p class="text-gray-900">{{ $paciente->peso }}</p>
                     </div>
                     <div class="mb-2">
                         <label class="block font-medium text-blue-800">Enfermedades que padece:</label>
-                        <p class="text-gray-900">No aplica</p>
+                        <p class="text-gray-900">{{ $paciente->enfermedades }}</p>
                     </div>
                     <div class="mb-2">
                         <label class="block font-medium text-blue-800">Alergias:</label>
-                        <p class="text-gray-900">A la penicilina</p>
+                        <p class="text-gray-900">{{ $paciente->alergias }}</p>
                     </div>
                     <div class="mb-2">
                         <label class="block font-medium text-blue-800">Teléfono:</label>
-                        <p class="text-gray-900">834 149 4966</p>
+                        <p class="text-gray-900">{{ $paciente->telefono }}</p>
                     </div>
                     <div class="mb-2">
                         <label class="block font-medium text-blue-800">Correo:</label>
-                        <p class="text-gray-900">2130074@upv.edu.mx</p>
+                        <p class="text-gray-900">{{ $paciente->correo }}</p>
                     </div>
                 </div>
                 <div class="col-span-2 flex justify-between mt-6">
@@ -94,8 +94,6 @@
             </div>
         </div>
     </div>
-
-
 </body>
 
 </html>

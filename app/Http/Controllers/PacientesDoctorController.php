@@ -13,4 +13,10 @@ class PacientesDoctorController extends Controller
         $pacientes = Paciente::all();
         return view('docPacientes', compact('pacientes'));
     }
+
+    public function show($id)
+    {
+        $paciente = Paciente::findOrFail($id); 
+        return view('detallesPacientes', compact('paciente')); 
+    }
 }
