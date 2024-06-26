@@ -9,8 +9,8 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var inputSearch = document.querySelector(
-            '.search-input'); // Asegúrate de tener un ID o clase específica para tu campo de búsqueda
-            var tbody = document.querySelector('tbody'); // Selector para el cuerpo de la tabla
+            '.search-input'); 
+            var tbody = document.querySelector('tbody');
 
             inputSearch.addEventListener('input', function(e) {
                 var filterValue = e.target.value.toLowerCase();
@@ -20,7 +20,6 @@
                     var row = rows[i];
                     var match = false;
 
-                    // Filtrar por nombre, correo y número
                     var cells = row.getElementsByTagName('td');
                     for (var j = 0; j < cells.length && !match; j++) {
                         var cellText = cells[j].textContent || cells[j].innerText;
@@ -112,8 +111,6 @@
                                             </button>
                                         </form>
                                     </td>
-
-
                                 </tr>
                             @endforeach
                         @endif
