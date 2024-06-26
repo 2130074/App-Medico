@@ -20,6 +20,8 @@ Route::post('/registrar-pacientes', [PacienteController::class, 'registerPatient
 
 //Para que funcionen las tablas
 Route::get('/verUsuarios', [UserController::class, 'index'])->name('verUsuarios');
+Route::delete('/eliminar/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminar');
+
 
 Route::get('/servicios', [ServicioController::class, 'create'])->name('servicios.create');
 Route::post('/servicios', [ServicioController::class, 'store'])->name('servicios.store');

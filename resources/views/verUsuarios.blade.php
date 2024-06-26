@@ -70,11 +70,18 @@
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                                         onclick="location.href='/modificar/{{ $usuario->id }}'">Modificar</button>
                                 </td>
+                                
                                 <td class="py-2 px-4 text-center">
-                                    <button
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                                        onclick="location.href='/eliminar/{{ $usuario->id }}'">Eliminar</button>
+                                    <form action="{{ route('usuarios.eliminar', $usuario->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                                            Eliminar
+                                        </button>
+                                    </form>                                    
                                 </td>
+
+                                
                             </tr>
                             @endforeach
                         @endif

@@ -33,7 +33,7 @@ class LoginController extends Controller
         //Auth::login($user);
         //Auth::logout();
 
-        return redirect(route('login'))->with('success', 'Registro exitoso. Por favor, inicia sesión.');
+        return redirect(route('verUsuarios'))->with('success', 'Registro exitoso. Por favor, inicia sesión.');
     }
 
     public function doLogin(Request $request)
