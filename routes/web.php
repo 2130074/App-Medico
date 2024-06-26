@@ -7,6 +7,7 @@ use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PacientesController;
+use App\Http\Controllers\PacientesDoctorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +25,7 @@ Route::get('/verUsuarios', [UserController::class, 'index'])->name('verUsuarios'
 Route::delete('/eliminar/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminar');
 Route::get('/verPacientes', [PacientesController::class, 'index'])->name('verPacientes');
 Route::delete('/eliminar/{id}', [PacientesController::class, 'destroy'])->name('pacientes.eliminar');
+Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
 
 Route::get('/servicios', [ServicioController::class, 'create'])->name('servicios.create');
 Route::post('/servicios', [ServicioController::class, 'store'])->name('servicios.store');
@@ -69,11 +71,6 @@ Route::get('/registroPacientes', function () {
 Route::get('/registroUsuarios', function () {
     return view('registroUsuarios');
 })->name('admin');
-
-
-Route::get('/docPacientes', function () {
-    return view('docPacientes');
-});
 
 Route::get('/modificar', function () {
     return view('modificar');
