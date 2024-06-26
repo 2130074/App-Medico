@@ -8,6 +8,7 @@ use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\PacientesDoctorController;
+use App\Http\Controllers\VerServiciosController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,10 +23,12 @@ Route::post('/registrar-pacientes', [PacienteController::class, 'registerPatient
 
 //Para que funcionen las tablas
 Route::get('/verUsuarios', [UserController::class, 'index'])->name('verUsuarios');
-Route::get('/eliminar/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminar');
+Route::delete('/eliminar/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminar');
 Route::get('/verPacientes', [PacientesController::class, 'index'])->name('verPacientes');
-Route::delete('/eliminar/{id}', [PacientesController::class, 'destroy'])->name('pacientes.eliminar');
+Route::get('/eliminar/{id}', [PacientesController::class, 'destroy'])->name('pacientes.eliminar');
 Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
+
+Route::get('/verServicios', [VerServiciosController::class, 'index'])->name('verServicios');
 
 Route::get('/detallesPacientes/{id}', [PacientesDoctorController::class, 'show'])->name('pacientes.show');
 
@@ -80,6 +83,10 @@ Route::get('/modificar', function () {
 
 Route::get('/modificarPacientes', function () {
     return view('modificarPacientes');
+});
+
+Route::get('/modificarServicio', function () {
+    return view('modificarServicio');
 });
 
 Route::get('/dashboard', function () {

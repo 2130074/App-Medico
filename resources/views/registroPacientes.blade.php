@@ -18,19 +18,23 @@
                 </div>
                 <ul>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Registrar Icon" class="w-6 h-6 mr-2">
+                        <img src="img/calendario.png" alt="Agenda Icon" class="w-6 h-6 mr-2">
                         <a href="/recepcionista" class="text-lg">Agenda</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Registrar Icon" class="w-6 h-6 mr-2">
+                        <img src="img/calendario.png" alt="Agregar servicio Icon" class="w-6 h-6 mr-2">
                         <a href="/servicios" class="text-lg">Agregar servicio</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Registrar Icon" class="w-6 h-6 mr-2">
+                        <img src="img/calendario.png" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
                         <a href="/registroPacientes" class="text-lg">Agregar paciente</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/usuario.png" alt="Ver Usuarios Icon" class="w-6 h-6 mr-2">
+                        <img src="img/usuario.png" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <a href="/verServicios" class="text-lg">Ver servicios</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="img/usuario.png" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
                         <a href="/verPacientes" class="text-lg">Ver pacientes</a>
                     </li>
                 </ul>

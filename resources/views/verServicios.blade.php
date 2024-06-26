@@ -5,7 +5,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
-    <title>Ver Pacientes</title>
+    <title>Ver Usuarios</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var inputSearch = document.querySelector(
+            '.search-input'); 
+            var tbody = document.querySelector('tbody');
+
+            inputSearch.addEventListener('input', function(e) {
+                var filterValue = e.target.value.toLowerCase();
+                var rows = tbody.getElementsByTagName('tr');
+
+                for (var i = 0; i < rows.length; i++) {
+                    var row = rows[i];
+                    var match = false;
+
+                    var cells = row.getElementsByTagName('td');
+                    for (var j = 0; j < cells.length && !match; j++) {
+                        var cellText = cells[j].textContent || cells[j].innerText;
+                        match |= cellText.toLowerCase().indexOf(filterValue) !== -1;
+                    }
+
+                    if (match) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
 </head>
 
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
@@ -50,7 +79,7 @@
             <div class="flex justify-center mt-6">
                 <div class="relative w-2/3 max-w-2xl">
                     <input type="text" placeholder="Buscar"
-                        class="w-full py-2 pl-4 pr-10 border border-blue-500 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full py-2 pl-4 pr-10 border border-blue-500 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 search-input">
                     <svg class="absolute right-3 top-2.5 w-5 h-5 text-blue-500" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -63,57 +92,32 @@
                 <table class="min-w-full bg-white bg-opacity-10 rounded-lg shadow-xl text-white">
                     <thead>
                         <tr class="bg-blue-500">
-                            <th class="py-2 px-4 text-left">Servicio</th>
-                            <th class="py-2 px-4 text-left">Costo</th>
-                            <th class="py-2 px-4 text-left">Fecha</th>
-                            <th class="py-2 px-4 text-left">Eliminar</th>
+                            <th class="py-2 px-4 text-left">Nombre</th>
+                            <th class="py-2 px-4 text-left">Correo</th>
+                            <th class="py-2 px-4 text-center">Modificar</th>
+                            <th class="py-2 px-4 text-center">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="hover:bg-blue-600">
-                            <td class="py-2 px-4">Consulta General</td>
-                            <td class="py-2 px-4 text-center">$50.00</td>
-                            <td class="py-2 px-4 text-center">20/05/2024</td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">
-                                    Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-blue-600">
-                            <td class="py-2 px-4">Consulta General</td>
-                            <td class="py-2 px-4 text-center">$50.00</td>
-                            <td class="py-2 px-4 text-center">20/05/2024</td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">
-                                    Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-blue-600">
-                            <td class="py-2 px-4">Consulta General</td>
-                            <td class="py-2 px-4 text-center">$50.00</td>
-                            <td class="py-2 px-4 text-center">20/05/2024</td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">
-                                    Eliminar</button>
-                            </td>
-                        </tr>
+                        @if (isset($servicios))
+                            @foreach ($servicios as $servicio)
+                                <tr class="hover:bg-blue-600">
+                                    <td class="py-2 px-4">{{ $servicio->nombre }}</td>
+                                    <td class="py-2 px-4">{{ $servicio->precio }}</td>
+                                    <td class="py-2 px-4 text-center">
+                                        <button
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/modificarServicio'">Modificar</button>
+                                    </td>
+                                    <td class="py-2 px-4 text-center">
+                                        <button
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" >Eliminar</button>
+                                    </td>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
-            </div>
-
-            <div class="flex justify-end mt-6">
-                <h3 class="text-xl font-bold text-gray-800">Total: <span class="text-blue-500">$120.00</span></h3>
-            </div>
-
-            <div class="flex justify-end mt-6">
-                <button type="button"
-                    class=" flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    onclick="location.href='/verPacientes'">
-                    Regresar
-                </button>
             </div>
         </div>
     </div>

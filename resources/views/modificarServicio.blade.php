@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Servicios</title>
+    <title>modificar Servicio</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -90,6 +90,12 @@
                         <button type="submit"
                             class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             Registrar
+                        </button>
+                    </div>
+                    <div class="flex-grow flex items-center justify-center mt-3">
+                        <button type="button"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="location.href='/verServicios'">
+                            Regresar
                         </button>
                     </div>
                 </form>
