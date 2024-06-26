@@ -22,7 +22,7 @@ Route::post('/registrar-pacientes', [PacienteController::class, 'registerPatient
 
 //Para que funcionen las tablas
 Route::get('/verUsuarios', [UserController::class, 'index'])->name('verUsuarios');
-Route::delete('/eliminar/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminar');
+Route::get('/eliminar/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminar');
 Route::get('/verPacientes', [PacientesController::class, 'index'])->name('verPacientes');
 Route::delete('/eliminar/{id}', [PacientesController::class, 'destroy'])->name('pacientes.eliminar');
 Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
