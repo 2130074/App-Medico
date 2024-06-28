@@ -13,16 +13,14 @@ class PacientesController extends Controller
         return view('verPacientes', compact('pacientes'));
     }
 
-    public function destroy($id)
+    public function destroy(Paciente $paciente)
     {
-        $paciente = Paciente::find($id); 
-        if ($paciente) {
-            $paciente->delete(); 
-            return redirect()->route('verPacientes') 
-                ->with('success', 'Paciente eliminado exitosamente.');
+        try {
+            $paciente->delete();
+            return redirect()->route('verPacientes.index')->withSuccess("Paciente eliminado");
+        } catch (\Exception $th) {
+            return back()->withErrors(['error' => 'Hubo un problema al eliminar el paciente. Error: ' . $th->getMessage()]);
         }
-        return redirect()->route('verPacientes') 
-            ->with('error', 'No se pudo encontrar el paciente.');
     }
 }
 

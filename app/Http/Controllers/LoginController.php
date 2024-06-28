@@ -57,7 +57,7 @@ class LoginController extends Controller
             }
 
             if ($usuario->tipoUsuario === 'Recepcionista') {
-                return redirect(route('recepcionista'));
+                return redirect(route('recepcionista.index'));
             } elseif ($usuario->tipoUsuario === 'Doctor') {
                 return redirect(route('doctor'));
             } else {

@@ -24,7 +24,7 @@ class PacienteController extends Controller{
 
         $paciente->save();
 
-        return redirect(route('recepcionista'));
+        return redirect(route('recepcionista.index'));
     }
 
     public function paciente(){

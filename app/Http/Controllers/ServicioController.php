@@ -2,33 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreServicioRequest;
 use App\Models\Servicio;
+use Illuminate\Http\Request;
 
 class ServicioController extends Controller
 {
-    public function create()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        return view('servicios.create');
+        return view('servicios', ['servicios' => Servicio::latest()->paginate(4)]);
     }
 
-    public function store(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        $validated = $request->validate([
-            'nombre' => 'required|string|max:50',
-            'precio' => 'required|numeric|min:0',
-            'time' => 'required|string',
-            'id_tipo_servicio' => 'nullable|exists:tipo_servicios,id' 
-        ]);
+        //
+    }
 
-        //Registra un nuevo servicio
-        $servicio = new Servicio();
-        $servicio->nombre = $validated['nombre'];
-        $servicio->precio = $validated['precio'];
-        $servicio->id_tipo_servicio = $validated['id_tipo_servicio'] ?? null; //perimite que el usuario ingrese datos nulos
-        $servicio->save();
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreServicioRequest $request)
+    
+    {
+        try {
+            Servicio::create($request->validated());
+            return redirect()->route('verServicios')->with('success', 'Servicio registrado correctamente');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Hubo un problema al insertar datos. Por favor, intentalo de nuevo']);
+        }
+    }
+    
 
-        //Si si lo registra envia a la ventana de recepcionista 
-        return redirect()->route('recepcionista')->with('success', 'Servicio registrado correctamente');
+    /**
+     * Display the specified resource.
+     */
+    public function show(Servicio $servicio)
+    {
+        return view('servicos.verServicios' , compact('medico'));
     }
 }

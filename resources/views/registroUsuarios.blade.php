@@ -10,7 +10,7 @@
 
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
     <div class="flex h-screen">
-        <div class="bg-blue-600 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
+        <div class="bg-blue-650 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center mb-8">
                     <img src="img/logo.png" alt="Logo" class="w-8 h-8 mr-2">

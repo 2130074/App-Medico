@@ -39,7 +39,7 @@
 
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
     <div class="flex h-screen">
-        <div class="bg-blue-600 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
+        <div class="bg-blue-650 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center mb-8">
                     <img src="img/logo.png" alt="Logo" class="w-8 h-8 mr-2">
@@ -105,14 +105,18 @@
                                     <td class="py-2 px-4">{{ $servicio->nombre }}</td>
                                     <td class="py-2 px-4">{{ $servicio->precio }}</td>
                                     <td class="py-2 px-4 text-center">
-                                        <button
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/modificarServicio'">Modificar</button>
+                                    <from action method ="post">
+                                        <button type="submit"
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Modificar</button>
+                                    </from>
                                     </td>
                                     <td class="py-2 px-4 text-center">
-                                        <button
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" >Eliminar</button>
-                                    </td>
-                                    </td>
+                                        <form action="{{ route('verServicios.destroy', $servicio->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>
+                                        </form>
+                                    </td>    
                                 </tr>
                             @endforeach
                         @endif

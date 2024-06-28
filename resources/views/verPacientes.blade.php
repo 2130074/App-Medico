@@ -39,7 +39,7 @@
 
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
     <div class="flex h-screen">
-        <div class="bg-blue-600 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
+        <div class="bg-blue-650 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center mb-8">
                     <img src="img/logo.png" alt="Logo" class="w-8 h-8 mr-2">
@@ -122,14 +122,10 @@
                                     </td>
 
                                     <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('pacientes.eliminar', $paciente->id) }}" method="POST"
-                                            style="display:inline;">
+                                        <form action="{{ route('verPacientes.destroy', $paciente->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit"
-                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                                                Eliminar
-                                            </button>
+                                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>

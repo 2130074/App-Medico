@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Servicios</title>
+    @vite('resources/css/app.css')
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -48,12 +49,23 @@
 
         <div class="flex items-center justify-center w-3/4 ml-auto">
             <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-sm">
-                <h2 class="text-3xl font-bold text-white text-center mb-6">Registro de servicios</h2>
-                @if(session('success'))
-                <div class="bg-green-500 text-white p-4 rounded mb-4">
-                    {{ session('success') }}
+                <div class="my-4">
+                    @session('succes')
+                        <div class="alert alert-success" role="alert">
+                            {{ $value }}
+                        </div>
+                    @endsession
                 </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
+                <h2 class="text-3xl font-bold text-white text-center mb-6">Registro de servicios</h2>
                 <form action="{{ route('servicios.store') }}" method="POST">
                     @csrf
                     <fieldset class="mb-4">
@@ -64,27 +76,18 @@
                                 class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                                 placeholder="Nombre del servicio" required>
                         </div>
-                        @error('nombre')
-                        <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
-                        @enderror
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/user.png" alt="Costo Icon" class="w-6 h-6 ml-2">
                             <input type="number" name="precio" id="precio"
                                 class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                                 placeholder="Costo" required>
                         </div>
-                        @error('precio')
-                        <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
-                        @enderror
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/calendarioyhora.png" alt="calendario Icon" class="w-6 h-6 ml-2">
-                            <input type="text" name="time" id="time"
+                            <input type="text" name="duracion" id="duracion"
                                 class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                                 placeholder="Duración del servicio" required>
                         </div>
-                        @error('time')
-                        <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
-                        @enderror
                     </fieldset>
                     <div class="flex-grow flex items-center justify-center mt-6">
                         <button type="submit"
@@ -93,11 +96,10 @@
                         </button>
                     </div>
                 </form>
-                
+
             </div>
         </div>
     </div>
 </body>
 
 </html>
-

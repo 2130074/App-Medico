@@ -11,16 +11,6 @@ class Servicio extends Model
     protected $fillable = [
         'nombre',
         'precio',
-        'id_tipo_servicio',
+        'duracion' 
     ];
-
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-    ];
-
-    public function tipoServicio()
-    {
-        return $this->belongsTo(TipoServicio::class, 'id_tipo_servicio');
-    }
 }

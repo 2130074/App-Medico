@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\PacientesDoctorController;
 use App\Http\Controllers\VerServiciosController;
+use App\Http\Controllers\CitaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,23 +25,20 @@ Route::post('/registrar-pacientes', [PacienteController::class, 'registerPatient
 //Para que funcionen las tablas
 Route::get('/verUsuarios', [UserController::class, 'index'])->name('verUsuarios');
 Route::delete('/eliminar/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminar');
+
 Route::get('/verPacientes', [PacientesController::class, 'index'])->name('verPacientes');
-Route::get('/eliminar/{id}', [PacientesController::class, 'destroy'])->name('pacientes.eliminar');
-Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
+Route::delete('/verPacientes/{paciente}', [PacienteController::class, 'destroy'])->name('verPacientes.destroy');
 
 Route::get('/verServicios', [VerServiciosController::class, 'index'])->name('verServicios');
+Route::delete('/verServicios/{servicio}', [VerServiciosController::class, 'destroy'])->name('verServicios.destroy');
 
+Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
 Route::get('/detallesPacientes/{id}', [PacientesDoctorController::class, 'show'])->name('pacientes.show');
 
-Route::get('/servicios', [ServicioController::class, 'create'])->name('servicios.create');
-Route::post('/servicios', [ServicioController::class, 'store'])->name('servicios.store');
-
+Route::resource('recepcionista', CitaController::class)->middleware(['auth','verified']);
+Route::resource('servicios', ServicioController::class)->middleware(['auth','verified']);
 
 // Vistas para navegación entre ventanas 
-Route::get('/recepcionista', function () {
-    return view('recepcionista');
-})->name('recepcionista');
-
 Route::get('/doctor', function () {
     return view('doctor');
 })->name('doctor');
@@ -49,9 +47,6 @@ Route::get('/citas', function () {
     return view('citas');
 });
 
-Route::get('/servicios', function () {
-    return view('servicios');
-});
 
 Route::get('/pago', function () {
     return view('pago');

@@ -9,44 +9,32 @@ class Citas extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-
     protected $fillable = [
         'motivos',
-        'fechaHora',
+        'fecha',
+        'hora',
         'id_paciente',
-        'id_tipo_servicio'
+        'id_servicio' 
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'created_at',
         'updated_at',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected $casts = [
-        'fechaHora' => 'datetime',
+        'fecha' => 'date',
+        'hora' => 'time',
         'id_paciente' => 'integer',
-        'id_tipo_servicio' => 'integer'
+        'id_servicio' => 'integer'
     ];
-    
+
     public function paciente() {
         return $this->belongsTo(Paciente::class, 'id_paciente');
     }
-    public function tipo_servicio(){
-        return $this->belongsTo('App\Models\Tipo_servicio', 'id_tipo_servicio');
+
+    public function tipo_servicio() { 
+        return $this->belongsTo(Servicio::class, 'id_servicio'); 
     }
 }
+

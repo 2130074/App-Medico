@@ -4,10 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @vite('resources/css/app.css')
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Bienvenida recepcionista</title>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const date = new Date();
             let currentMonth = date.getMonth();
             let currentYear = date.getFullYear();
@@ -17,7 +18,7 @@
                 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
             ];
 
-    
+
             const occupiedHours = {
                 '2024-06-24': ['08:00', '09:00'],
                 '2024-06-25': ['10:00', '11:00'],
@@ -46,7 +47,8 @@
                         } else {
                             const cellText = document.createTextNode(date);
                             cell.appendChild(cellText);
-                            const fullDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+                            const fullDate =
+                                `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
                             cell.setAttribute('data-date', fullDate);
 
                             if (new Date(fullDate) < new Date().setHours(0, 0, 0, 0)) {
@@ -78,7 +80,7 @@
                     '08:00', '09:00', '10:00', '11:00', '12:00',
                     '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'
                 ];
-                timeSelect.innerHTML = ''; 
+                timeSelect.innerHTML = '';
                 availableHours.forEach(time => {
                     const option = document.createElement('option');
                     option.value = time;
@@ -117,19 +119,19 @@
                 }
             }
 
-            document.getElementById('next').addEventListener('click', function () {
+            document.getElementById('next').addEventListener('click', function() {
                 currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
                 currentMonth = (currentMonth + 1) % 12;
                 renderCalendar(currentMonth, currentYear);
             });
 
-            document.getElementById('prev').addEventListener('click', function () {
+            document.getElementById('prev').addEventListener('click', function() {
                 currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
                 currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
                 renderCalendar(currentMonth, currentYear);
             });
 
-            document.getElementById('today').addEventListener('click', function () {
+            document.getElementById('today').addEventListener('click', function() {
                 currentMonth = date.getMonth();
                 currentYear = date.getFullYear();
                 renderCalendar(currentMonth, currentYear);
@@ -139,6 +141,26 @@
             document.getElementById('register-button').addEventListener('click', validateForm);
 
             renderCalendar(currentMonth, currentYear);
+        });
+
+        $(document).ready(function() {
+            // Llenar el select de pacientes
+            $.getJSON("/api/pacientes", function(data) {
+                var select = $("#patient-name");
+                select.empty(); // Vacía el select antes de llenarlo
+                $.each(data, function(key, val) {
+                    select.append("<option value='" + key + "'>" + val + "</option>");
+                });
+            });
+
+            // Llenar el select de servicios
+            $.getJSON("/api/servicios", function(data) {
+                var select = $("#service-type");
+                select.empty(); // Vacía el select antes de llenarlo
+                $.each(data, function(key, val) {
+                    select.append("<option value='" + key + "'>" + val + "</option>");
+                });
+            });
         });
     </script>
 </head>
@@ -174,6 +196,22 @@
                     </li>
                 </ul>
             </div>
+            <div class="my-4">
+                @session('succes')
+                    <div class="alert alert-success" role="alert">
+                        {{ $value }}
+                    </div>
+                @endsession
+            </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <button
                 class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 onclick="location.href='/'">
@@ -181,7 +219,7 @@
             </button>
         </div>
 
-        <div class="flex-1 p-8 mt-24"> 
+        <div class="flex-1 p-8 mt-24">
             <div class="bg-white shadow-md rounded-lg p-4">
                 <div class="flex justify-between mb-4">
                     <button id="prev" class="text-blue-600 hover:underline mr-2">&lt;</button>
@@ -213,46 +251,69 @@
         <div class="bg-white rounded-lg p-6 w-1/3 relative">
             <button id="close-modal" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900">&times;</button>
             <h2 class="text-2xl font-bold mb-4">Agendar servicio</h2>
-            <form id="appointment-form">
-                <div class="mb-4">
-                    <label for="patient-name" class="block text-sm font-medium text-gray-700">Nombre del paciente</label>
-                    <input type="text" id="patient-name" class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
-                </div>
-                <div class="mb-4">
-                    <label for="appointment-reason" class="block text-sm font-medium text-gray-700">Motivo de la cita</label>
-                    <input type="text" id="appointment-reason" class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
-                </div>
-                <div class="mb-4">
-                    <label for="service-type" class="block text-sm font-medium text-gray-700">Tipo de servicio</label>
-                    <input type="text" id="service-type" class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
-                </div>
-                <div class="mb-4">
-                    <label for="selected-date" class="block text-sm font-medium text-gray-700">Fecha</label>
-                    <input type="text" id="selected-date" class="mt-1 p-2 block w-full border border-gray-300 rounded-md" readonly>
-                </div>
-                <div class="mb-4">
-                    <label for="selected-time" class="block text-sm font-medium text-gray-700">Hora</label>
-                    <select id="selected-time" class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
-                        <option value="08:00">08:00 AM</option>
-                        <option value="09:00">09:00 AM</option>
-                        <option value="10:00">10:00 AM</option>
-                        <option value="11:00">11:00 AM</option>
-                        <option value="12:00">12:00 PM</option>
-                        <option value="13:00">01:00 PM</option>
-                        <option value="14:00">02:00 PM</option>
-                        <option value="15:00">03:00 PM</option>
-                        <option value="16:00">04:00 PM</option>
-                        <option value="17:00">05:00 PM</option>
-                        <option value="18:00">06:00 PM</option>
-                    </select>
-                </div>
-                <div class="flex-grow flex items-center justify-center mt-6">
-                    <button type="submit" id="register-button"
-                        class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        Registrar
-                    </button>
-                </div>
-            </form>
+        
+            @if (isset($pacientes) && isset($servicios))
+                <form id="appointment-form" method="POST" action="{{ route('recepcionista.store') }}">
+                    @csrf
+                    <div class="mb-4">
+                        <label for="patient-name" class="block text-sm font-medium text-gray-700">Nombre del
+                            paciente</label>
+                        <select id="patient-name" name="id_paciente"
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                            @foreach ($pacientes as $paciente)
+                                <option value="{{ $paciente->id }}">{{ $paciente->nombre }} {{ $paciente->apellidos }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="appointment-reason" class="block text-sm font-medium text-gray-700">Motivo de la
+                            cita</label>
+                        <input type="text" id="motivos" name="motivos"
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                    </div>
+                    <div class="mb-4">
+                        <label for="service-type" class="block text-sm font-medium text-gray-700">Tipo de
+                            servicio</label>
+                        <select id="service-type" name="id_servicio"
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                            @foreach ($servicios as $servicio)
+                                <option value="{{ $servicio->id }}">{{ $servicio->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="selected-date" class="block text-sm font-medium text-gray-700">Fecha</label>
+                        <input type="text" id="selected-date" name="fecha"
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md" readonly>
+                    </div>
+                    <div class="mb-4">
+                        <label for="selected-time" class="block text-sm font-medium text-gray-700">Hora</label>
+                        <select id="selected-time" name="hora"
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                            <option value="08:00">08:00 AM</option>
+                            <option value="09:00">09:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="13:00">01:00 PM</option>
+                            <option value="14:00">02:00 PM</option>
+                            <option value="15:00">03:00 PM</option>
+                            <option value="16:00">04:00 PM</option>
+                            <option value="17:00">05:00 PM</option>
+                            <option value="18:00">06:00 PM</option>
+                        </select>
+                    </div>
+                    <div class="flex-grow flex items-center justify-center mt-6">
+                        <button type="submit" id="register-button"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Registrar
+                        </button>
+                    </div>
+                </form>
+            @else
+                <p>No se encontraron pacientes o servicios.</p>
+            @endif
         </div>
     </div>
 </body>
