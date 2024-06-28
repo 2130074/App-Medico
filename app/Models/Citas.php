@@ -24,7 +24,7 @@ class Citas extends Model
 
     protected $casts = [
         'fecha' => 'date',
-        'hora' => 'time',
+        'hora' => 'datetime:H:i',
         'id_paciente' => 'integer',
         'id_servicio' => 'integer'
     ];

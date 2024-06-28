@@ -19,11 +19,8 @@ class CitaController extends Controller
     }
 
     public function store(StoreCitaRequest $request){
-        try {
             Citas::create($request->validated());
-            return redirect()->route('recepcionista')->with('success', 'Cita registrado correctamente');
-        } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Hubo un problema al insertar datos. Por favor, intentalo de nuevo']);
-        }
+            return redirect()->route('recepcionista.index')->with('success', 'Cita registrado correctamente');
+        
     }
 }

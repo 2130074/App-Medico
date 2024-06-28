@@ -24,7 +24,7 @@ class StoreCitaRequest extends FormRequest
         return [
             'motivos' => 'required|string|max:255',
             'fecha' => 'required|date',
-            'hora' => 'required|time',
+            'hora' => 'required|date_format:H:i',
             'id_paciente' => 'required|integer',
             'id_servicio' => 'required|integer',
         ];
