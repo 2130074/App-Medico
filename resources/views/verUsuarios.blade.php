@@ -9,7 +9,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var inputSearch = document.querySelector(
-            '.search-input'); 
+                '.search-input');
             var tbody = document.querySelector('tbody');
 
             inputSearch.addEventListener('input', function(e) {
@@ -99,7 +99,6 @@
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                                             onclick="location.href='/modificar/{{ $usuario->id }}'">Modificar</button>
                                     </td>
-
                                     <td class="py-2 px-4 text-center">
                                         <form action="{{ route('usuarios.eliminar', $usuario->id) }}" method="POST"
                                             style="display:inline;">
