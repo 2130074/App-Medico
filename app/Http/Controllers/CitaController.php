@@ -18,29 +18,27 @@ class CitaController extends Controller
         ]);
     }
 
-    public function store(StoreCitaRequest $request){
-            Citas::create($request->validated());
-            return redirect()->route('recepcionista.index')->with('success', 'Cita registrado correctamente');
-        
+    public function store(StoreCitaRequest $request)
+    {
+        Citas::create($request->validated());
+        return redirect()->route('recepcionista.index')->with('success', 'Cita registrado correctamente');
     }
 
     public function verPago($paciente_id)
     {
         $citas = Citas::where('id_paciente', $paciente_id)
-                      ->where('fecha', '<', now()) 
-                      ->with('tipo_servicio')  
-                      ->get();
+            ->with('tipo_servicio')
+            ->get();
 
-        return view('pago', compact('citas', 'paciente_id'));
+        return view('pago', compact('citas', 'paciente_id')); // Pasa 'paciente_id' a la vista
     }
 
-    public function eliminarPago(Request $request, $cita_id)
+    public function cambiarEstadoPago(Request $request, $cita_id)
     {
-        $cita = Citas::find($cita_id);
-        if ($cita) {
-            $cita->delete();
-        }
-        
-        return redirect()->route('verPago', ['paciente_id' => $request->paciente_id])->with('success', 'Pago eliminado de la vista');
+        $cita = Citas::findOrFail($cita_id);
+        $cita->estado = ($cita->estado == 'Pendiente') ? 'Pagado' : 'Pendiente';
+        $cita->save();
+
+        return redirect()->route('verPago', $request->paciente_id)->with('success', 'Estado del pago actualizado.');
     }
 }

@@ -46,9 +46,9 @@ class PacientesController extends Controller
     public function verPagos($id)
     {
         $citas = Citas::where('id_paciente', $id)
-            ->with('tipo_servicio') 
+            ->with('tipo_servicio')
             ->get();
 
-        return view('pago', compact('citas'));
+        return view('pago', compact('citas', 'id')); 
     }
 }

@@ -13,6 +13,7 @@ class Citas extends Model
         'motivos',
         'fecha',
         'hora',
+        'estado',
         'id_paciente',
         'id_servicio',
         'medicamentos',  

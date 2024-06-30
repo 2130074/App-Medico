@@ -33,8 +33,6 @@ Route::get('/verPacientes', [PacientesController::class, 'index'])->name('verPac
 Route::delete('/verPacientes/{paciente}', [PacientesController::class, 'destroy'])->name('verPacientes.destroy');
 Route::get('/verPacientes/{paciente}/modificar', [PacientesController::class, 'edit'])->name('pacientes.edit');
 Route::put('/verPacientes/{paciente}/actualizar', [PacientesController::class, 'update'])->name('pacientes.update');
-Route::get('/pago/{id}', [PacientesController::class, 'verPagos'])->name('pago');
-
 
 Route::get('/verServicios', [VerServiciosController::class, 'index'])->name('verServicios');
 Route::delete('/verServicios/{servicio}', [VerServiciosController::class, 'destroy'])->name('verServicios.destroy');
@@ -47,8 +45,10 @@ Route::get('/expediente/{id}', [PacientesDoctorController::class, 'expediente'])
 Route::get('/detallesCita/{id}', [PacientesDoctorController::class, 'detallesCita']);
 Route::post('/actualizarCita/{id}', [PacientesDoctorController::class, 'actualizarCita'])->name('actualizarCita');
 
+// Ver pagos de un paciente específico
+Route::get('/pago/{id}', [PacientesController::class, 'verPagos'])->name('verPagos');
 Route::get('/pago/{paciente_id}', [CitaController::class, 'verPago'])->name('verPago');
-Route::post('/pago/eliminar/{cita_id}', [CitaController::class, 'eliminarPago'])->name('eliminarPago');
+Route::post('/pago/cambiarEstado/{cita_id}', [CitaController::class, 'cambiarEstadoPago'])->name('cambiarEstadoPago');
 
 Route::resource('recepcionista', CitaController::class)->middleware(['auth','verified']);
 Route::resource('servicios', ServicioController::class)->middleware(['auth','verified']);

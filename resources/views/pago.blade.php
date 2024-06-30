@@ -18,7 +18,7 @@
                 </div>
                 <ul>
                     <li class="flex items-center mb-10">
-                        <img src="{{ asset('img/calendario.png') }}"  alt="Agenda Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Agenda Icon" class="w-6 h-6 mr-2">
                         <a href="/recepcionista" class="text-lg">Agenda</a>
                     </li>
                     <li class="flex items-center mb-10">
@@ -64,9 +64,10 @@
                     <thead>
                         <tr class="bg-blue-500">
                             <th class="py-2 px-4 text-left">Servicio</th>
-                            <th class="py-2 px-4 text-left">Costo</th>
-                            <th class="py-2 px-4 text-left">Fecha</th>
-                            <th class="py-2 px-4 text-left">Eliminar</th>
+                            <th class="py-2 px-4 text-center">Costo</th>
+                            <th class="py-2 px-4 text-center">Fecha</th>
+                            <th class="py-2 px-4 text-center">Estado</th>
+                            <th class="py-2 px-4 text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,13 +77,27 @@
                                 <td class="py-2 px-4 text-center">${{ $cita->tipo_servicio->precio }}</td>
                                 <td class="py-2 px-4 text-center">{{ $cita->fecha->format('d/m/Y') }}</td>
                                 <td class="py-2 px-4 text-center">
-                                    <form action="{{ route('eliminarPago', $cita->id) }}" method="post">
+                                    @if ($cita->estado == 'Pendiente')
+                                        <span class="text-yellow-500 font-bold">Pendiente</span>
+                                    @else
+                                        <span class="text-green-500 font-bold">Pagado</span>
+                                    @endif
+                                </td>
+                                <td class="py-2 px-4 text-center">
+                                    <form action="{{ route('cambiarEstadoPago', $cita->id) }}" method="post">
                                         @csrf
-                                        <input type="hidden" name="paciente_id" value="{{ $paciente_id }}">
-                                        <button type="submit"
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                                            Eliminar
-                                        </button>
+                                        <input type="hidden" name="paciente_id" value="{{ $id }}">
+                                        @if ($cita->estado == 'Pendiente')
+                                            <button type="submit"
+                                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
+                                                Marcar como Pagado
+                                            </button>
+                                        @else
+                                            <button type="submit"
+                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
+                                                Marcar como Pendiente
+                                            </button>
+                                        @endif
                                     </form>
                                 </td>
                             </tr>
@@ -93,7 +108,7 @@
 
             <div class="flex justify-end mt-6">
                 <h3 class="text-xl font-bold text-gray-800">Total: <span class="text-blue-500">
-                    ${{ $citas->sum(fn($cita) => $cita->tipo_servicio->precio) }}
+                    ${{ $citas->where('estado', 'Pendiente')->sum(fn($cita) => $cita->tipo_servicio->precio) }}
                 </span></h3>
             </div>
 
