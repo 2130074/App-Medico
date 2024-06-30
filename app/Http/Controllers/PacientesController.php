@@ -22,5 +22,25 @@ class PacientesController extends Controller
             return back()->withErrors(['error' => 'Hubo un problema al eliminar el paciente. Error: ' . $th->getMessage()]);
         }
     }
+    public function edit(Paciente $paciente)
+    {
+        return view('modificarPacientes', compact('paciente'));
+    }
+
+    public function update(Request $request, $id)
+{
+    // Primero, busca el paciente por ID
+    $paciente = Paciente::findOrFail($id); // Utiliza findOrFail para lanzar una excepción si el paciente no existe
+
+    // Luego, valida los datos del formulario
+    $validatedData = $request->validate([
+        'nombre' => 'required',
+        'apellidos' => 'required',
+        // Continúa agregando las reglas de validación para los demás campos
+    ]);
+
+    $paciente->fill($validatedData)->save(); 
+    return redirect()->route('verPacientes')->with('success', 'Paciente actualizado exitosamente.');
 }
 
+}

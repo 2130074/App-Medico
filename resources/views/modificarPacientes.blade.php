@@ -48,42 +48,43 @@
         <div class="flex items-center justify-center w-3/4 ml-auto">
             <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-md">
                 <h2 class="text-3xl font-bold text-white text-center mb-6">Modificar pacientes</h2>
-                <form action="{{ route('registrar-pacientes') }}" method="POST">
+                <form action="{{ route('pacientes.update', $paciente->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                         <img src="img/user.png" alt="Nombre Icon" class="w-6 h-6 ml-2">
-                        <input type="text" name="nombre" id="nombre"
+                        <input type="text" name="nombre" id="nombre" value="{{ $paciente->nombre }}" 
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                             placeholder="Nombre(s)" required>
                     </div>
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                         <img src="img/user.png" alt="Apellidos Icon" class="w-6 h-6 ml-2">
-                        <input type="text" name="apellidos" id="apellidos"
+                        <input type="text" name="apellidos" id="apellidos" value="{{ $paciente->apellidos}}" 
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                             placeholder="Apellidos(s)" required>
                     </div>
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                         <img src="img/pill.png" alt="pill Icon" class="w-6 h-6 ml-2">
-                        <input type="text" name="enfermedades" id="enfermedades"
+                        <input type="text" name="enfermedades" id="enfermedades" value="{{ $paciente->enfermedades}}" 
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                             placeholder="Enfermedades que padece" required>
                     </div>
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                         <img src="img/pill.png" alt="pill Icon" class="w-6 h-6 ml-2">
-                        <input type="text" name="alergias" id="alergias"
+                        <input type="text" name="alergias" id="alergias" value="{{ $paciente->alergias}}" 
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                             placeholder="Alergias" required>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/user.png" alt="user Icon" class="w-6 h-6 ml-2">
-                            <input type="text" name="altura" id="altura"
+                            <input type="text" name="altura" id="altura" value="{{ $paciente->altura}}" 
                                 class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                                 placeholder="Altura" required>
                         </div>
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/user.png" alt="user Icon" class="w-6 h-6 ml-2">
-                            <input type="text" name="peso" id="peso"
+                            <input type="text" name="peso" id="peso" value="{{ $paciente->peso}}" 
                                 class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                                 placeholder="Peso" required>
                         </div>
@@ -91,13 +92,13 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/user.png" alt="user Icon" class="w-6 h-6 ml-2">
-                            <input type="number" name="edad" id="edad"
+                            <input type="number" name="edad" id="edad" value="{{ $paciente->edad}}"
                                 class="flex-grow px-1 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                                 placeholder="Edad" required>
                         </div>
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/user.png" alt="user Icon" class="w-6 h-6 ml-2">
-                            <select name="genero" id="genero"
+                            <select name="genero" id="genero" value="{{ $paciente->genero}}" 
                                 class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white">
                                 <option value="">Genero</option>
                                 <option value="masculino">Masculino</option>
@@ -108,20 +109,20 @@
                     </div>
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                         <img src="img/email.png" alt="Correo Icon" class="w-6 h-6 ml-2">
-                        <input type="email" name="correo" id="correo"
+                        <input type="email" name="correo" id="correo" value="{{ $paciente->correo}}" 
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                             placeholder="Correo" required>
                     </div>
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                         <img src="img/phone.png" alt="Teléfono Icon" class="w-6 h-6 ml-2">
-                        <input type="tel" name="telefono" id="telefono"
+                        <input type="tel" name="telefono" id="telefono" value="{{ $paciente->telefono}}" 
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                             placeholder="Número de teléfono" required>
                     </div>
                     <div class="flex-grow flex items-center justify-center mt-6">
                         <button type="submit"
                             class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Registrar
+                            Actualizar 
                         </button>
                     </div>
                     <div class="flex-grow flex items-center justify-center mt-3">

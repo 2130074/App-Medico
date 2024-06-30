@@ -31,6 +31,13 @@ Route::post('/modificar/{id}', [UserController::class, 'update'])->name('usuario
 
 Route::get('/verPacientes', [PacientesController::class, 'index'])->name('verPacientes');
 Route::delete('/verPacientes/{paciente}', [PacienteController::class, 'destroy'])->name('verPacientes.destroy');
+// Ruta para mostrar el formulario de modificación de un paciente
+Route::get('/verPacientes/{paciente}/modificar', [PacientesController::class, 'edit'])->name('pacientes.edit');
+
+// Ruta para actualizar los datos de un paciente
+Route::put('/verPacientes/{paciente}/actualizar', [PacientesController::class, 'update'])->name('pacientes.update');
+
+
 
 Route::get('/verServicios', [VerServiciosController::class, 'index'])->name('verServicios');
 Route::delete('/verServicios/{servicio}', [VerServiciosController::class, 'destroy'])->name('verServicios.destroy');

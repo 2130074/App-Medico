@@ -9,7 +9,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var inputSearch = document.querySelector(
-            '.search-input'); 
+                '.search-input');
             var tbody = document.querySelector('tbody');
 
             inputSearch.addEventListener('input', function(e) {
@@ -118,14 +118,16 @@
                                     <td class="py-2 px-4 text-center">
                                         <button
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                                            onclick="location.href='/modificar/{{ $paciente->id }}'">Modificar</button>
-                                    </td>
+                                            onclick="location.href='{{ route('pacientes.edit', $paciente->id) }}'">Modificar</button>
+                                    </td>                                    
 
                                     <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('verPacientes.destroy', $paciente->id) }}" method="post">
+                                        <form action="{{ route('verPacientes.destroy', $paciente->id) }}"
+                                            method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>
+                                            <button type="submit"
+                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>
