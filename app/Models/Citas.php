@@ -14,7 +14,9 @@ class Citas extends Model
         'fecha',
         'hora',
         'id_paciente',
-        'id_servicio' 
+        'id_servicio',
+        'medicamentos',  
+        'estudios'       
     ];
 
     protected $hidden = [

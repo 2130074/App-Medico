@@ -43,6 +43,9 @@ Route::put('/verServicios/update/{servicio}', [VerServiciosController::class, 'u
 
 Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
 Route::get('/detallesPacientes/{id}', [PacientesDoctorController::class, 'show'])->name('pacientes.show');
+Route::get('/expediente/{id}', [PacientesDoctorController::class, 'expediente']);
+Route::get('/detallesCita/{id}', [PacientesDoctorController::class, 'detallesCita']);
+Route::post('/actualizarCita/{id}', [PacientesDoctorController::class, 'actualizarCita'])->name('actualizarCita');
 
 Route::get('/pago/{paciente_id}', [CitaController::class, 'verPago'])->name('verPago');
 Route::post('/pago/eliminar/{cita_id}', [CitaController::class, 'eliminarPago'])->name('eliminarPago');
