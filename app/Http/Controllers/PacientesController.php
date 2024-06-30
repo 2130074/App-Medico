@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paciente;
+use App\Models\Citas;
 use Illuminate\Http\Request;
 
 class PacientesController extends Controller
@@ -17,30 +18,37 @@ class PacientesController extends Controller
     {
         try {
             $paciente->delete();
-            return redirect()->route('verPacientes.index')->withSuccess("Paciente eliminado");
+            return redirect()->route('verPacientes')->withSuccess("Paciente eliminado");
         } catch (\Exception $th) {
             return back()->withErrors(['error' => 'Hubo un problema al eliminar el paciente. Error: ' . $th->getMessage()]);
         }
     }
+
     public function edit(Paciente $paciente)
     {
         return view('modificarPacientes', compact('paciente'));
     }
 
     public function update(Request $request, $id)
-{
-    // Primero, busca el paciente por ID
-    $paciente = Paciente::findOrFail($id); // Utiliza findOrFail para lanzar una excepción si el paciente no existe
+    {
 
-    // Luego, valida los datos del formulario
-    $validatedData = $request->validate([
-        'nombre' => 'required',
-        'apellidos' => 'required',
-        // Continúa agregando las reglas de validación para los demás campos
-    ]);
+        $paciente = Paciente::findOrFail($id);
 
-    $paciente->fill($validatedData)->save(); 
-    return redirect()->route('verPacientes')->with('success', 'Paciente actualizado exitosamente.');
-}
+        $validatedData = $request->validate([
+            'nombre' => 'required',
+            'apellidos' => 'required',
+        ]);
 
+        $paciente->fill($validatedData)->save();
+        return redirect()->route('verPacientes')->with('success', 'Paciente actualizado exitosamente.');
+    }
+
+    public function verPagos($id)
+    {
+        $citas = Citas::where('id_paciente', $id)
+            ->with('tipo_servicio') 
+            ->get();
+
+        return view('pago', compact('citas'));
+    }
 }

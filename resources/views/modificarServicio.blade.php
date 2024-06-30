@@ -13,28 +13,28 @@
         <div class="bg-blue-650 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center mb-8">
-                    <img src="img/logo.png" alt="Logo" class="w-8 h-8 mr-2">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-8 h-8 mr-2">
                     <span class="text-2xl font-bold">Salud Conecta</span>
                 </div>
                 <ul>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Agenda Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}"  alt="Agenda Icon" class="w-6 h-6 mr-2">
                         <a href="/recepcionista" class="text-lg">Agenda</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Agregar servicio Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Agregar servicio Icon" class="w-6 h-6 mr-2">
                         <a href="/servicios" class="text-lg">Agregar servicio</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
                         <a href="/registroPacientes" class="text-lg">Agregar paciente</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/usuario.png" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/usuario.png') }}" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
                         <a href="/verServicios" class="text-lg">Ver servicios</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/usuario.png" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/usuario.png') }}" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
                         <a href="/verPacientes" class="text-lg">Ver pacientes</a>
                     </li>
                 </ul>
@@ -58,7 +58,7 @@
                     @csrf
                     @method('PUT')
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
-                        <img src="img/user.png" alt="Nombre Icon" class="w-6 h-6 ml-2">
+                        <img src="{{ asset('img/user.png') }}" alt="Nombre Icon" class="w-6 h-6 ml-2">
                         <input type="text" name="nombre" id="nombre" value="{{ $servicio->nombre }}"
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                             placeholder="Nombre del servicio" required>
@@ -67,7 +67,7 @@
                     <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
                     @enderror
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
-                        <img src="img/user.png" alt="Costo Icon" class="w-6 h-6 ml-2">
+                        <img src="{{ asset('img/user.png') }}" alt="Costo Icon" class="w-6 h-6 ml-2">
                         <input type="number" name="precio" id="precio" value="{{ $servicio->precio }}"
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                             placeholder="Costo" required>
@@ -76,7 +76,7 @@
                     <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
                     @enderror
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
-                        <img src="img/calendarioyhora.png" alt="calendario Icon" class="w-6 h-6 ml-2">
+                        <img src="{{ asset('img/calendarioyhora.png') }}"  alt="calendario Icon" class="w-6 h-6 ml-2">
                         <input type="text" name="duracion" id="duracion" value="{{ $servicio->duracion }}"
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                             placeholder="Duración del servicio" required>

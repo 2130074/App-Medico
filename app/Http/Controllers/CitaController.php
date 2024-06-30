@@ -23,4 +23,24 @@ class CitaController extends Controller
             return redirect()->route('recepcionista.index')->with('success', 'Cita registrado correctamente');
         
     }
+
+    public function verPago($paciente_id)
+    {
+        $citas = Citas::where('id_paciente', $paciente_id)
+                      ->where('fecha', '<', now()) 
+                      ->with('tipo_servicio')  
+                      ->get();
+
+        return view('pago', compact('citas', 'paciente_id'));
+    }
+
+    public function eliminarPago(Request $request, $cita_id)
+    {
+        $cita = Citas::find($cita_id);
+        if ($cita) {
+            $cita->delete();
+        }
+        
+        return redirect()->route('verPago', ['paciente_id' => $request->paciente_id])->with('success', 'Pago eliminado de la vista');
+    }
 }

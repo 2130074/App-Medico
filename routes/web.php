@@ -30,13 +30,10 @@ Route::post('/modificar/{id}', [UserController::class, 'update'])->name('usuario
 
 
 Route::get('/verPacientes', [PacientesController::class, 'index'])->name('verPacientes');
-Route::delete('/verPacientes/{paciente}', [PacienteController::class, 'destroy'])->name('verPacientes.destroy');
-// Ruta para mostrar el formulario de modificación de un paciente
+Route::delete('/verPacientes/{paciente}', [PacientesController::class, 'destroy'])->name('verPacientes.destroy');
 Route::get('/verPacientes/{paciente}/modificar', [PacientesController::class, 'edit'])->name('pacientes.edit');
-
-// Ruta para actualizar los datos de un paciente
 Route::put('/verPacientes/{paciente}/actualizar', [PacientesController::class, 'update'])->name('pacientes.update');
-
+Route::get('/pago/{id}', [PacientesController::class, 'verPagos'])->name('pago');
 
 
 Route::get('/verServicios', [VerServiciosController::class, 'index'])->name('verServicios');
@@ -46,6 +43,9 @@ Route::put('/verServicios/update/{servicio}', [VerServiciosController::class, 'u
 
 Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
 Route::get('/detallesPacientes/{id}', [PacientesDoctorController::class, 'show'])->name('pacientes.show');
+
+Route::get('/pago/{paciente_id}', [CitaController::class, 'verPago'])->name('verPago');
+Route::post('/pago/eliminar/{cita_id}', [CitaController::class, 'eliminarPago'])->name('eliminarPago');
 
 Route::resource('recepcionista', CitaController::class)->middleware(['auth','verified']);
 Route::resource('servicios', ServicioController::class)->middleware(['auth','verified']);

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
-    <title>Ver Pacientes</title>
+    <title>Ver Pagos</title>
 </head>
 
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
@@ -13,28 +13,28 @@
         <div class="bg-blue-650 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center mb-8">
-                    <img src="img/logo.png" alt="Logo" class="w-8 h-8 mr-2">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-8 h-8 mr-2">
                     <span class="text-2xl font-bold">Salud Conecta</span>
                 </div>
                 <ul>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Agenda Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}"  alt="Agenda Icon" class="w-6 h-6 mr-2">
                         <a href="/recepcionista" class="text-lg">Agenda</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Agregar servicio Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Agregar servicio Icon" class="w-6 h-6 mr-2">
                         <a href="/servicios" class="text-lg">Agregar servicio</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
                         <a href="/registroPacientes" class="text-lg">Agregar paciente</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/usuario.png" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/usuario.png') }}" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
                         <a href="/verServicios" class="text-lg">Ver servicios</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/usuario.png" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/usuario.png') }}" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
                         <a href="/verPacientes" class="text-lg">Ver pacientes</a>
                     </li>
                 </ul>
@@ -70,48 +70,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="hover:bg-blue-600">
-                            <td class="py-2 px-4">Consulta General</td>
-                            <td class="py-2 px-4 text-center">$50.00</td>
-                            <td class="py-2 px-4 text-center">20/05/2024</td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">
-                                    Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-blue-600">
-                            <td class="py-2 px-4">Consulta General</td>
-                            <td class="py-2 px-4 text-center">$50.00</td>
-                            <td class="py-2 px-4 text-center">20/05/2024</td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">
-                                    Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-blue-600">
-                            <td class="py-2 px-4">Consulta General</td>
-                            <td class="py-2 px-4 text-center">$50.00</td>
-                            <td class="py-2 px-4 text-center">20/05/2024</td>
-                            <td class="py-2 px-4 text-center">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/pago'">
-                                    Eliminar</button>
-                            </td>
-                        </tr>
+                        @foreach ($citas as $cita)
+                            <tr class="hover:bg-blue-600">
+                                <td class="py-2 px-4">{{ $cita->tipo_servicio->nombre }}</td>
+                                <td class="py-2 px-4 text-center">${{ $cita->tipo_servicio->precio }}</td>
+                                <td class="py-2 px-4 text-center">{{ $cita->fecha->format('d/m/Y') }}</td>
+                                <td class="py-2 px-4 text-center">
+                                    <form action="{{ route('eliminarPago', $cita->id) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="paciente_id" value="{{ $paciente_id }}">
+                                        <button type="submit"
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
 
             <div class="flex justify-end mt-6">
-                <h3 class="text-xl font-bold text-gray-800">Total: <span class="text-blue-500">$120.00</span></h3>
+                <h3 class="text-xl font-bold text-gray-800">Total: <span class="text-blue-500">
+                    ${{ $citas->sum(fn($cita) => $cita->tipo_servicio->precio) }}
+                </span></h3>
             </div>
 
             <div class="flex justify-end mt-6">
                 <button type="button"
-                    class=" flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    onclick="location.href='/verPacientes'">
+                    class="flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    onclick="location.href='{{ route('verPacientes') }}'">
                     Regresar
                 </button>
             </div>
