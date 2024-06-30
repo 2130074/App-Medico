@@ -13,27 +13,29 @@ class VerServiciosController extends Controller
         return view('verServicios', compact('servicios'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Servicio $servicio)
     {
-        return view('verServicios.modificarServicio', compact('servicio'));
+        return view('modificarServicio', compact('servicio'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Servicio $servicio)
     {
-        //
+        $validatedData = $request->validate([
+            'nombre' => 'required',
+            'precio' => 'required|numeric',
+            'duracion' => 'required',
+        ]);
+
+        $servicio->update($validatedData);
+        return redirect()->route('verServicios')->withSuccess("Servicio actualizado exitosamente");
     }
+
 
     public function destroy(Servicio $servicio)
     {
         try {
             $servicio->delete();
-            return redirect()->route('verServicios.index')->withSuccess("Servicio eliminado");
+            return redirect()->route('verServicios')->withSuccess("Servicio eliminado");
         } catch (\Exception $th) {
             return back()->withErrors(['error' => 'Hubo un problema al eliminar el servicio. Error: ' . $th->getMessage()]);
         }

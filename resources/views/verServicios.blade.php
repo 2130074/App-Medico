@@ -105,10 +105,9 @@
                                     <td class="py-2 px-4">{{ $servicio->nombre }}</td>
                                     <td class="py-2 px-4">{{ $servicio->precio }}</td>
                                     <td class="py-2 px-4 text-center">
-                                    <from action method ="post">
-                                        <button type="submit"
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Modificar</button>
-                                    </from>
+                                        <form action="{{ route('verServicios.edit', $servicio->id) }}" method="get">
+                                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Modificar</button>
+                                        </form>
                                     </td>
                                     <td class="py-2 px-4 text-center">
                                         <form action="{{ route('verServicios.destroy', $servicio->id) }}" method="post">

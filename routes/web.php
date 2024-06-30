@@ -34,6 +34,8 @@ Route::delete('/verPacientes/{paciente}', [PacienteController::class, 'destroy']
 
 Route::get('/verServicios', [VerServiciosController::class, 'index'])->name('verServicios');
 Route::delete('/verServicios/{servicio}', [VerServiciosController::class, 'destroy'])->name('verServicios.destroy');
+Route::get('/verServicios/editar/{servicio}', [VerServiciosController::class, 'edit'])->name('verServicios.edit');
+Route::put('/verServicios/update/{servicio}', [VerServiciosController::class, 'update'])->name('verServicios.update');
 
 Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
 Route::get('/detallesPacientes/{id}', [PacientesDoctorController::class, 'show'])->name('pacientes.show');
