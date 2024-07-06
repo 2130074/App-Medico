@@ -73,7 +73,9 @@
                     </li>
                 </ul>
             </div>
-            <button class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="location.href='/'">
+            <button
+                class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                onclick="location.href='/'">
                 Cerrar sesión
             </button>
         </div>
@@ -182,32 +184,44 @@
                 selectable: true,
                 selectMirror: true,
                 nowIndicator: true,
-                slotDuration: '00:30:00',  
-                slotLabelInterval: '00:30', 
+                slotDuration: '00:30:00',
+                slotLabelInterval: '00:30',
                 views: {
                     timeGrid: {
-                        slotDuration: '00:30:00',  
-                        slotLabelInterval: '00:30'  
+                        slotDuration: '00:30:00',
+                        slotLabelInterval: '00:30'
                     }
                 },
                 events: [
                     @foreach ($citas as $cita)
                         {
-                            title: '{{ $cita->servicio->nombre }}', 
+                            title: '{{ $cita->servicio->nombre }}',
                             start: '{{ $cita->fecha->format('Y-m-d') }}T{{ $cita->hora->format('H:i:s') }}',
-                            end: '{{ $cita->fecha->format('Y-m-d') }}T{{ $cita->hora->addMinutes(30)->format('H:i:s') }}', 
-                            backgroundColor: '#007bff',  
-                            borderColor: '#0056b3', 
-                            textColor: '#ffffff',  
+                            end: '{{ $cita->fecha->format('Y-m-d') }}T{{ $cita->hora->addMinutes(30)->format('H:i:s') }}',
+                            backgroundColor: '#007bff',
+                            borderColor: '#0056b3',
+                            textColor: '#ffffff',
                         },
                     @endforeach
                 ],
                 dateClick: function(info) {
+                    var today = new Date();
+                    var selectedDate = new Date(info.dateStr);
+
+                    if (selectedDate < today.setHours(0, 0, 0, 0)) {
+                        alert('No puedes seleccionar fechas pasadas.');
+                        return; 
+                    }
+
                     var modal = document.getElementById('modal');
                     modal.style.display = 'flex';
 
-                    var selectedDate = document.getElementById('selected-date');
-                    selectedDate.value = info.dateStr;
+                    var selectedDateField = document.getElementById('selected-date');
+                    selectedDateField.value = info.dateStr;
+
+                    var selectedDateStr = info.dateStr;
+                    var now = new Date();
+                    var selectedDateObj = new Date(selectedDateStr);
                 }
             });
 
