@@ -11,14 +11,12 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
     <title>Bienvenida recepcionista</title>
     <style>
-        /* Ajustar el estilo del calendario */
         #calendar {
             background-color: white;
             max-width: 100%;
             margin: 0 auto;
         }
 
-        /* Estilo para el modal */
         #modal {
             display: none;
             position: fixed;
@@ -131,15 +129,25 @@
                         <select id="selected-time" name="hora"
                             class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
                             <option value="08:00">08:00 AM</option>
+                            <option value="08:30">08:30 AM</option>
                             <option value="09:00">09:00 AM</option>
+                            <option value="09:30">09:30 AM</option>
                             <option value="10:00">10:00 AM</option>
+                            <option value="10:30">10:30 AM</option>
                             <option value="11:00">11:00 AM</option>
+                            <option value="11:30">11:30 AM</option>
                             <option value="12:00">12:00 PM</option>
+                            <option value="12:30">12:30 PM</option>
                             <option value="13:00">01:00 PM</option>
+                            <option value="13:30">01:30 PM</option>
                             <option value="14:00">02:00 PM</option>
+                            <option value="14:30">02:30 PM</option>
                             <option value="15:00">03:00 PM</option>
+                            <option value="15:30">03:30 PM</option>
                             <option value="16:00">04:00 PM</option>
+                            <option value="16:30">04:30 PM</option>
                             <option value="17:00">05:00 PM</option>
+                            <option value="17:30">05:30 PM</option>
                             <option value="18:00">06:00 PM</option>
                         </select>
                     </div>
@@ -169,73 +177,35 @@
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 },
                 height: 'auto',
-                navLinks: true, // can click day/week names to navigate views
+                navLinks: true,
                 editable: true,
                 selectable: true,
                 selectMirror: true,
                 nowIndicator: true,
-                events: [
-                    {
-                        title: 'All Day Event',
-                        start: '2023-01-01',
-                    },
-                    {
-                        title: 'Long Event',
-                        start: '2023-01-07',
-                        end: '2023-01-10'
-                    },
-                    {
-                        groupId: 999,
-                        title: 'Repeating Event',
-                        start: '2023-01-09T16:00:00'
-                    },
-                    {
-                        groupId: 999,
-                        title: 'Repeating Event',
-                        start: '2023-01-16T16:00:00'
-                    },
-                    {
-                        title: 'Conference',
-                        start: '2023-01-11',
-                        end: '2023-01-13'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2023-01-12T10:30:00',
-                        end: '2023-01-12T12:30:00'
-                    },
-                    {
-                        title: 'Lunch',
-                        start: '2023-01-12T12:00:00'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2023-01-12T14:30:00'
-                    },
-                    {
-                        title: 'Happy Hour',
-                        start: '2023-01-12T17:30:00'
-                    },
-                    {
-                        title: 'Dinner',
-                        start: '2023-01-12T20:00:00'
-                    },
-                    {
-                        title: 'Birthday Party',
-                        start: '2023-01-13T07:00:00'
-                    },
-                    {
-                        title: 'Click for Google',
-                        url: 'http://google.com/',
-                        start: '2023-01-28'
+                slotDuration: '00:30:00',  
+                slotLabelInterval: '00:30', 
+                views: {
+                    timeGrid: {
+                        slotDuration: '00:30:00',  
+                        slotLabelInterval: '00:30'  
                     }
+                },
+                events: [
+                    @foreach ($citas as $cita)
+                        {
+                            title: '{{ $cita->servicio->nombre }}', 
+                            start: '{{ $cita->fecha->format('Y-m-d') }}T{{ $cita->hora->format('H:i:s') }}',
+                            end: '{{ $cita->fecha->format('Y-m-d') }}T{{ $cita->hora->addMinutes(30)->format('H:i:s') }}', 
+                            backgroundColor: '#007bff',  
+                            borderColor: '#0056b3', 
+                            textColor: '#ffffff',  
+                        },
+                    @endforeach
                 ],
                 dateClick: function(info) {
-                    // Abrir el modal
                     var modal = document.getElementById('modal');
                     modal.style.display = 'flex';
 
-                    // Poner la fecha seleccionada en el campo de fecha del formulario
                     var selectedDate = document.getElementById('selected-date');
                     selectedDate.value = info.dateStr;
                 }

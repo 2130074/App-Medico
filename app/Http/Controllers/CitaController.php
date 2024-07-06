@@ -12,9 +12,11 @@ class CitaController extends Controller
 {
     public function index()
     {
+        $citas = Citas::with('servicio')->get();  
         return view('recepcionista', [
             'pacientes' => Paciente::latest()->get(),
             'servicios' => Servicio::latest()->get(),
+            'citas' => $citas,  
         ]);
     }
 
@@ -30,7 +32,7 @@ class CitaController extends Controller
             ->with('tipo_servicio')
             ->get();
 
-        return view('pago', compact('citas', 'paciente_id')); // Pasa 'paciente_id' a la vista
+        return view('pago', compact('citas', 'paciente_id')); 
     }
 
     public function cambiarEstadoPago(Request $request, $cita_id)

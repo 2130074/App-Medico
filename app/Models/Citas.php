@@ -16,8 +16,8 @@ class Citas extends Model
         'estado',
         'id_paciente',
         'id_servicio',
-        'medicamentos',  
-        'estudios'       
+        'medicamentos',
+        'estudios'
     ];
 
     protected $hidden = [
@@ -32,12 +32,18 @@ class Citas extends Model
         'id_servicio' => 'integer'
     ];
 
-    public function paciente() {
+    public function paciente()
+    {
         return $this->belongsTo(Paciente::class, 'id_paciente');
     }
 
-    public function tipo_servicio() { 
-        return $this->belongsTo(Servicio::class, 'id_servicio'); 
+    public function tipo_servicio()
+    {
+        return $this->belongsTo(Servicio::class, 'id_servicio');
+    }
+
+    public function servicio()
+    {
+        return $this->belongsTo(Servicio::class, 'id_servicio');
     }
 }
-
