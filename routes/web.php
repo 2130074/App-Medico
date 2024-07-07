@@ -10,6 +10,7 @@ use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\PacientesDoctorController;
 use App\Http\Controllers\VerServiciosController;
 use App\Http\Controllers\CitaController;
+use App\Http\Controllers\DoctorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -51,17 +52,13 @@ Route::get('/pago/{paciente_id}', [CitaController::class, 'verPago'])->name('ver
 Route::post('/pago/cambiarEstado/{cita_id}', [CitaController::class, 'cambiarEstadoPago'])->name('cambiarEstadoPago');
 
 Route::resource('recepcionista', CitaController::class)->middleware(['auth','verified']);
+Route::resource('doctor', DoctorController::class)->middleware(['auth','verified']);
 Route::resource('servicios', ServicioController::class)->middleware(['auth','verified']);
 
 // Vistas para navegación entre ventanas 
-Route::get('/doctor', function () {
-    return view('doctor');
-})->name('doctor');
-
 Route::get('/citas', function () {
     return view('citas');
 });
-
 
 Route::get('/pago', function () {
     return view('pago');
@@ -98,6 +95,18 @@ Route::get('/modificarPacientes', function () {
 Route::get('/modificarServicio', function () {
     return view('modificarServicio');
 });
+
+Route::get('/docServicios', function () {
+    return view('doc.docServicios');
+})->name('docServicios');
+
+Route::get('/docProductos', function () {
+    return view('doc.docProductos');
+})->name('docProductos');
+
+Route::get('/docIngresos', function () {
+    return view('doc.docIngresos');
+})->name('docIngresos');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
