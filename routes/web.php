@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\ServicioController;
+use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\ProductosDoctorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\PacientesDoctorController;
@@ -46,6 +48,11 @@ Route::delete('/docServicios/{servicio}', [ServiciosDoctorController::class, 'de
 Route::get('/docServicios/editar/{servicio}', [ServiciosDoctorController::class, 'edit'])->name('docServicios.edit');
 Route::put('/docServicios/update/{servicio}', [ServiciosDoctorController::class, 'update'])->name('docServicios.update');
 
+Route::get('/docProductos', [ProductosDoctorController::class, 'index'])->name('docProductos');
+Route::delete('/docProductos/{producto}', [ProductosDoctorController::class, 'destroy'])->name('docProductos.destroy');
+Route::get('/docProductos/editar/{producto}', [ProductosDoctorController::class, 'edit'])->name('docProductos.edit');
+Route::put('/docProductos/update/{producto}', [ProductosDoctorController::class, 'update'])->name('docProductos.update');
+
 Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
 Route::get('/detallesPacientes/{id}', [PacientesDoctorController::class, 'show'])->name('pacientes.show');
 Route::get('/expediente/{id}', [PacientesDoctorController::class, 'expediente']);
@@ -64,6 +71,7 @@ Route::resource('recepcionista', CitaController::class)->middleware(['auth','ver
 Route::resource('doctor', DoctorController::class)->middleware(['auth','verified']);
 Route::resource('servicios', ServicioController::class)->middleware(['auth','verified']);
 Route::resource('crearServicio', ServiciosDoctorController::class)->middleware(['auth','verified']);
+Route::resource('crearProducto', ProductosDoctorController::class)->middleware(['auth','verified']);
 
 // Vistas para navegación entre ventanas 
 Route::get('/citas', function () {
@@ -110,11 +118,6 @@ Route::get('/modificarServicio', function () {
     return view('modificarServicio');
 });
 
-
-Route::get('/docProductos', function () {
-    return view('doc.docProductos');
-})->name('docProductos');
-
 Route::get('/docIngresos', function () {
     return view('doc.docIngresos');
 })->name('docIngresos');
@@ -126,6 +129,10 @@ Route::get('/modificarPacientesDoc', function () {
 Route::get('/crearServicio', function () {
     return view('doc.crearServicio');
 })->name('crearServicio');
+
+Route::get('/crearProducto', function () {
+    return view('doc.crearProducto');
+})->name('crearProducto');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

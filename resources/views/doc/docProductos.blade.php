@@ -88,7 +88,7 @@
                 </div>
                 <button
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                    onclick="location.href='/'">
+                    onclick="location.href='/crearProducto'">
                     Agregar productos
                 </button>
             </div>
@@ -98,24 +98,28 @@
                     <thead>
                         <tr class="bg-blue-500">
                             <th class="py-2 px-4 text-left">Nombre</th>
+                            <th class="py-2 px-4 text-left">Marca</th>
                             <th class="py-2 px-4 text-left">Costo</th>
+                            <th class="py-2 px-4 text-left">Cantidad</th>
                             <th class="py-2 px-4 text-center">Modificar</th>
                             <th class="py-2 px-4 text-center">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (isset($servicios))
-                            @foreach ($servicios as $servicio)
+                        @if (isset($productos))
+                            @foreach ($productos as $producto)
                                 <tr class="hover:bg-blue-600">
-                                    <td class="py-2 px-4">{{ $servicio->nombre }}</td>
-                                    <td class="py-2 px-4">{{ $servicio->precio }}</td>
+                                    <td class="py-2 px-4">{{ $producto->nombre}}</td>
+                                    <td class="py-2 px-4">{{ $producto->marca}}</td>
+                                    <td class="py-2 px-4">{{ $producto->costo}}</td>
+                                    <td class="py-2 px-4">{{ $producto->cantidad}}</td>
                                     <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('verServicios.edit', $servicio->id) }}" method="get">
+                                        <form action="{{ route('docProductos.edit', $producto->id) }}" method="get">
                                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Modificar</button>
                                         </form>
                                     </td>
                                     <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('verServicios.destroy', $servicio->id) }}" method="post">
+                                        <form action="{{ route('docProductos.destroy', $producto->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>
