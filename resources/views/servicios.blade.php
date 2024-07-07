@@ -14,29 +14,37 @@
         <div class="bg-blue-650 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center mb-8">
-                    <img src="img/logo.png" alt="Logo" class="w-8 h-8 mr-2">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-8 h-8 mr-2">
                     <span class="text-2xl font-bold">Salud Conecta</span>
                 </div>
                 <ul>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Agenda Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}"  alt="Agenda Icon" class="w-6 h-6 mr-2">
                         <a href="/recepcionista" class="text-lg">Agenda</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Agregar servicio Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Agregar servicio Icon" class="w-6 h-6 mr-2">
                         <a href="/servicios" class="text-lg">Agregar servicio</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
                         <a href="/registroPacientes" class="text-lg">Agregar paciente</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/usuario.png" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
+                        <a href="/registrarProducto" class="text-lg">Agregar producto</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="{{ asset('img/usuario.png') }}" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
                         <a href="/verServicios" class="text-lg">Ver servicios</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/usuario.png" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/usuario.png') }}" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
                         <a href="/verPacientes" class="text-lg">Ver pacientes</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="{{ asset('img/usuario.png') }}" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <a href="/Productos" class="text-lg">Ver productos</a>
                     </li>
                 </ul>
             </div>

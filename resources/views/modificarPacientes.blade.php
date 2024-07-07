@@ -30,12 +30,20 @@
                         <a href="/registroPacientes" class="text-lg">Agregar paciente</a>
                     </li>
                     <li class="flex items-center mb-10">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
+                        <a href="/registrarProducto" class="text-lg">Agregar producto</a>
+                    </li>
+                    <li class="flex items-center mb-10">
                         <img src="{{ asset('img/usuario.png') }}" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
                         <a href="/verServicios" class="text-lg">Ver servicios</a>
                     </li>
                     <li class="flex items-center mb-10">
                         <img src="{{ asset('img/usuario.png') }}" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
                         <a href="/verPacientes" class="text-lg">Ver pacientes</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="{{ asset('img/usuario.png') }}" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <a href="/Productos" class="text-lg">Ver productos</a>
                     </li>
                 </ul>
             </div>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>modificar Servicio</title>
+    <title>Modificar Producto</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -56,40 +56,49 @@
 
         <div class="flex items-center justify-center w-3/4 ml-auto">
             <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-sm">
-                <h2 class="text-3xl font-bold text-white text-center mb-6">Modificar Servicio</h2>
+                <h2 class="text-3xl font-bold text-white text-center mb-6">Modificar Producto</h2>
                 @if(session('success'))
                     <div class="bg-green-500 text-white p-4 rounded mb-4">
                         {{ session('success') }}
                     </div>
                 @endif
-                <form action="{{ route('verServicios.update', $servicio->id) }}" method="POST">
+                <form action="{{ route('Productos.update', $producto->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                         <img src="{{ asset('img/user.png') }}" alt="Nombre Icon" class="w-6 h-6 ml-2">
-                        <input type="text" name="nombre" id="nombre" value="{{ $servicio->nombre }}"
+                        <input type="text" name="nombre" id="nombre" value="{{ $producto->nombre }}"
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
-                            placeholder="Nombre del servicio" required>
+                            placeholder="Nombre del producto" required>
                     </div>
                     @error('nombre')
                     <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
                     @enderror
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
-                        <img src="{{ asset('img/user.png') }}" alt="Costo Icon" class="w-6 h-6 ml-2">
-                        <input type="number" name="precio" id="precio" value="{{ $servicio->precio }}"
+                        <img src="{{ asset('img/user.png') }}" alt="Nombre Icon" class="w-6 h-6 ml-2">
+                        <input type="text" name="marca" id="marca" value="{{ $producto->marca }}"
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
-                            placeholder="Costo" required>
+                            placeholder="Nombre del producto" required>
                     </div>
-                    @error('precio')
+                    @error('marca')
                     <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
                     @enderror
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
-                        <img src="{{ asset('img/calendarioyhora.png') }}"  alt="calendario Icon" class="w-6 h-6 ml-2">
-                        <input type="text" name="duracion" id="duracion" value="{{ $servicio->duracion }}"
+                        <img src="{{ asset('img/user.png') }}" alt="Costo Icon" class="w-6 h-6 ml-2">
+                        <input type="number" name="costo" id="costo" value="{{ $producto->costo }}"
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
-                            placeholder="Duración del servicio" required>
+                            placeholder="Costo" required>
                     </div>
-                    @error('duracion')
+                    @error('costo')
+                    <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
+                    @enderror
+                    <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
+                        <img src="{{ asset('img/user.png') }}" alt="Costo Icon" class="w-6 h-6 ml-2">
+                        <input type="number" name="cantidad" id="cantidad" value="{{ $producto->cantidad}}"
+                            class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
+                            placeholder="Cantidad" required>
+                    </div>
+                    @error('cantidad')
                     <div class="bg-red-500 text-white p-2 rounded mb-4">{{ $message }}</div>
                     @enderror
                     <div class="flex-grow flex items-center justify-center mt-6">
@@ -100,7 +109,7 @@
                     </div>
                     <div class="flex-grow flex items-center justify-center mt-3">
                         <button type="button"
-                            class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="location.href='/verServicios'">
+                            class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="location.href='/Productos'">
                             Regresar
                         </button>
                     </div>
@@ -112,4 +121,3 @@
 </body>
 
 </html>
-

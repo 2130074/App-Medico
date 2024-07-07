@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
-    <title>Ver Usuarios</title>
+    <title>Productos</title>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var inputSearch = document.querySelector(
@@ -101,24 +101,28 @@
                     <thead>
                         <tr class="bg-blue-500">
                             <th class="py-2 px-4 text-left">Nombre</th>
+                            <th class="py-2 px-4 text-left">Marca</th>
                             <th class="py-2 px-4 text-left">Costo</th>
+                            <th class="py-2 px-4 text-left">Cantidad</th>
                             <th class="py-2 px-4 text-center">Modificar</th>
                             <th class="py-2 px-4 text-center">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (isset($servicios))
-                            @foreach ($servicios as $servicio)
+                        @if (isset($productos))
+                            @foreach ($productos as $producto)
                                 <tr class="hover:bg-blue-600">
-                                    <td class="py-2 px-4">{{ $servicio->nombre }}</td>
-                                    <td class="py-2 px-4">{{ $servicio->precio }}</td>
+                                    <td class="py-2 px-4">{{ $producto->nombre}}</td>
+                                    <td class="py-2 px-4">{{ $producto->marca}}</td>
+                                    <td class="py-2 px-4">{{ $producto->costo}}</td>
+                                    <td class="py-2 px-4">{{ $producto->cantidad}}</td>
                                     <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('verServicios.edit', $servicio->id) }}" method="get">
+                                        <form action="{{ route('Productos.edit', $producto->id) }}" method="get">
                                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Modificar</button>
                                         </form>
                                     </td>
                                     <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('verServicios.destroy', $servicio->id) }}" method="post">
+                                        <form action="{{ route('Productos.destroy', $producto->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>

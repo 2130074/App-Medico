@@ -53,6 +53,11 @@ Route::delete('/docProductos/{producto}', [ProductosDoctorController::class, 'de
 Route::get('/docProductos/editar/{producto}', [ProductosDoctorController::class, 'edit'])->name('docProductos.edit');
 Route::put('/docProductos/update/{producto}', [ProductosDoctorController::class, 'update'])->name('docProductos.update');
 
+Route::get('/Productos', [ProductosController::class, 'index'])->name('Productos');
+Route::delete('/Productos/{producto}', [ProductosController::class, 'destroy'])->name('Productos.destroy');
+Route::get('/Productos/editar/{producto}', [ProductosController::class, 'edit'])->name('Productos.edit');
+Route::put('/Productos/update/{producto}', [ProductosController::class, 'update'])->name('Productos.update');
+
 Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
 Route::get('/detallesPacientes/{id}', [PacientesDoctorController::class, 'show'])->name('pacientes.show');
 Route::get('/expediente/{id}', [PacientesDoctorController::class, 'expediente']);
@@ -72,6 +77,7 @@ Route::resource('doctor', DoctorController::class)->middleware(['auth','verified
 Route::resource('servicios', ServicioController::class)->middleware(['auth','verified']);
 Route::resource('crearServicio', ServiciosDoctorController::class)->middleware(['auth','verified']);
 Route::resource('crearProducto', ProductosDoctorController::class)->middleware(['auth','verified']);
+Route::resource('registrarProducto', ProductosController::class)->middleware(['auth','verified']);
 
 // Vistas para navegación entre ventanas 
 Route::get('/citas', function () {
@@ -133,6 +139,14 @@ Route::get('/crearServicio', function () {
 Route::get('/crearProducto', function () {
     return view('doc.crearProducto');
 })->name('crearProducto');
+
+Route::get('/registrarProducto', function () {
+    return view('recepcionista.registrarProducto');
+})->name('registrarProducto');
+
+Route::get('/Producto', function () {
+    return view('recepcionista.Producto');
+})->name('Producto');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
