@@ -18,12 +18,24 @@
                 </div>
                 <ul>
                     <li class="flex items-center mb-10">
-                        <img src="{{ asset('img/calendario.png') }}" alt="Registrar Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Agenda Icon" class="w-6 h-6 mr-2">
                         <a href="/doctor" class="text-lg">Agenda</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="{{ asset('img/usuario.png') }}" alt="Ver Usuarios Icon" class="w-6 h-6 mr-2">
-                        <a href="/docPacientes" class="text-lg">Ver pacientes</a>
+                        <img src="{{ asset('img/usuario.png') }}" alt="Agregar servicio Icon" class="w-6 h-6 mr-2">
+                        <a href="/docPacientes" class="text-lg">Pacientes</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="{{ asset('img/productos.png') }}" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
+                        <a href="/docServicios" class="text-lg">Servicios</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="{{ asset('img/productos.png') }}"  alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <a href="/docProductos" class="text-lg">Productos</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="{{ asset('img/ingresos.png') }}"  alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <a href="/docIngresos" class="text-lg">Ingresos</a>
                     </li>
                 </ul>
             </div>

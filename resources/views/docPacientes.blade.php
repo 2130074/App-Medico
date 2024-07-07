@@ -47,12 +47,24 @@
                 </div>
                 <ul>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Registrar Icon" class="w-6 h-6 mr-2">
+                        <img src="img/calendario.png" alt="Agenda Icon" class="w-6 h-6 mr-2">
                         <a href="/doctor" class="text-lg">Agenda</a>
                     </li>
                     <li class="flex items-center mb-10">
-                        <img src="img/usuario.png" alt="Ver Usuarios Icon" class="w-6 h-6 mr-2">
-                        <a href="/docPacientes" class="text-lg">Ver pacientes</a>
+                        <img src="img/usuario.png" alt="Agregar servicio Icon" class="w-6 h-6 mr-2">
+                        <a href="/docPacientes" class="text-lg">Pacientes</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="img/productos.png" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
+                        <a href="/docServicios" class="text-lg">Servicios</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="img/productos.png" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <a href="/docProductos" class="text-lg">Productos</a>
+                    </li>
+                    <li class="flex items-center mb-10">
+                        <img src="img/ingresos.png" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
+                        <a href="/docIngresos" class="text-lg">Ingresos</a>
                     </li>
                 </ul>
             </div>
@@ -64,7 +76,7 @@
         </div>
 
         <div class="flex-1 flex flex-col p-6">
-            <div class="flex justify-center mt-6">
+            <div class="flex justify-between mt-6 items-center">
                 <div class="relative w-2/3 max-w-2xl">
                     <input type="text" placeholder="Buscar"
                         class="w-full py-2 pl-4 pr-10 border border-blue-500 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 search-input">
@@ -74,6 +86,11 @@
                             d="M21 21l-4.35-4.35M16.44 11.2a5.45 5.45 0 11-10.89 0 5.45 5.45 0 0110.89 0z" />
                     </svg>
                 </div>
+                <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    onclick="location.href='/registroPacientesDoc'">
+                    Agregar Pacientes
+                </button>
             </div>
 
             <div class="overflow-x-auto mt-6">
@@ -84,6 +101,8 @@
                             <th class="py-2 px-4 text-left">Fecha</th>
                             <th class="py-2 px-4 text-left">Hora</th>
                             <th class="py-2 px-4 text-left">Ver detalles</th>
+                            <th class="py-2 px-4 text-center">Modificar</th>
+                            <th class="py-2 px-4 text-center">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,6 +117,20 @@
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                                         onclick="location.href='/detallesPacientes/{{ $paciente->id }}'">Ver detalles</button>
                                     
+                                    </td>
+                                    <td class="py-2 px-4 text-center">
+                                        <button
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                                            onclick="location.href='{{ route('pacientesDoc.edit', $paciente->id) }}'">Modificar</button>
+                                    </td>                                    
+                                    <td class="py-2 px-4 text-center">
+                                        <form action="{{ route('docPacientes.destroy', $paciente->id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

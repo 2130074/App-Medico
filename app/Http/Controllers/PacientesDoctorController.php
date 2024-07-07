@@ -15,6 +15,54 @@ class PacientesDoctorController extends Controller
         return view('docPacientes', compact('pacientes'));
     }
 
+    public function registerPatient(Request $request){
+        $paciente = new Paciente();
+
+        $paciente->nombre = $request->nombre;
+        $paciente->apellidos = $request->apellidos;
+        $paciente->edad = $request->edad;
+        $paciente->genero = $request->genero;
+        $paciente->altura = $request->altura;
+        $paciente->peso = $request->peso;
+        $paciente->enfermedades = $request->enfermedades;
+        $paciente->alergias = $request->alergias;
+        $paciente->telefono = $request->telefono;
+        $paciente->correo = $request->correo;
+
+        $paciente->save();
+
+        return redirect(route('docPacientes'));
+    }
+
+    public function destroy(Paciente $paciente)
+    {
+        try {
+            $paciente->delete();
+            return redirect()->route('docPacientes')->withSuccess("Paciente eliminado");
+        } catch (\Exception $th) {
+            return back()->withErrors(['error' => 'Hubo un problema al eliminar el paciente. Error: ' . $th->getMessage()]);
+        }
+    }
+
+    public function edit(Paciente $paciente)
+    {
+        return view('doc.modificarPacientesDoc', compact('paciente'));
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $paciente = Paciente::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'nombre' => 'required',
+            'apellidos' => 'required',
+        ]);
+
+        $paciente->fill($validatedData)->save();
+        return redirect()->route('docPacientes')->with('success', 'Paciente actualizado exitosamente.');
+    }
+
     public function show($id)
     {
         $paciente = Paciente::findOrFail($id);

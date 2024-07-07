@@ -22,13 +22,13 @@ Route::get('logout',[LoginController::class,'logout'])->name('logout');
 Route::post('/validar-registro',[LoginController::class, 'register'])->name('validar-registro');
 Route::post('/verificar-login', [LoginController::class, 'doLogin'])->name('verificar-login');
 Route::post('/registrar-pacientes', [PacienteController::class, 'registerPatient'])->name('registrar-pacientes');
+Route::post('/registrar-pacientes', [PacientesDoctorController::class, 'registerPatient'])->name('registrar-pacientes');
 
 //Para que funcionen las tablas
 Route::get('/verUsuarios', [UserController::class, 'index'])->name('verUsuarios');
 Route::delete('/eliminar/{id}', [UserController::class, 'destroy'])->name('usuarios.eliminar');
 Route::get('/modificar/{id}', [UserController::class, 'edit'])->name('usuarios.edit');
 Route::post('/modificar/{id}', [UserController::class, 'update'])->name('usuarios.update');
-
 
 Route::get('/verPacientes', [PacientesController::class, 'index'])->name('verPacientes');
 Route::delete('/verPacientes/{paciente}', [PacientesController::class, 'destroy'])->name('verPacientes.destroy');
@@ -45,6 +45,9 @@ Route::get('/detallesPacientes/{id}', [PacientesDoctorController::class, 'show']
 Route::get('/expediente/{id}', [PacientesDoctorController::class, 'expediente']);
 Route::get('/detallesCita/{id}', [PacientesDoctorController::class, 'detallesCita']);
 Route::post('/actualizarCita/{id}', [PacientesDoctorController::class, 'actualizarCita'])->name('actualizarCita');
+Route::delete('/docPacientes/{paciente}', [PacientesDoctorController::class, 'destroy'])->name('docPacientes.destroy');
+Route::get('/docPacientes/{paciente}/modificar', [PacientesDoctorController::class, 'edit'])->name('pacientesDoc.edit');
+Route::put('/docPacientes/{paciente}/actualizar', [PacientesDoctorController::class, 'update'])->name('pacientesDoc.update');
 
 // Ver pagos de un paciente específico
 Route::get('/pago/{id}', [PacientesController::class, 'verPagos'])->name('verPagos');
@@ -80,6 +83,10 @@ Route::get('/registroPacientes', function () {
     return view('registroPacientes');
 });
 
+Route::get('/registroPacientesDoc', function () {
+    return view('doc.registroPacientesDoc');
+})->name('registroPacientesDoc');
+
 Route::get('/registroUsuarios', function () {
     return view('registroUsuarios');
 })->name('admin');
@@ -107,6 +114,10 @@ Route::get('/docProductos', function () {
 Route::get('/docIngresos', function () {
     return view('doc.docIngresos');
 })->name('docIngresos');
+
+Route::get('/modificarPacientesDoc', function () {
+    return view('doc.modificarPacientesDoc');
+})->name('modificarPacientesDoc');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
