@@ -88,7 +88,7 @@
                 </div>
                 <button
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                    onclick="location.href='/'">
+                    onclick="location.href='/crearServicio'">
                     Agregar Servicios
                 </button>
             </div>
@@ -110,12 +110,12 @@
                                     <td class="py-2 px-4">{{ $servicio->nombre }}</td>
                                     <td class="py-2 px-4">{{ $servicio->precio }}</td>
                                     <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('verServicios.edit', $servicio->id) }}" method="get">
+                                        <form action="{{ route('docServicios.edit', $servicio->id) }}" method="get">
                                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Modificar</button>
                                         </form>
                                     </td>
                                     <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('verServicios.destroy', $servicio->id) }}" method="post">
+                                        <form action="{{ route('docServicios.destroy', $servicio->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>

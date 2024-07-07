@@ -11,6 +11,7 @@ use App\Http\Controllers\PacientesDoctorController;
 use App\Http\Controllers\VerServiciosController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\ServiciosDoctorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -40,6 +41,11 @@ Route::delete('/verServicios/{servicio}', [VerServiciosController::class, 'destr
 Route::get('/verServicios/editar/{servicio}', [VerServiciosController::class, 'edit'])->name('verServicios.edit');
 Route::put('/verServicios/update/{servicio}', [VerServiciosController::class, 'update'])->name('verServicios.update');
 
+Route::get('/docServicios', [ServiciosDoctorController::class, 'index'])->name('docServicios');
+Route::delete('/docServicios/{servicio}', [ServiciosDoctorController::class, 'destroy'])->name('docServicios.destroy');
+Route::get('/docServicios/editar/{servicio}', [ServiciosDoctorController::class, 'edit'])->name('docServicios.edit');
+Route::put('/docServicios/update/{servicio}', [ServiciosDoctorController::class, 'update'])->name('docServicios.update');
+
 Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('docPacientes');
 Route::get('/detallesPacientes/{id}', [PacientesDoctorController::class, 'show'])->name('pacientes.show');
 Route::get('/expediente/{id}', [PacientesDoctorController::class, 'expediente']);
@@ -57,6 +63,7 @@ Route::post('/pago/cambiarEstado/{cita_id}', [CitaController::class, 'cambiarEst
 Route::resource('recepcionista', CitaController::class)->middleware(['auth','verified']);
 Route::resource('doctor', DoctorController::class)->middleware(['auth','verified']);
 Route::resource('servicios', ServicioController::class)->middleware(['auth','verified']);
+Route::resource('crearServicio', ServiciosDoctorController::class)->middleware(['auth','verified']);
 
 // Vistas para navegación entre ventanas 
 Route::get('/citas', function () {
@@ -103,9 +110,6 @@ Route::get('/modificarServicio', function () {
     return view('modificarServicio');
 });
 
-Route::get('/docServicios', function () {
-    return view('doc.docServicios');
-})->name('docServicios');
 
 Route::get('/docProductos', function () {
     return view('doc.docProductos');
@@ -119,9 +123,9 @@ Route::get('/modificarPacientesDoc', function () {
     return view('doc.modificarPacientesDoc');
 })->name('modificarPacientesDoc');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/crearServicio', function () {
+    return view('doc.crearServicio');
+})->name('crearServicio');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
