@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +18,8 @@ class Paciente extends Model
         'enfermedades',
         'alergias',
         'telefono',
-        'correo'
+        'correo',
+        'password'
     ];
 
     /**
@@ -28,6 +28,7 @@ class Paciente extends Model
      * @var array<int, string>
      */
     protected $hidden = [
+        'password',
         'created_at',
         'updated_at',
     ];
@@ -42,5 +43,4 @@ class Paciente extends Model
         'altura' => 'decimal:2',
         'peso' => 'decimal:2',
     ];
-    
 }

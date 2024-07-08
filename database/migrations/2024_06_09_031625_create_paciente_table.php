@@ -18,14 +18,15 @@ class CreatePacienteTable extends Migration
             $table->string('nombre', 50);
             $table->string('apellidos', 50);
             $table->integer('edad')->nullable();
-            $table->string('genero', 20);
+            $table->string('genero', 50);
             $table->decimal('altura', 5, 2)->nullable();
             $table->decimal('peso', 5, 2)->nullable();
             $table->text('enfermedades')->nullable();
             $table->text('alergias')->nullable();
             $table->string('telefono', 20);
             $table->string('correo', 100);
-            $table->timestamps(); // Añade las columnas created_at y updated_at
+            $table->string('password'); 
+            $table->timestamps(); 
         });
     }
 

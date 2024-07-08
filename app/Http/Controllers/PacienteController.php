@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Paciente;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,13 +20,10 @@ class PacienteController extends Controller{
         $paciente->alergias = $request->alergias;
         $paciente->telefono = $request->telefono;
         $paciente->correo = $request->correo;
+        $paciente->password = Hash::make($request->password);
 
         $paciente->save();
 
         return redirect(route('recepcionista.index'));
-    }
-
-    public function paciente(){
-        return $this->belongsTo('App\Models\Paciente', 'id_paciente');
     }
 }

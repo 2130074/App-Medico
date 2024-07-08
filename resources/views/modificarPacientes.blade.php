@@ -122,6 +122,12 @@
                             placeholder="Correo" required>
                     </div>
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
+                        <img src="{{ asset('img/candado.png') }}" alt="Correo Icon" class="w-6 h-6 ml-2">
+                        <input type="password" name="password" id="password"
+                            class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
+                            placeholder="Contraseña" required>
+                    </div>
+                    <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                         <img src="{{ asset('img/phone.png') }}" alt="Teléfono Icon" class="w-6 h-6 ml-2">
                         <input type="tel" name="telefono" id="telefono" value="{{ $paciente->telefono}}" 
                             class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
