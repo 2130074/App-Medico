@@ -98,8 +98,8 @@
                     <thead>
                         <tr class="bg-blue-500">
                             <th class="py-2 px-4 text-left">Nombre</th>
-                            <th class="py-2 px-4 text-left">Fecha</th>
-                            <th class="py-2 px-4 text-left">Hora</th>
+                            <th class="py-2 px-4 text-left">Correo</th>
+                            <th class="py-2 px-4 text-center">Próxima cita</th>
                             <th class="py-2 px-4 text-left">Ver detalles</th>
                             <th class="py-2 px-4 text-center">Modificar</th>
                             <th class="py-2 px-4 text-center">Eliminar</th>
@@ -110,8 +110,8 @@
                             @foreach ($pacientes as $paciente)
                                 <tr class="hover:bg-blue-600">
                                     <td class="py-2 px-4">{{ $paciente->nombre }}</td>
-                                    <td class="py-2 px-4 text-center">12/08/2023</td>
-                                    <td class="py-2 px-4 text-center">04:00 pm </td>
+                                    <td class="py-2 px-4">{{ $paciente->correo }}</td>
+                                    <td class="py-2 px-4 text-center">20/05/2024</td>
                                     <td class="py-2 px-4 text-center">
                                         <button
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"

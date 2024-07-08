@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Paciente;
 use App\Models\Citas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PacientesController extends Controller
 {
@@ -12,6 +13,26 @@ class PacientesController extends Controller
     {
         $pacientes = Paciente::all();
         return view('verPacientes', compact('pacientes'));
+    }
+
+    public function registerPatient(Request $request){
+        $paciente = new Paciente();
+
+        $paciente->nombre = $request->nombre;
+        $paciente->apellidos = $request->apellidos;
+        $paciente->edad = $request->edad;
+        $paciente->genero = $request->genero;
+        $paciente->altura = $request->altura;
+        $paciente->peso = $request->peso;
+        $paciente->enfermedades = $request->enfermedades;
+        $paciente->alergias = $request->alergias;
+        $paciente->telefono = $request->telefono;
+        $paciente->correo = $request->correo;
+        $paciente->password = Hash::make($request->password);
+
+        $paciente->save();
+
+        return redirect(route('verPacientes'));
     }
 
     public function destroy(Paciente $paciente)

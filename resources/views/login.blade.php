@@ -39,5 +39,10 @@
             </div>
         </form>
 
+        <div class="mt-6 text-center text-white text-xs">
+            <span>¿Quieres agendar y aún no tienes cuenta? </span><a href="{{ route('registro') }}" class="font-bold underline">Registrarte</a>.
+        </div>
     </div>
 </body>
+
+</html>

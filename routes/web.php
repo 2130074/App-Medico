@@ -24,8 +24,9 @@ Route::get('/', function () {
 Route::get('logout',[LoginController::class,'logout'])->name('logout');
 Route::post('/validar-registro',[LoginController::class, 'register'])->name('validar-registro');
 Route::post('/verificar-login', [LoginController::class, 'doLogin'])->name('verificar-login');
-Route::post('/registrar-pacientes', [PacienteController::class, 'registerPatient'])->name('registrar-pacientes');
-Route::post('/registrar-pacientes', [PacientesDoctorController::class, 'registerPatient'])->name('registrar-pacientes');
+Route::post('/registrar', [PacienteController::class, 'registerPatient'])->name('registrar');
+Route::post('/registrar-pacientes', [PacientesController::class, 'registerPatient'])->name('registrar-pacientes');
+Route::post('/registrar-pacientes-doc', [PacientesDoctorController::class, 'registerPatient'])->name('registrar-pacientes-doc');
 
 //Para que funcionen las tablas
 Route::get('/verUsuarios', [UserController::class, 'index'])->name('verUsuarios');
@@ -147,6 +148,14 @@ Route::get('/registrarProducto', function () {
 Route::get('/Producto', function () {
     return view('recepcionista.Producto');
 })->name('Producto');
+
+Route::get('/registro', function () {
+    return view('paciente.registro');
+})->name('registro');
+
+Route::get('/calendario', function () {
+    return view('paciente.calendario');
+})->name('calendario');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -16,40 +16,18 @@
                     <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-8 h-8 mr-2">
                     <span class="text-2xl font-bold">Salud Conecta</span>
                 </div>
-                <ul>
-                    <li class="flex items-center mb-10">
-                        <img src="{{ asset('img/calendario.png') }}" alt="Agenda Icon" class="w-6 h-6 mr-2">
-                        <a href="/doctor" class="text-lg">Agenda</a>
-                    </li>
-                    <li class="flex items-center mb-10">
-                        <img src="{{ asset('img/usuario.png') }}" alt="Agregar servicio Icon" class="w-6 h-6 mr-2">
-                        <a href="/docPacientes" class="text-lg">Pacientes</a>
-                    </li>
-                    <li class="flex items-center mb-10">
-                        <img src="{{ asset('img/productos.png') }}" alt="Agregar paciente Icon" class="w-6 h-6 mr-2">
-                        <a href="/docServicios" class="text-lg">Servicios</a>
-                    </li>
-                    <li class="flex items-center mb-10">
-                        <img src="{{ asset('img/productos.png') }}"  alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
-                        <a href="/docProductos" class="text-lg">Productos</a>
-                    </li>
-                    <li class="flex items-center mb-10">
-                        <img src="{{ asset('img/ingresos.png') }}"  alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
-                        <a href="/docIngresos" class="text-lg">Ingresos</a>
-                    </li>
-                </ul>
             </div>
             <button
                 class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 onclick="location.href='/'">
-                Cerrar sesión
+                Regresar
             </button>
         </div>
 
         <div class="flex items-center justify-center w-3/4 ml-auto">
             <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-md">
                 <h2 class="text-3xl font-bold text-white text-center mb-6">Registro de pacientes</h2>
-                <form action="{{ route('registrar-pacientes-doc') }}" method="POST">
+                <form action="{{ route('registrar') }}" method="POST">
                     @csrf
                     <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                         <img src="img/user.png" alt="Nombre Icon" class="w-6 h-6 ml-2">
@@ -129,12 +107,6 @@
                         <button type="submit"
                             class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             Registrar
-                        </button>
-                    </div>
-                    <div class="flex-grow flex items-center justify-center mt-3">
-                        <button type="button"
-                            class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="location.href='/docPacientes'">
-                            Regresar
                         </button>
                     </div>
                 </form>
