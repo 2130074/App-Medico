@@ -15,4 +15,9 @@ class Producto extends Model
         'costo',
         'cantidad',
     ];
+
+    public function ventas()
+    {
+        return $this->hasMany(Venta::class);
+    }
 }

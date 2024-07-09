@@ -77,7 +77,7 @@
                 <form action="{{ route('registrarProducto.store') }}" method="POST">
                     @csrf
                     <fieldset class="mb-4">
-                        <legend class="sr-only">Información del producto</legend>
+                        <legend class="sr-only">Registrar del producto</legend>
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/user.png" alt="Nombre Icon" class="w-6 h-6 ml-2">
                             <input type="text" name="nombre" id="nombre"

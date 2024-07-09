@@ -65,7 +65,7 @@
                         </ul>
                     </div>
                 @endif
-                <h2 class="text-3xl font-bold text-white text-center mb-6">Registro de servicios</h2>
+                <h2 class="text-3xl font-bold text-white text-center mb-6">Registro de productos</h2>
                 <form action="{{ route('crearProducto.store') }}" method="POST">
                     @csrf
                     <fieldset class="mb-4">

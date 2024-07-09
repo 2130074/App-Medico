@@ -84,7 +84,7 @@
         </div>
 
         <div class="flex-1 flex flex-col p-6">
-            <div class="flex justify-center mt-6">
+            <div class="flex justify-between mt-6 items-center">
                 <div class="relative w-2/3 max-w-2xl">
                     <input type="text" placeholder="Buscar"
                         class="w-full py-2 pl-4 pr-10 border border-blue-500 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 search-input">
@@ -94,6 +94,11 @@
                             d="M21 21l-4.35-4.35M16.44 11.2a5.45 5.45 0 11-10.89 0 5.45 5.45 0 0110.89 0z" />
                     </svg>
                 </div>
+                <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    onclick="location.href='/vender'">
+                    Vender producto 
+                </button>
             </div>
 
             <div class="overflow-x-auto mt-6">

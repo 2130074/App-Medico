@@ -14,6 +14,7 @@ use App\Http\Controllers\VerServiciosController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ServiciosDoctorController;
+use App\Http\Controllers\VentaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -72,6 +73,10 @@ Route::put('/docPacientes/{paciente}/actualizar', [PacientesDoctorController::cl
 Route::get('/pago/{id}', [PacientesController::class, 'verPagos'])->name('verPagos');
 Route::get('/pago/{paciente_id}', [CitaController::class, 'verPago'])->name('verPago');
 Route::post('/pago/cambiarEstado/{cita_id}', [CitaController::class, 'cambiarEstadoPago'])->name('cambiarEstadoPago');
+
+Route::get('/vender', [VentaController::class, 'create'])->name('vender.create');
+Route::post('/vender', [VentaController::class, 'store'])->name('vender.store');
+Route::get('/venta/max-stock/{id}', [VentaController::class, 'obtenerMaxStock'])->name('venta.obtenerMaxStock');
 
 Route::resource('recepcionista', CitaController::class)->middleware(['auth','verified']);
 Route::resource('doctor', DoctorController::class)->middleware(['auth','verified']);
@@ -148,6 +153,7 @@ Route::get('/registrarProducto', function () {
 Route::get('/Producto', function () {
     return view('recepcionista.Producto');
 })->name('Producto');
+
 
 Route::get('/registro', function () {
     return view('paciente.registro');
