@@ -15,6 +15,7 @@ use App\Http\Controllers\CitaController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ServiciosDoctorController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\VentaDocController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -77,6 +78,10 @@ Route::post('/pago/cambiarEstado/{cita_id}', [CitaController::class, 'cambiarEst
 Route::get('/vender', [VentaController::class, 'create'])->name('vender.create');
 Route::post('/vender', [VentaController::class, 'store'])->name('vender.store');
 Route::get('/venta/max-stock/{id}', [VentaController::class, 'obtenerMaxStock'])->name('venta.obtenerMaxStock');
+
+Route::get('/ventas', [VentaDocController::class, 'create'])->name('ventas.create');
+Route::post('/ventas', [VentaDocController::class, 'store'])->name('ventas.store');
+Route::get('/ventas/max-stock/{id}', [VentaController::class, 'obtenerMaxStock'])->name('ventas.obtenerMaxStock');
 
 Route::resource('recepcionista', CitaController::class)->middleware(['auth','verified']);
 Route::resource('doctor', DoctorController::class)->middleware(['auth','verified']);
