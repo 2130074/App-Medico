@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Models\Paciente;
@@ -97,6 +96,8 @@ class PacientesDoctorController extends Controller
             'estudios' => 'nullable|string',
             'medicamentos' => 'nullable|array',
             'medicamentos.*' => 'nullable|string',
+            'productos' => 'nullable|array',
+            'cantidades' => 'nullable|array',
         ]);
 
         $cita = Citas::findOrFail($id);
@@ -105,6 +106,29 @@ class PacientesDoctorController extends Controller
         $cita->hora = $request->input('hora');
         $cita->estudios = $request->input('estudios');
         $cita->medicamentos = $request->has('medicamentos') ? implode(',', $request->input('medicamentos')) : null;
+
+        // Manejo de productos
+        $productos = $request->input('productos', []);
+        $cantidades = $request->input('cantidades', []);
+        $productosSeleccionados = [];
+        $total = 0;
+
+        foreach ($productos as $index => $productoId) {
+            $producto = Producto::findOrFail($productoId);
+            $cantidad = $cantidades[$index];
+            $subtotal = $producto->costo * $cantidad;
+            $total += $subtotal;
+            $productosSeleccionados[] = [
+                'producto_id' => $productoId,
+                'nombre' => $producto->nombre,
+                'marca' => $producto->marca,
+                'cantidad' => $cantidad,
+                'subtotal' => $subtotal,
+            ];
+        }
+
+        $cita->productos = json_encode($productosSeleccionados);
+        $cita->total = $total;
         $cita->save();
 
         return redirect()->route('docPacientes');

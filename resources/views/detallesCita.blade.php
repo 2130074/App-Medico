@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
     <title>Detalles de la Cita</title>
 </head>
+
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
     <div class="flex h-screen">
         <div class="bg-blue-650 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
@@ -91,7 +93,6 @@
                             </div>
                         </div>
 
-                        <!-- Productos y cantidades -->
                         <div class="col-span-2 grid grid-cols-2 gap-4 mb-2">
                             <div class="mb-4">
                                 <label class="block font-medium text-blue-800">Productos:</label>
@@ -104,19 +105,28 @@
                                             @foreach ($productos as $producto)
                                                 <option value="{{ $producto->id }}"
                                                     data-price="{{ $producto->costo }}"
-                                                    data-stock="{{ $producto->cantidad }}">{{ $producto->nombre }} -
-                                                    {{ $producto->marca }}</option>
+                                                    data-stock="{{ $producto->cantidad }}">
+                                                    {{ $producto->nombre }} - {{ $producto->marca }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         <select name="cantidades[]" class="w-full px-4 py-2 border rounded-md ml-2">
                                             <!-- Options will be populated based on the selected product -->
                                         </select>
+                                        <button type="button" onclick="removeProductField(this)"
+                                            class="ml-2 text-red-800">-</button>
                                     </div>
                                 </div>
                                 <button type="button" onclick="addProductField()" class="mt-2 text-blue-800">+
                                     Añadir más</button>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Campo de total -->
+                    <div class="mb-4">
+                        <label class="block font-medium text-blue-800">Total:</label>
+                        <input type="text" id="total" class="w-full px-4 py-2 border rounded-md" readonly>
                     </div>
 
                     <div class="flex justify-between mt-6">
@@ -143,18 +153,11 @@
     <script>
         function addMedicationField() {
             const container = document.getElementById('medicationFields');
-            const newField = document.createElement('div');
-            newField.classList.add('flex', 'items-center');
-            newField.innerHTML = `
-                <input type="text" name="medicamentos[]" placeholder="Medicamento" class="w-full px-4 py-2 border rounded-md">
-                <button type="button" onclick="removeMedicationField(this)" class="ml-2 text-red-800">-</button>
-            `;
-            container.appendChild(newField);
-        }
-
-        function removeMedicationField(button) {
-            const field = button.parentNode;
-            field.remove();
+            const field = document.createElement('div');
+            field.className = 'flex items-center mt-2';
+            field.innerHTML =
+                '<input type="text" name="medicamentos[]" placeholder="Medicamento" class="flex-1 px-4 py-2 border rounded-md">';
+            container.appendChild(field);
         }
 
         function addProductField() {
@@ -170,17 +173,18 @@
                         </option>
                     @endforeach
                 </select>
-                <select name="cantidades[]" class="w-full px-4 py-2 border rounded-md ml-2">
+                <select name="cantidades[]" class="w-full px-4 py-2 border rounded-md ml-2" onchange="updateTotal()">
                     <!-- Options will be populated based on the selected product -->
                 </select>
                 <button type="button" onclick="removeProductField(this)" class="ml-2 text-red-800">-</button>
             `;
             container.appendChild(newField);
+            updateTotal(); 
         }
 
         function removeProductField(button) {
-            const field = button.parentNode;
-            field.remove();
+            button.parentElement.remove();
+            updateTotal(); 
         }
 
         function updateQuantityOptions(select) {
@@ -188,17 +192,43 @@
             const stock = selectedOption.getAttribute('data-stock');
             const quantitySelect = select.nextElementSibling;
 
-            quantitySelect.innerHTML = ''; // Clear previous options
-
-            if (stock) {
-                for (let i = 1; i <= stock; i++) {
-                    const option = document.createElement('option');
-                    option.value = i;
-                    option.textContent = i;
-                    quantitySelect.appendChild(option);
-                }
+            quantitySelect.innerHTML = '';
+            for (let i = 1; i <= stock; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                quantitySelect.appendChild(option);
             }
+
+            updateTotal(); 
         }
+
+        function updateTotal() {
+            const productFields = document.querySelectorAll('select[name="productos[]"]');
+            let total = 0;
+
+            productFields.forEach(field => {
+                const selectedOption = field.options[field.selectedIndex];
+                const price = selectedOption.getAttribute('data-price');
+                const quantity = field.nextElementSibling.value;
+
+                if (price && quantity) {
+                    total += parseFloat(price) * parseInt(quantity);
+                }
+            });
+
+            document.getElementById('total').value = total.toFixed(2);
+        }
+
+
+        window.addEventListener('load', () => {
+            updateTotal();
+            const productFields = document.querySelectorAll('select[name="productos[]"]');
+            productFields.forEach(field => {
+                updateQuantityOptions(field);
+            });
+        });
     </script>
 </body>
+
 </html>

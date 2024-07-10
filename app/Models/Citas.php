@@ -17,7 +17,9 @@ class Citas extends Model
         'id_paciente',
         'id_servicio',
         'medicamentos',
-        'estudios'
+        'estudios',
+        'productos',
+        'total'
     ];
 
     protected $hidden = [
@@ -29,7 +31,8 @@ class Citas extends Model
         'fecha' => 'date',
         'hora' => 'datetime:H:i',
         'id_paciente' => 'integer',
-        'id_servicio' => 'integer'
+        'id_servicio' => 'integer',
+        'productos' => 'array',
     ];
 
     public function paciente()
@@ -45,5 +48,10 @@ class Citas extends Model
     public function servicio()
     {
         return $this->belongsTo(Servicio::class, 'id_servicio');
+    }
+
+    public function citas()
+    {
+        return $this->belongsToMany(Citas::class, 'id_producto');
     }
 }
