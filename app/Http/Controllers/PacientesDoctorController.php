@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Paciente;
 use App\Models\Citas;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,7 +31,7 @@ class PacientesDoctorController extends Controller
         $paciente->alergias = $request->alergias;
         $paciente->telefono = $request->telefono;
         $paciente->correo = $request->correo;
-        $paciente->password = Hash::make($request->password); 
+        $paciente->password = Hash::make($request->password);
 
         $paciente->save();
 
@@ -82,8 +83,10 @@ class PacientesDoctorController extends Controller
     public function detallesCita($id)
     {
         $cita = Citas::findOrFail($id);
-        return view('detallesCita', compact('cita'));
+        $productos = Producto::all();
+        return view('detallesCita', compact('cita', 'productos'));
     }
+
 
     public function actualizarCita(Request $request, $id)
     {

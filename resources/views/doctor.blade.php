@@ -52,7 +52,7 @@
                 </div>
                 <ul>
                     <li class="flex items-center mb-10">
-                        <img src="img/calendario.png" alt="Agenda Icon" class="w-6 h-6 mr-2">
+                       <img src="img/calendario.png" alt="Agenda Icon" class="w-6 h-6 mr-2">
                         <a href="/doctor" class="text-lg">Agenda</a>
                     </li>
                     <li class="flex items-center mb-10">

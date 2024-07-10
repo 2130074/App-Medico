@@ -150,28 +150,40 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            const productoSelect = document.getElementById('nombre_producto');
-            const cantidadSelect = document.getElementById('cantidad');
+        const productoSelect = document.getElementById('nombre_producto');
+        const cantidadSelect = document.getElementById('cantidad');
+        const totalPagoSpan = document.getElementById('total_pago');
 
-            productoSelect.addEventListener('change', function() {
-                const productoId = this.value;
-                fetch(`/ventas/max-stock/${productoId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        cantidadSelect.innerHTML = '';
-                        for (let i = 1; i <= data.maxStock; i++) {
-                            let option = document.createElement("option");
-                            option.text = option.value = i;
-                            cantidadSelect.add(option);
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            });
+        const updateTotalPago = () => {
+            const costo = productoSelect.options[productoSelect.selectedIndex].dataset.costo || 0;
+            const cantidad = cantidadSelect.value || 0;
+            const totalPago = costo * cantidad;
+            totalPagoSpan.textContent = totalPago.toFixed(2);
+        };
 
-            productoSelect.addEventListener('focus', function() {
-                cantidadSelect.innerHTML = '<option value="">Seleccione la cantidad</option>';
-            });
+        productoSelect.addEventListener('change', function() {
+            const productoId = this.value;
+            fetch(`/ventas/max-stock/${productoId}`)
+                .then(response => response.json())
+                .then(data => {
+                    cantidadSelect.innerHTML = '';
+                    for (let i = 1; i <= data.maxStock; i++) {
+                        let option = document.createElement("option");
+                        option.text = option.value = i;
+                        cantidadSelect.add(option);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         });
+
+        productoSelect.addEventListener('focus', function() {
+            cantidadSelect.innerHTML = '<option value="">Seleccione la cantidad</option>';
+        });
+
+        // Actualizar el total de pago cuando cambie la cantidad o el producto seleccionado
+        productoSelect.addEventListener('change', updateTotalPago);
+        cantidadSelect.addEventListener('change', updateTotalPago);
+    });
     </script>
 </body>
 
