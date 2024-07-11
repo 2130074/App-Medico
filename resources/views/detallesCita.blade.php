@@ -97,22 +97,33 @@
                             <div class="mb-4">
                                 <label class="block font-medium text-blue-800">Productos:</label>
                                 <div id="productFields" class="space-y-2">
-                                    @foreach (json_decode($cita->productos, true) as $producto)
+                                    @foreach (json_decode($cita->productos, true) ?? [] as $producto)
                                         <div class="flex items-center">
-                                            <select name="productos[]" class="w-full px-4 py-2 border rounded-md" onchange="updateQuantityOptions(this)">
-                                                <option value="" data-price="" data-stock="">Seleccione un producto</option>
+                                            <select name="productos[]" class="w-full px-4 py-2 border rounded-md"
+                                                onchange="updateQuantityOptions(this)">
+                                                <option value="" data-price="" data-stock="">Seleccione un
+                                                    producto</option>
                                                 @foreach ($productos as $prod)
-                                                    <option value="{{ $prod->id }}" data-price="{{ $prod->costo }}" data-stock="{{ $prod->cantidad }}" @if ($producto['id'] == $prod->id) selected @endif>
+                                                    <option value="{{ $prod->id }}"
+                                                        data-price="{{ $prod->costo }}"
+                                                        data-stock="{{ $prod->cantidad }}"
+                                                        @if ($producto['id'] == $prod->id) selected @endif>
                                                         {{ $prod->nombre }} - {{ $prod->marca }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            <input type="number" name="cantidades[]" value="{{ $producto['cantidad'] }}" class="w-full px-4 py-2 border rounded-md ml-2" min="1" onchange="validateQuantity(this); updateTotal();">
-                                            <button type="button" onclick="removeProductField(this)" class="ml-2 text-red-800">-</button>
+                                            <input type="number" name="cantidades[]"
+                                                value="{{ $producto['cantidad'] }}"
+                                                class="w-full px-4 py-2 border rounded-md ml-2" min="1"
+                                                onchange="validateQuantity(this); updateTotal();">
+                                            <button type="button" onclick="removeProductField(this)"
+                                                class="ml-2 text-red-800">-</button>
                                         </div>
                                     @endforeach
+
                                 </div>
-                                <button type="button" onclick="addProductField()" class="mt-2 text-blue-800">+ Añadir más</button>
+                                <button type="button" onclick="addProductField()" class="mt-2 text-blue-800">+
+                                    Añadir más</button>
                             </div>
                         </div>
                     </div>
@@ -120,7 +131,8 @@
                     <!-- Campo de total -->
                     <div class="mb-4">
                         <label class="block font-medium text-blue-800">Total:</label>
-                        <input type="text" id="total" name="total" value="{{ $cita->total }}" class="w-full px-4 py-2 border rounded-md" readonly>
+                        <input type="text" id="total" name="total" value="{{ $cita->total }}"
+                            class="w-full px-4 py-2 border rounded-md" readonly>
                     </div>
 
                     <div class="flex justify-between mt-6">
