@@ -82,9 +82,18 @@ class PacientesDoctorController extends Controller
     public function detallesCita($id)
     {
         $cita = Citas::with('tipo_servicio')->find($id);
+
+        // Verifica si la cita existe
+        if (!$cita) {
+            return redirect()->back()->with('error', 'Cita no encontrada.');
+        }
+
         $productos = Producto::all();
-        return view('detallesCita', compact('cita', 'productos'));
+        $servicio = $cita->tipo_servicio; // Obtener el servicio de la cita
+
+        return view('detallesCita', compact('cita', 'productos', 'servicio'));
     }
+
 
     public function actualizarCita(Request $request, $id)
     {

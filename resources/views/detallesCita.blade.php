@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
     <title>Detalles de la Cita</title>
 </head>
-
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
     <div class="flex h-screen">
         <div class="bg-blue-650 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
@@ -39,9 +37,8 @@
                     </li>
                 </ul>
             </div>
-            <button
-                class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                onclick="location.href='/'">
+            <button class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    onclick="location.href='/'">
                 Cerrar sesión
             </button>
         </div>
@@ -54,23 +51,19 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div class="mb-2">
                             <label class="block font-medium text-blue-800">Servicio:</label>
-                            <input type="text" name="motivos" value="{{ $cita->tipo_servicio->nombre }}"
-                                placeholder="Motivo de la cita" class="w-full px-4 py-2 border rounded-md">
+                            <input type="text" name="motivos" value="{{ $cita->tipo_servicio ? $cita->tipo_servicio->nombre : 'N/A' }}" placeholder="Motivo de la cita" class="w-full px-4 py-2 border rounded-md">
                         </div>
                         <div class="mb-2">
                             <label class="block font-medium text-blue-800">Motivo de la cita:</label>
-                            <input type="text" name="motivos" value="{{ $cita->motivos }}"
-                                placeholder="Motivo de la cita" class="w-full px-4 py-2 border rounded-md">
+                            <input type="text" name="motivos" value="{{ $cita->motivos }}" placeholder="Motivo de la cita" class="w-full px-4 py-2 border rounded-md">
                         </div>
                         <div class="mb-2">
                             <label class="block font-medium text-blue-800">Fecha de la cita:</label>
-                            <input type="date" name="fecha" value="{{ $cita->fecha->format('Y-m-d') }}"
-                                class="w-full px-4 py-2 border rounded-md">
+                            <input type="date" name="fecha" value="{{ $cita->fecha->format('Y-m-d') }}" class="w-full px-4 py-2 border rounded-md">
                         </div>
                         <div class="mb-2">
                             <label class="block font-medium text-blue-800">Hora de la cita:</label>
-                            <input type="time" name="hora" value="{{ date('H:i', strtotime($cita->hora)) }}"
-                                class="w-full px-4 py-2 border rounded-md">
+                            <input type="time" name="hora" value="{{ date('H:i', strtotime($cita->hora)) }}" class="w-full px-4 py-2 border rounded-md">
                         </div>
                         <div class="col-span-2 grid grid-cols-2 gap-4">
                             <div class="mb-4">
@@ -78,61 +71,51 @@
                                 <div id="medicationFields" class="space-y-2">
                                     @foreach (explode(',', $cita->medicamentos) as $medicamento)
                                         <div class="flex items-center">
-                                            <input type="text" name="medicamentos[]" value="{{ $medicamento }}"
-                                                placeholder="Medicamento" class="w-full px-4 py-2 border rounded-md">
+                                            <input type="text" name="medicamentos[]" value="{{ $medicamento }}" placeholder="Medicamento" class="w-full px-4 py-2 border rounded-md">
                                         </div>
                                     @endforeach
                                 </div>
-                                <button type="button" onclick="addMedicationField()" class="mt-2 text-blue-800">+
-                                    Añadir más</button>
+                                <button type="button" onclick="addMedicationField()" class="mt-2 text-blue-800">+ Añadir más</button>
                             </div>
                             <div class="mb-2">
                                 <label class="block font-medium text-blue-800">Estudios a realizar:</label>
-                                <input type="text" name="estudios" value="{{ $cita->estudios }}"
-                                    placeholder="Estudios a realizar" class="w-full px-4 py-2 border rounded-md">
+                                <input type="text" name="estudios" value="{{ $cita->estudios }}" placeholder="Estudios a realizar" class="w-full px-4 py-2 border rounded-md">
                             </div>
                         </div>
 
-                        <div class="col-span-2 grid grid-cols-2 gap-4 mb-2">
-                            <div class="mb-4">
-                                <label class="block font-medium text-blue-800">Productos:</label>
+                        <div class="col-span-2 grid grid-cols-2 gap-4">
+                            <div class="col-span-2">
+                                <label class="block font-medium text-blue-800">Productos usados:</label>
                                 <div id="productFields" class="space-y-2">
-                                    @foreach (json_decode($cita->productos, true) ?? [] as $producto)
+                                    @php
+                                        $productosData = json_decode($cita->productos, true) ?? [];
+                                    @endphp
+                                    @foreach ($productosData as $producto)
                                         <div class="flex items-center">
-                                            <select name="productos[]" class="w-full px-4 py-2 border rounded-md"
-                                                onchange="updateQuantityOptions(this)">
-                                                <option value="" data-price="" data-stock="">Seleccione un
-                                                    producto</option>
-                                                @foreach ($productos as $prod)
-                                                    <option value="{{ $prod->id }}"
-                                                        data-price="{{ $prod->costo }}"
-                                                        data-stock="{{ $prod->cantidad }}"
-                                                        @if ($producto['id'] == $prod->id) selected @endif>
-                                                        {{ $prod->nombre }} - {{ $prod->marca }}
+                                            <select name="productos[]" class="w-full px-4 py-2 border rounded-md" onchange="updateTotal(this)">
+                                                <option value="">Selecciona un producto</option>
+                                                @foreach ($productos as $item)
+                                                    <option value="{{ $item->id }}" data-stock="{{ $item->stock }}" {{ $producto['id'] == $item->id ? 'selected' : '' }}>
+                                                        {{ $item->nombre }} - {{ $item->costo }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            <input type="number" name="cantidades[]"
-                                                value="{{ $producto['cantidad'] }}"
-                                                class="w-full px-4 py-2 border rounded-md ml-2" min="1"
-                                                onchange="validateQuantity(this); updateTotal();">
-                                            <button type="button" onclick="removeProductField(this)"
-                                                class="ml-2 text-red-800">-</button>
+                                            <input type="number" name="cantidades[]" value="{{ $producto['cantidad'] }}" placeholder="Cantidad" class="w-full px-4 py-2 border rounded-md ml-2" min="1" onchange="validateQuantity(this)">
                                         </div>
                                     @endforeach
-
                                 </div>
-                                <button type="button" onclick="addProductField()" class="mt-2 text-blue-800">+
-                                    Añadir más</button>
+                                <button type="button" onclick="addProductField()" class="mt-2 text-blue-800">+ Añadir más</button>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- Campo de total -->
-                    <div class="mb-4">
-                        <label class="block font-medium text-blue-800">Total:</label>
-                        <input type="text" id="total" name="total" value="{{ $cita->total }}"
-                            class="w-full px-4 py-2 border rounded-md" readonly>
+                            <div class="mb-2">
+                                <label class="block font-medium text-blue-800">Precio del servicio:</label>
+                                <input type="text" id="servicePrice" value="{{ $servicio ? $servicio->precio : 0 }}" class="w-full px-4 py-2 border rounded-md" readonly>
+                            </div>
+                            <div class="mb-2">
+                                <label class="block font-medium text-blue-800">Total:</label>
+                                <input type="text" id="total" name="total" value="{{ $cita->total }}" class="w-full px-4 py-2 border rounded-md" readonly>
+                            </div>   
+                        </div>
                     </div>
 
                     <div class="flex justify-between mt-6">
@@ -158,23 +141,47 @@
 
     <script>
         function addMedicationField() {
-            const container = document.getElementById('medicationFields');
-            const field = document.createElement('div');
-            field.className = 'flex items-center mt-2';
-            field.innerHTML =
-                '<input type="text" name="medicamentos[]" placeholder="Medicamento" class="flex-1 px-4 py-2 border rounded-md">';
-            container.appendChild(field);
+            var container = document.getElementById('medicationFields');
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'medicamentos[]';
+            input.placeholder = 'Medicamento';
+            input.className = 'w-full px-4 py-2 border rounded-md mt-2';
+            container.appendChild(input);
         }
 
-        // Función para agregar más campos de medicamentos
-        function addMedicationField() {
-            const container = document.getElementById('medicationFields');
-            const newField = document.createElement('div');
-            newField.classList.add('flex', 'items-center', 'mt-2');
-            newField.innerHTML = `
-                <input type="text" name="medicamentos[]" placeholder="Medicamento" class="w-full px-4 py-2 border rounded-md">
-                <button type="button" onclick="removeField(this)" class="ml-2 text-red-800">-</button>`;
-            container.appendChild(newField);
+        function addProductField() {
+            var container = document.getElementById('productFields');
+            var div = document.createElement('div');
+            div.className = 'flex items-center mt-2';
+
+            var select = document.createElement('select');
+            select.name = 'productos[]';
+            select.className = 'w-full px-4 py-2 border rounded-md';
+            select.setAttribute('onchange', 'updateTotal(this)');
+            var option = document.createElement('option');
+            option.value = '';
+            option.text = 'Selecciona un producto';
+            select.appendChild(option);
+
+            @foreach ($productos as $producto)
+                var option = document.createElement('option');
+                option.value = '{{ $producto->id }}';
+                option.text = '{{ $producto->nombre }} - {{ $producto->costo }}';
+                option.setAttribute('data-stock', '{{ $producto->stock }}');
+                select.appendChild(option);
+            @endforeach
+
+            var input = document.createElement('input');
+            input.type = 'number';
+            input.name = 'cantidades[]';
+            input.placeholder = 'Cantidad';
+            input.className = 'w-full px-4 py-2 border rounded-md';
+            input.setAttribute('onchange', 'validateQuantity(this)');
+
+            div.appendChild(select);
+            div.appendChild(input);
+            container.appendChild(div);
         }
 
         // Función para eliminar campos
@@ -182,33 +189,7 @@
             const field = button.parentNode;
             field.parentNode.removeChild(field);
         }
-
-        // Función para agregar más campos de productos
-        function addProductField() {
-            const container = document.getElementById('productFields');
-            const newField = document.createElement('div');
-            newField.classList.add('flex', 'items-center', 'mt-2');
-            newField.innerHTML = `
-                <select name="productos[]" class="w-full px-4 py-2 border rounded-md" onchange="updateQuantityOptions(this)">
-                    <option value="" data-price="" data-stock="">Seleccione un producto</option>
-                    @foreach ($productos as $producto)
-                        <option value="{{ $producto->id }}" data-price="{{ $producto->costo }}" data-stock="{{ $producto->cantidad }}">
-                            {{ $producto->nombre }} - {{ $producto->marca }}
-                        </option>
-                    @endforeach
-                </select>
-                <input type="number" name="cantidades[]" class="w-full px-4 py-2 border rounded-md ml-2" min="1" onchange="validateQuantity(this); updateTotal();">
-                <button type="button" onclick="removeProductField(this)" class="ml-2 text-red-800">-</button>`;
-            container.appendChild(newField);
-        }
-
-        // Función para eliminar campos de productos
-        function removeProductField(button) {
-            const field = button.parentNode;
-            field.parentNode.removeChild(field);
-            updateTotal();
-        }
-
+        
         function updateQuantityOptions(select) {
             const selectedOption = select.options[select.selectedIndex];
             const stock = selectedOption.getAttribute('data-stock');
@@ -233,25 +214,29 @@
         }
 
         function updateTotal() {
-            let total = 0;
-            const productSelects = document.querySelectorAll('select[name="productos[]"]');
-            const quantityInputs = document.querySelectorAll('input[name="cantidades[]"]');
+            var servicePrice = parseFloat(document.getElementById('servicePrice').value) || 0;
+            var total = servicePrice;
 
-            productSelects.forEach((select, index) => {
-                const selectedOption = select.options[select.selectedIndex];
-                const price = parseFloat(selectedOption.getAttribute('data-price'));
-                const quantity = parseInt(quantityInputs[index].value) || 0;
-                total += price * quantity;
+            var productFields = document.getElementById('productFields');
+            var productSelects = productFields.querySelectorAll('select[name="productos[]"]');
+            var productQuantities = productFields.querySelectorAll('input[name="cantidades[]"]');
+
+            productSelects.forEach(function(select, index) {
+                var selectedOption = select.options[select.selectedIndex];
+                var productPrice = parseFloat(selectedOption.text.split(' - ')[1]) || 0;
+                var quantity = parseFloat(productQuantities[index].value) || 0;
+                total += productPrice * quantity;
             });
 
             document.getElementById('total').value = total.toFixed(2);
         }
 
-        // Llamar a updateTotal en la carga inicial
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             updateTotal();
+            document.querySelectorAll('select[name="productos[]"], input[name="cantidades[]"]').forEach(function(element) {
+                element.addEventListener('change', updateTotal);
+            });
         });
     </script>
 </body>
-
 </html>
