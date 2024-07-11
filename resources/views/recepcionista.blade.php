@@ -9,6 +9,9 @@
     <!-- FullCalendar CSS and JS -->
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
+    <!-- Select2 CSS and JS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <title>Bienvenida recepcionista</title>
     <style>
         #calendar {
@@ -52,7 +55,7 @@
                 </div>
                 <ul>
                     <li class="flex items-center mb-10">
-                        <img src="{{ asset('img/calendario.png') }}"  alt="Agenda Icon" class="w-6 h-6 mr-2">
+                        <img src="{{ asset('img/calendario.png') }}" alt="Agenda Icon" class="w-6 h-6 mr-2">
                         <a href="/recepcionista" class="text-lg">Agenda</a>
                     </li>
                     <li class="flex items-center mb-10">
@@ -106,10 +109,9 @@
                         <label for="patient-name" class="block text-sm font-medium text-gray-700">Nombre del
                             paciente</label>
                         <select id="patient-name" name="id_paciente"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md select2">
                             @foreach ($pacientes as $paciente)
-                                <option value="{{ $paciente->id }}">{{ $paciente->nombre }} {{ $paciente->apellidos }}
-                                </option>
+                                <option value="{{ $paciente->id }}">{{ $paciente->nombre }} {{ $paciente->apellidos }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -123,7 +125,7 @@
                         <label for="service-type" class="block text-sm font-medium text-gray-700">Tipo de
                             servicio</label>
                         <select id="service-type" name="id_servicio"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md select2">
                             @foreach ($servicios as $servicio)
                                 <option value="{{ $servicio->id }}">{{ $servicio->nombre }}</option>
                             @endforeach
@@ -241,8 +243,12 @@
                 var modal = document.getElementById('modal');
                 modal.style.display = 'none';
             });
+
+            // Inicializar select2
+            $('.select2').select2();
         });
     </script>
 </body>
 
 </html>
+

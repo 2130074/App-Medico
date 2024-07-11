@@ -98,10 +98,9 @@
                         <label for="patient-name" class="block text-sm font-medium text-gray-700">Nombre del
                             paciente</label>
                         <select id="patient-name" name="id_paciente"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md select2">
                             @foreach ($pacientes as $paciente)
-                                <option value="{{ $paciente->id }}">{{ $paciente->nombre }} {{ $paciente->apellidos }}
-                                </option>
+                                <option value="{{ $paciente->id }}">{{ $paciente->nombre }} {{ $paciente->apellidos }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -115,7 +114,7 @@
                         <label for="service-type" class="block text-sm font-medium text-gray-700">Tipo de
                             servicio</label>
                         <select id="service-type" name="id_servicio"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md select2">
                             @foreach ($servicios as $servicio)
                                 <option value="{{ $servicio->id }}">{{ $servicio->nombre }}</option>
                             @endforeach
@@ -233,6 +232,9 @@
                 var modal = document.getElementById('modal');
                 modal.style.display = 'none';
             });
+
+            // Inicializar select2
+            $('.select2').select2();
         });
     </script>
 </body>

@@ -92,7 +92,7 @@
                                     @endphp
                                     @foreach ($productosData as $producto)
                                         <div class="flex items-center">
-                                            <select name="productos[]" class="w-full px-4 py-2 border rounded-md" onchange="updateTotal(this)">
+                                            <select name="productos[]" class="w-full px-4 py-2 border rounded-md select2" onchange="updateTotal(this)">
                                                 <option value="">Selecciona un producto</option>
                                                 @foreach ($productos as $item)
                                                     <option value="{{ $item->id }}" data-stock="{{ $item->stock }}" {{ $producto['id'] == $item->id ? 'selected' : '' }}>

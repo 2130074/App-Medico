@@ -71,7 +71,7 @@
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/productos.png" alt="user Icon" class="w-6 h-6 ml-2">
                             <select name="nombre_producto" id="nombre_producto"
-                                class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
+                                class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white select2"
                                 required>
                                 <option value="">Selecciona un producto</option>
                                 @foreach ($productos as $producto)
@@ -83,7 +83,7 @@
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/user.png" alt="user Icon" class="w-6 h-6 ml-2">
                             <select name="nombre_paciente" id="nombre_paciente"
-                                class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
+                                class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white select2"
                                 required>
                                 <option value="">Selecciona un paciente</option>
                                 @foreach ($pacientes as $paciente)
