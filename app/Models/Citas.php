@@ -19,7 +19,7 @@ class Citas extends Model
         'medicamentos',
         'estudios',
         'productos',
-        'total'
+        'total' 
     ];
 
     protected $hidden = [
@@ -48,10 +48,5 @@ class Citas extends Model
     public function servicio()
     {
         return $this->belongsTo(Servicio::class, 'id_servicio');
-    }
-
-    public function citas()
-    {
-        return $this->belongsToMany(Citas::class, 'id_producto');
     }
 }

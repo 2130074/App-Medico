@@ -27,6 +27,10 @@ class VentaController extends Controller
 
         $producto = Producto::find($request->nombre_producto);
 
+        if ($request->cantidad > $producto->cantidad) {
+            return redirect()->back()->withErrors(['cantidad' => 'La cantidad solicitada supera el stock disponible.']);
+        }
+
         $totalPagoCalculado = $producto->costo * $request->cantidad;
 
         Venta::create([

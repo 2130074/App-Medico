@@ -20,12 +20,16 @@ class VentaDocController extends Controller
     {
         $validatedData = $request->validate([
             'nombre_producto' => 'required|exists:productos,id',
-            'nombre_paciente' => 'required',
+            'nombre_paciente' => 'required|exists:pacientes,id',
             'fecha_hora' => 'required|date',
             'cantidad' => 'required|integer|min:1',
         ]);
 
         $producto = Producto::find($request->nombre_producto);
+
+        if ($request->cantidad > $producto->cantidad) {
+            return redirect()->back()->withErrors(['cantidad' => 'La cantidad solicitada supera el stock disponible.']);
+        }
 
         $totalPagoCalculado = $producto->costo * $request->cantidad;
 

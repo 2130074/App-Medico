@@ -110,9 +110,9 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <select name="cantidades[]" class="w-full px-4 py-2 border rounded-md ml-2">
-                                            <!-- Options will be populated based on the selected product -->
-                                        </select>
+                                        <input type="number" name="cantidades[]"
+                                            class="w-full px-4 py-2 border rounded-md ml-2" min="1"
+                                            onchange="validateQuantity(this)">
                                         <button type="button" onclick="removeProductField(this)"
                                             class="ml-2 text-red-800">-</button>
                                     </div>
@@ -160,10 +160,28 @@
             container.appendChild(field);
         }
 
+        // Función para agregar más campos de medicamentos
+        function addMedicationField() {
+            const container = document.getElementById('medicationFields');
+            const newField = document.createElement('div');
+            newField.classList.add('flex', 'items-center', 'mt-2');
+            newField.innerHTML = `
+                <input type="text" name="medicamentos[]" placeholder="Medicamento" class="w-full px-4 py-2 border rounded-md">
+                <button type="button" onclick="removeField(this)" class="ml-2 text-red-800">-</button>`;
+            container.appendChild(newField);
+        }
+
+        // Función para eliminar campos
+        function removeField(button) {
+            const field = button.parentNode;
+            field.parentNode.removeChild(field);
+        }
+
+        // Función para agregar más campos de productos
         function addProductField() {
             const container = document.getElementById('productFields');
             const newField = document.createElement('div');
-            newField.classList.add('flex', 'items-center');
+            newField.classList.add('flex', 'items-center', 'mt-2');
             newField.innerHTML = `
                 <select name="productos[]" class="w-full px-4 py-2 border rounded-md" onchange="updateQuantityOptions(this)">
                     <option value="" data-price="" data-stock="">Seleccione un producto</option>
@@ -173,18 +191,16 @@
                         </option>
                     @endforeach
                 </select>
-                <select name="cantidades[]" class="w-full px-4 py-2 border rounded-md ml-2" onchange="updateTotal()">
-                    <!-- Options will be populated based on the selected product -->
-                </select>
-                <button type="button" onclick="removeProductField(this)" class="ml-2 text-red-800">-</button>
-            `;
+                <input type="number" name="cantidades[]" class="w-full px-4 py-2 border rounded-md ml-2" min="1" onchange="validateQuantity(this)">
+                <button type="button" onclick="removeProductField(this)" class="ml-2 text-red-800">-</button>`;
             container.appendChild(newField);
-            updateTotal(); 
         }
 
+        // Función para eliminar campos de productos
         function removeProductField(button) {
-            button.parentElement.remove();
-            updateTotal(); 
+            const field = button.parentNode;
+            field.parentNode.removeChild(field);
+            updateTotal();
         }
 
         function updateQuantityOptions(select) {
@@ -200,33 +216,49 @@
                 quantitySelect.appendChild(option);
             }
 
-            updateTotal(); 
+            // Agrega la validación de cantidad al evento input
+            quantitySelect.setAttribute('max', stock);
+            quantitySelect.setAttribute('min', 1);
+            quantitySelect.addEventListener('input', () => validateQuantity(quantitySelect));
+
+            updateTotal();
         }
 
+        // Función para validar la cantidad y el total
+        function validateQuantity(quantityInput) {
+            const maxQuantity = parseInt(quantityInput.getAttribute('max'));
+            const minQuantity = parseInt(quantityInput.getAttribute('min'));
+            const currentQuantity = parseInt(quantityInput.value);
+
+            if (currentQuantity < minQuantity) {
+                quantityInput.value = minQuantity;
+            } else if (currentQuantity > maxQuantity) {
+                alert(`La cantidad ingresada no puede ser mayor a ${maxQuantity}.`);
+                quantityInput.value = maxQuantity;
+            }
+
+            updateTotal();
+        }
+
+        // Función para calcular y actualizar el total
         function updateTotal() {
-            const productFields = document.querySelectorAll('select[name="productos[]"]');
             let total = 0;
+            const productSelects = document.querySelectorAll('select[name="productos[]"]');
+            const quantityInputs = document.querySelectorAll('input[name="cantidades[]"]');
 
-            productFields.forEach(field => {
-                const selectedOption = field.options[field.selectedIndex];
-                const price = selectedOption.getAttribute('data-price');
-                const quantity = field.nextElementSibling.value;
-
-                if (price && quantity) {
-                    total += parseFloat(price) * parseInt(quantity);
-                }
+            productSelects.forEach((select, index) => {
+                const selectedOption = select.options[select.selectedIndex];
+                const price = parseFloat(selectedOption.getAttribute('data-price'));
+                const quantity = parseInt(quantityInputs[index].value) || 0;
+                total += price * quantity;
             });
 
             document.getElementById('total').value = total.toFixed(2);
         }
 
-
-        window.addEventListener('load', () => {
+        // Llamar a updateTotal en la carga inicial
+        document.addEventListener('DOMContentLoaded', function() {
             updateTotal();
-            const productFields = document.querySelectorAll('select[name="productos[]"]');
-            productFields.forEach(field => {
-                updateQuantityOptions(field);
-            });
         });
     </script>
 </body>

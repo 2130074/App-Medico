@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Ventas</title>
 </head>
-
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
     <div class="flex h-screen">
         <div class="bg-blue-650 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
@@ -101,15 +99,12 @@
                         </div>
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/productos.png" alt="user Icon" class="w-6 h-6 ml-2">
-                            <select name="cantidad" id="cantidad"
+                            <input type="number" name="cantidad" id="cantidad"
                                 class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
-                                required>
-                                <!-- Las opciones se cargarán dinámicamente -->
-                            </select>
+                                min="1" required>
                         </div>
                         <div class="mb-4 flex items-center bg-white bg-opacity-20 rounded-md shadow-sm">
                             <img src="img/productos.png" alt="user Icon" class="w-6 h-6 ml-2">
-                            
                             <span id="total_pago"
                                 class="flex-grow px-3 py-2 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 text-white placeholder-white"
                                 style="cursor: default;"></span>
@@ -135,56 +130,45 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const productoSelect = document.getElementById('nombre_producto');
-            const cantidadSelect = document.getElementById('cantidad');
+            const cantidadInput = document.getElementById('cantidad');
             const totalPagoSpan = document.getElementById('total_pago');
 
             const updateTotalPago = () => {
                 const costo = productoSelect.options[productoSelect.selectedIndex].dataset.costo || 0;
-                const cantidad = cantidadSelect.value || 0;
+                const cantidad = cantidadInput.value || 0;
                 const totalPago = costo * cantidad;
                 totalPagoSpan.textContent = totalPago.toFixed(2);
             };
 
+            productoSelect.addEventListener('change', function() {
+                const productoId = this.value;
+                fetch(`/ventas/max-stock/${productoId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        cantidadInput.max = data.maxStock;
+                        cantidadInput.value = '';
+                        totalPagoSpan.textContent = '0.00';
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+
+            cantidadInput.addEventListener('input', function() {
+                const cantidad = parseInt(cantidadInput.value);
+                const maxStock = parseInt(cantidadInput.max);
+
+                if (cantidad > maxStock) {
+                    alert(`No se puede registrar. Ingrese una cantidad menor o igual a ${maxStock}`);
+                    cantidadInput.value = '';
+                } else if (cantidad <= 0) {
+                    alert('La cantidad debe ser mayor a 0');
+                    cantidadInput.value = '';
+                }
+
+                updateTotalPago();
+            });
+
             productoSelect.addEventListener('change', updateTotalPago);
-            cantidadSelect.addEventListener('change', updateTotalPago);
         });
-
-        document.addEventListener('DOMContentLoaded', function() {
-        const productoSelect = document.getElementById('nombre_producto');
-        const cantidadSelect = document.getElementById('cantidad');
-        const totalPagoSpan = document.getElementById('total_pago');
-
-        const updateTotalPago = () => {
-            const costo = productoSelect.options[productoSelect.selectedIndex].dataset.costo || 0;
-            const cantidad = cantidadSelect.value || 0;
-            const totalPago = costo * cantidad;
-            totalPagoSpan.textContent = totalPago.toFixed(2);
-        };
-
-        productoSelect.addEventListener('change', function() {
-            const productoId = this.value;
-            fetch(`/ventas/max-stock/${productoId}`)
-                .then(response => response.json())
-                .then(data => {
-                    cantidadSelect.innerHTML = '';
-                    for (let i = 1; i <= data.maxStock; i++) {
-                        let option = document.createElement("option");
-                        option.text = option.value = i;
-                        cantidadSelect.add(option);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        });
-
-        productoSelect.addEventListener('focus', function() {
-            cantidadSelect.innerHTML = '<option value="">Seleccione la cantidad</option>';
-        });
-
-        // Actualizar el total de pago cuando cambie la cantidad o el producto seleccionado
-        productoSelect.addEventListener('change', updateTotalPago);
-        cantidadSelect.addEventListener('change', updateTotalPago);
-    });
     </script>
 </body>
-
 </html>

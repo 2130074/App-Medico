@@ -81,56 +81,35 @@ class PacientesDoctorController extends Controller
 
     public function detallesCita($id)
     {
-        $cita = Citas::findOrFail($id);
+        $cita = Citas::with('tipo_servicio')->find($id);
         $productos = Producto::all();
         return view('detallesCita', compact('cita', 'productos'));
     }
 
-
     public function actualizarCita(Request $request, $id)
     {
-        $request->validate([
-            'motivos' => 'required|string',
-            'fecha' => 'required|date',
-            'hora' => 'required|date_format:H:i',
-            'estudios' => 'nullable|string',
-            'medicamentos' => 'nullable|array',
-            'medicamentos.*' => 'nullable|string',
-            'productos' => 'nullable|array',
-            'cantidades' => 'nullable|array',
-        ]);
-
-        $cita = Citas::findOrFail($id);
+        $cita = Citas::find($id);
         $cita->motivos = $request->input('motivos');
         $cita->fecha = $request->input('fecha');
         $cita->hora = $request->input('hora');
+        $cita->medicamentos = implode(',', $request->input('medicamentos', []));
         $cita->estudios = $request->input('estudios');
-        $cita->medicamentos = $request->has('medicamentos') ? implode(',', $request->input('medicamentos')) : null;
-
-        // Manejo de productos
-        $productos = $request->input('productos', []);
-        $cantidades = $request->input('cantidades', []);
-        $productosSeleccionados = [];
-        $total = 0;
-
-        foreach ($productos as $index => $productoId) {
-            $producto = Producto::findOrFail($productoId);
-            $cantidad = $cantidades[$index];
-            $subtotal = $producto->costo * $cantidad;
-            $total += $subtotal;
-            $productosSeleccionados[] = [
-                'producto_id' => $productoId,
-                'nombre' => $producto->nombre,
-                'marca' => $producto->marca,
-                'cantidad' => $cantidad,
-                'subtotal' => $subtotal,
-            ];
-        }
-
-        $cita->productos = json_encode($productosSeleccionados);
-        $cita->total = $total;
+        $cita->total = $request->input('total', 0); // Guarda el total, asegurando que no sea nulo
         $cita->save();
 
-        return redirect()->route('docPacientes');
+        $productos = $request->input('productos', []);
+        $cantidades = $request->input('cantidades', []);
+
+        foreach ($productos as $index => $producto_id) {
+            if (!empty($producto_id) && isset($cantidades[$index]) && $cantidades[$index] > 0) {
+                $producto = Producto::find($producto_id);
+                if ($producto && $producto->cantidad >= $cantidades[$index]) {
+                    $producto->cantidad -= $cantidades[$index];
+                    $producto->save();
+                }
+            }
+        }
+
+        return redirect()->route('docPacientes', ['id' => $cita->id_paciente])->with('success', 'Cita actualizada correctamente.');
     }
 }
