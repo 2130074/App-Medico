@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +18,7 @@ class Citas extends Model
         'medicamentos',
         'estudios',
         'productos',
-        'total' 
+        'total'
     ];
 
     protected $hidden = [
@@ -32,7 +31,7 @@ class Citas extends Model
         'hora' => 'datetime:H:i',
         'id_paciente' => 'integer',
         'id_servicio' => 'integer',
-        'productos' => 'array',
+        'productos' => 'array', // Esto es necesario para manejar los productos como un array
     ];
 
     public function paciente()

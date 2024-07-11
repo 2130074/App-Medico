@@ -97,28 +97,22 @@
                             <div class="mb-4">
                                 <label class="block font-medium text-blue-800">Productos:</label>
                                 <div id="productFields" class="space-y-2">
-                                    <div class="flex items-center">
-                                        <select name="productos[]" class="w-full px-4 py-2 border rounded-md"
-                                            onchange="updateQuantityOptions(this)">
-                                            <option value="" data-price="" data-stock="">Seleccione un
-                                                producto</option>
-                                            @foreach ($productos as $producto)
-                                                <option value="{{ $producto->id }}"
-                                                    data-price="{{ $producto->costo }}"
-                                                    data-stock="{{ $producto->cantidad }}">
-                                                    {{ $producto->nombre }} - {{ $producto->marca }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <input type="number" name="cantidades[]"
-                                            class="w-full px-4 py-2 border rounded-md ml-2" min="1"
-                                            onchange="validateQuantity(this)">
-                                        <button type="button" onclick="removeProductField(this)"
-                                            class="ml-2 text-red-800">-</button>
-                                    </div>
+                                    @foreach (json_decode($cita->productos, true) as $producto)
+                                        <div class="flex items-center">
+                                            <select name="productos[]" class="w-full px-4 py-2 border rounded-md" onchange="updateQuantityOptions(this)">
+                                                <option value="" data-price="" data-stock="">Seleccione un producto</option>
+                                                @foreach ($productos as $prod)
+                                                    <option value="{{ $prod->id }}" data-price="{{ $prod->costo }}" data-stock="{{ $prod->cantidad }}" @if ($producto['id'] == $prod->id) selected @endif>
+                                                        {{ $prod->nombre }} - {{ $prod->marca }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <input type="number" name="cantidades[]" value="{{ $producto['cantidad'] }}" class="w-full px-4 py-2 border rounded-md ml-2" min="1" onchange="validateQuantity(this); updateTotal();">
+                                            <button type="button" onclick="removeProductField(this)" class="ml-2 text-red-800">-</button>
+                                        </div>
+                                    @endforeach
                                 </div>
-                                <button type="button" onclick="addProductField()" class="mt-2 text-blue-800">+
-                                    Añadir más</button>
+                                <button type="button" onclick="addProductField()" class="mt-2 text-blue-800">+ Añadir más</button>
                             </div>
                         </div>
                     </div>
@@ -126,7 +120,7 @@
                     <!-- Campo de total -->
                     <div class="mb-4">
                         <label class="block font-medium text-blue-800">Total:</label>
-                        <input type="text" id="total" class="w-full px-4 py-2 border rounded-md" readonly>
+                        <input type="text" id="total" name="total" value="{{ $cita->total }}" class="w-full px-4 py-2 border rounded-md" readonly>
                     </div>
 
                     <div class="flex justify-between mt-6">
@@ -191,7 +185,7 @@
                         </option>
                     @endforeach
                 </select>
-                <input type="number" name="cantidades[]" class="w-full px-4 py-2 border rounded-md ml-2" min="1" onchange="validateQuantity(this)">
+                <input type="number" name="cantidades[]" class="w-full px-4 py-2 border rounded-md ml-2" min="1" onchange="validateQuantity(this); updateTotal();">
                 <button type="button" onclick="removeProductField(this)" class="ml-2 text-red-800">-</button>`;
             container.appendChild(newField);
         }
@@ -206,41 +200,26 @@
         function updateQuantityOptions(select) {
             const selectedOption = select.options[select.selectedIndex];
             const stock = selectedOption.getAttribute('data-stock');
-            const quantitySelect = select.nextElementSibling;
+            const quantityInput = select.nextElementSibling;
 
-            quantitySelect.innerHTML = '';
-            for (let i = 1; i <= stock; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                quantitySelect.appendChild(option);
-            }
-
-            // Agrega la validación de cantidad al evento input
-            quantitySelect.setAttribute('max', stock);
-            quantitySelect.setAttribute('min', 1);
-            quantitySelect.addEventListener('input', () => validateQuantity(quantitySelect));
+            quantityInput.setAttribute('max', stock);
+            quantityInput.setAttribute('min', 1);
+            quantityInput.value = 1;
 
             updateTotal();
         }
 
-        // Función para validar la cantidad y el total
-        function validateQuantity(quantityInput) {
-            const maxQuantity = parseInt(quantityInput.getAttribute('max'));
-            const minQuantity = parseInt(quantityInput.getAttribute('min'));
-            const currentQuantity = parseInt(quantityInput.value);
-
-            if (currentQuantity < minQuantity) {
-                quantityInput.value = minQuantity;
-            } else if (currentQuantity > maxQuantity) {
-                alert(`La cantidad ingresada no puede ser mayor a ${maxQuantity}.`);
-                quantityInput.value = maxQuantity;
+        function validateQuantity(input) {
+            const max = input.getAttribute('max');
+            const min = input.getAttribute('min');
+            if (parseInt(input.value) > parseInt(max)) {
+                input.value = max;
+            } else if (parseInt(input.value) < parseInt(min)) {
+                input.value = min;
             }
-
             updateTotal();
         }
 
-        // Función para calcular y actualizar el total
         function updateTotal() {
             let total = 0;
             const productSelects = document.querySelectorAll('select[name="productos[]"]');

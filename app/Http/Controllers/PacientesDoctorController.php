@@ -89,16 +89,19 @@ class PacientesDoctorController extends Controller
     public function actualizarCita(Request $request, $id)
     {
         $cita = Citas::find($id);
+
+        // Actualizar los campos de la cita
         $cita->motivos = $request->input('motivos');
         $cita->fecha = $request->input('fecha');
         $cita->hora = $request->input('hora');
         $cita->medicamentos = implode(',', $request->input('medicamentos', []));
         $cita->estudios = $request->input('estudios');
-        $cita->total = $request->input('total', 0); // Guarda el total, asegurando que no sea nulo
-        $cita->save();
+        $cita->total = $request->input('total', 0);
 
+        // Guardar los productos y las cantidades como un array JSON
         $productos = $request->input('productos', []);
         $cantidades = $request->input('cantidades', []);
+        $productosData = [];
 
         foreach ($productos as $index => $producto_id) {
             if (!empty($producto_id) && isset($cantidades[$index]) && $cantidades[$index] > 0) {
@@ -106,10 +109,14 @@ class PacientesDoctorController extends Controller
                 if ($producto && $producto->cantidad >= $cantidades[$index]) {
                     $producto->cantidad -= $cantidades[$index];
                     $producto->save();
+                    $productosData[] = ['id' => $producto_id, 'cantidad' => (int)$cantidades[$index]];
                 }
             }
         }
 
-        return redirect()->route('docPacientes', ['id' => $cita->id_paciente])->with('success', 'Cita actualizada correctamente.');
+        $cita->productos = json_encode($productosData, JSON_UNESCAPED_UNICODE); // Guardar productos como JSON
+        $cita->save();
+
+        return redirect()->route('docPacientes', ['id' => $cita->id])->with('success', 'Cita actualizada correctamente.');
     }
 }

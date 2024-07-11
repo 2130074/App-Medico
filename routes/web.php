@@ -65,6 +65,7 @@ Route::get('/docPacientes', [PacientesDoctorController::class, 'index'])->name('
 Route::get('/detallesPacientes/{id}', [PacientesDoctorController::class, 'show'])->name('pacientes.show');
 Route::get('/expediente/{id}', [PacientesDoctorController::class, 'expediente']);
 Route::get('/detallesCita/{id}', [PacientesDoctorController::class, 'detallesCita']);
+Route::get('/cita/{id}', [PacientesDoctorController::class, 'detallesCita'])->name('detallesCita');
 Route::post('/actualizarCita/{id}', [PacientesDoctorController::class, 'actualizarCita'])->name('actualizarCita');
 Route::delete('/docPacientes/{paciente}', [PacientesDoctorController::class, 'destroy'])->name('docPacientes.destroy');
 Route::get('/docPacientes/{paciente}/modificar', [PacientesDoctorController::class, 'edit'])->name('pacientesDoc.edit');
