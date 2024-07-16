@@ -75,6 +75,7 @@ Route::put('/docPacientes/{paciente}/actualizar', [PacientesDoctorController::cl
 Route::get('/pago/{id}', [PacientesController::class, 'verPagos'])->name('verPagos');
 Route::get('/pago/{paciente_id}', [CitaController::class, 'verPago'])->name('verPago');
 Route::post('/pago/cambiarEstado/{cita_id}', [CitaController::class, 'cambiarEstadoPago'])->name('cambiarEstadoPago');
+Route::get('/docIngresos', [CitaController::class, 'ingresosDiarios'])->name('ingresos.diarios');
 
 Route::get('/vender', [VentaController::class, 'create'])->name('vender.create');
 Route::post('/vender', [VentaController::class, 'store'])->name('vender.store');
@@ -136,9 +137,6 @@ Route::get('/modificarServicio', function () {
     return view('modificarServicio');
 });
 
-Route::get('/docIngresos', function () {
-    return view('doc.docIngresos');
-})->name('docIngresos');
 
 Route::get('/modificarPacientesDoc', function () {
     return view('doc.modificarPacientesDoc');

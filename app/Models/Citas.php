@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Citas extends Model
 {
@@ -21,17 +23,12 @@ class Citas extends Model
         'total'
     ];
 
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-    ];
-
     protected $casts = [
         'fecha' => 'date',
         'hora' => 'datetime:H:i',
         'id_paciente' => 'integer',
         'id_servicio' => 'integer',
-        'productos' => 'array', // Esto es necesario para manejar los productos como un array
+        'productos' => 'array',
     ];
 
     public function paciente()

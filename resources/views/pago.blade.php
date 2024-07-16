@@ -116,7 +116,7 @@
 
             <div class="flex justify-end mt-6">
                 <h3 class="text-xl font-bold text-gray-800">Total: <span class="text-blue-500">
-                    ${{ $citas->where('estado', 'Pendiente')->sum(fn($cita) => $cita->tipo_servicio->precio) }}
+                    ${{ $citas->where('estado', 'Pendiente')->sum(fn($cita) => $cita->total) }}
                 </span></h3>
             </div>
 
