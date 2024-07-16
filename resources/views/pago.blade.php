@@ -82,7 +82,7 @@
                         @foreach ($citas as $cita)
                             <tr class="hover:bg-blue-600">
                                 <td class="py-2 px-4">{{ $cita->tipo_servicio->nombre }}</td>
-                                <td class="py-2 px-4 text-center">${{ $cita->tipo_servicio->precio }}</td>
+                                <td class="py-2 px-4 text-center">${{ $cita->total}}</td>
                                 <td class="py-2 px-4 text-center">{{ $cita->fecha->format('d/m/Y') }}</td>
                                 <td class="py-2 px-4 text-center">
                                     @if ($cita->estado == 'Pendiente')
