@@ -83,13 +83,12 @@ class PacientesDoctorController extends Controller
     {
         $cita = Citas::with('tipo_servicio')->find($id);
 
-        // Verifica si la cita existe
         if (!$cita) {
             return redirect()->back()->with('error', 'Cita no encontrada.');
         }
 
         $productos = Producto::all();
-        $servicio = $cita->tipo_servicio; // Obtener el servicio de la cita
+        $servicio = $cita->tipo_servicio; 
 
         return view('detallesCita', compact('cita', 'productos', 'servicio'));
     }
@@ -103,6 +102,8 @@ class PacientesDoctorController extends Controller
         $cita->motivos = $request->input('motivos');
         $cita->fecha = $request->input('fecha');
         $cita->hora = $request->input('hora');
+        $cita->temperatura = $request->input('temperatura');
+        $cita->presion_arterial = $request->input('presion_arterial');
         $cita->medicamentos = implode(',', $request->input('medicamentos', []));
         $cita->estudios = $request->input('estudios');
         $cita->total = $request->input('total', 0);

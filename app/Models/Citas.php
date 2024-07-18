@@ -20,7 +20,9 @@ class Citas extends Model
         'medicamentos',
         'estudios',
         'productos',
-        'total'
+        'total',
+        'temperatura',
+        'presion_arterial'
     ];
 
     protected $casts = [

@@ -65,6 +65,14 @@
                             <label class="block font-medium text-blue-800">Hora de la cita:</label>
                             <input type="time" name="hora" value="{{ date('H:i', strtotime($cita->hora)) }}" class="w-full px-4 py-2 border rounded-md">
                         </div>
+                        <div class="mb-2">
+                            <label class="block font-medium text-blue-800">Temperatura:</label>
+                            <input type="text" name="temperatura" value="{{ $cita->temperatura }}" placeholder="Temperatura" class="w-full px-4 py-2 border rounded-md">
+                        </div>
+                        <div class="mb-2">
+                            <label class="block font-medium text-blue-800">Presión arterial:</label>
+                            <input type="text" name="presion_arterial" value="{{ $cita->presion_arterial }}" placeholder="Presión arterial" class="w-full px-4 py-2 border rounded-md">
+                        </div>
                         <div class="col-span-2 grid grid-cols-2 gap-4">
                             <div class="mb-4">
                                 <label class="block font-medium text-blue-800">Medicamentos recetados:</label>

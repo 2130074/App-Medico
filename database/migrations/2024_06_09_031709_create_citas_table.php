@@ -21,7 +21,9 @@ class CreateCitasTable extends Migration
             $table->string('medicamentos')->nullable();
             $table->string('estudios')->nullable();
             $table->json('productos')->nullable(); 
-            $table->decimal('total', 8, 2)->default(0); 
+            $table->decimal('total', 8, 2)->default(0);
+            $table->float('temperatura')->nullable();
+            $table->string('presion_arterial')->nullable(); 
             $table->timestamps();
 
             // Definir las llaves foráneas
