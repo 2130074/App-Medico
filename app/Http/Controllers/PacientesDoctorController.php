@@ -104,6 +104,7 @@ class PacientesDoctorController extends Controller
         $cita->hora = $request->input('hora');
         $cita->temperatura = $request->input('temperatura');
         $cita->presion_arterial = $request->input('presion_arterial');
+        $cita->diagnostico = $request->input('diagnostico');
         $cita->medicamentos = implode(',', $request->input('medicamentos', []));
         $cita->estudios = $request->input('estudios');
         $cita->total = $request->input('total', 0);

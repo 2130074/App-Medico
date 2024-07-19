@@ -73,6 +73,11 @@
                             <label class="block font-medium text-blue-800">Presión arterial:</label>
                             <input type="text" name="presion_arterial" value="{{ $cita->presion_arterial }}" placeholder="Presión arterial" class="w-full px-4 py-2 border rounded-md">
                         </div>
+                        <div class="col-span-2 mb-2">
+                            <label class="block font-medium text-blue-800">Diagnóstico:</label>
+                            <textarea name="diagnostico" placeholder="Diagnóstico" class="w-full px-4 py-2 border rounded-md">{{ $cita->diagnostico }}</textarea>
+                        </div>
+                        
                         <div class="col-span-2 grid grid-cols-2 gap-4">
                             <div class="mb-4">
                                 <label class="block font-medium text-blue-800">Medicamentos recetados:</label>
