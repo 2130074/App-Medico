@@ -32,16 +32,6 @@ class ProductosController extends Controller
         return redirect()->route('Productos')->withSuccess("Producto actualizado exitosamente");
     }
 
-    public function destroy(Producto $producto)
-    {
-        try {
-            $producto->delete();
-            return redirect()->route('Productos')->withSuccess("Producto eliminado");
-        } catch (\Exception $th) {
-            return back()->withErrors(['error' => 'Hubo un problema al eliminar el servicio. Error: ' . $th->getMessage()]);
-        }
-    }
-
     public function store(StoreProductoRequest $request)
     {
         try {

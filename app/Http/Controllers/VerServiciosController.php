@@ -29,15 +29,4 @@ class VerServiciosController extends Controller
         $servicio->update($validatedData);
         return redirect()->route('verServicios')->withSuccess("Servicio actualizado exitosamente");
     }
-
-
-    public function destroy(Servicio $servicio)
-    {
-        try {
-            $servicio->delete();
-            return redirect()->route('verServicios')->withSuccess("Servicio eliminado");
-        } catch (\Exception $th) {
-            return back()->withErrors(['error' => 'Hubo un problema al eliminar el servicio. Error: ' . $th->getMessage()]);
-        }
-    }
 }

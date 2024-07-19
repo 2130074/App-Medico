@@ -105,7 +105,6 @@
                             <th class="py-2 px-4 text-center">Próxima cita</th>
                             <th class="py-2 px-4 text-center">Total de pago</th>
                             <th class="py-2 px-4 text-center">Modificar</th>
-                            <th class="py-2 px-4 text-center">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,16 +126,6 @@
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                                             onclick="location.href='{{ route('pacientes.edit', $paciente->id) }}'">Modificar</button>
                                     </td>                                    
-
-                                    <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('verPacientes.destroy', $paciente->id) }}"
-                                            method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>
-                                        </form>
-                                    </td>
                                 </tr>
                             @endforeach
                         @endif

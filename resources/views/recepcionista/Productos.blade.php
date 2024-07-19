@@ -110,7 +110,6 @@
                             <th class="py-2 px-4 text-left">Costo</th>
                             <th class="py-2 px-4 text-left">Cantidad</th>
                             <th class="py-2 px-4 text-center">Modificar</th>
-                            <th class="py-2 px-4 text-center">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,13 +125,6 @@
                                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Modificar</button>
                                         </form>
                                     </td>
-                                    <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('Productos.destroy', $producto->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>
-                                        </form>
-                                    </td>    
                                 </tr>
                             @endforeach
                         @endif

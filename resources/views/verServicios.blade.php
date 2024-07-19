@@ -103,7 +103,6 @@
                             <th class="py-2 px-4 text-left">Nombre</th>
                             <th class="py-2 px-4 text-left">Costo</th>
                             <th class="py-2 px-4 text-center">Modificar</th>
-                            <th class="py-2 px-4 text-center">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,14 +115,7 @@
                                         <form action="{{ route('verServicios.edit', $servicio->id) }}" method="get">
                                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Modificar</button>
                                         </form>
-                                    </td>
-                                    <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('verServicios.destroy', $servicio->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Eliminar</button>
-                                        </form>
-                                    </td>    
+                                    </td>  
                                 </tr>
                             @endforeach
                         @endif

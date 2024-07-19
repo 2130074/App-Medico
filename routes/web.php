@@ -37,12 +37,10 @@ Route::get('/modificar/{id}', [UserController::class, 'edit'])->name('usuarios.e
 Route::post('/modificar/{id}', [UserController::class, 'update'])->name('usuarios.update');
 
 Route::get('/verPacientes', [PacientesController::class, 'index'])->name('verPacientes');
-Route::delete('/verPacientes/{paciente}', [PacientesController::class, 'destroy'])->name('verPacientes.destroy');
 Route::get('/verPacientes/{paciente}/modificar', [PacientesController::class, 'edit'])->name('pacientes.edit');
 Route::put('/verPacientes/{paciente}/actualizar', [PacientesController::class, 'update'])->name('pacientes.update');
 
 Route::get('/verServicios', [VerServiciosController::class, 'index'])->name('verServicios');
-Route::delete('/verServicios/{servicio}', [VerServiciosController::class, 'destroy'])->name('verServicios.destroy');
 Route::get('/verServicios/editar/{servicio}', [VerServiciosController::class, 'edit'])->name('verServicios.edit');
 Route::put('/verServicios/update/{servicio}', [VerServiciosController::class, 'update'])->name('verServicios.update');
 
@@ -57,7 +55,6 @@ Route::get('/docProductos/editar/{producto}', [ProductosDoctorController::class,
 Route::put('/docProductos/update/{producto}', [ProductosDoctorController::class, 'update'])->name('docProductos.update');
 
 Route::get('/Productos', [ProductosController::class, 'index'])->name('Productos');
-Route::delete('/Productos/{producto}', [ProductosController::class, 'destroy'])->name('Productos.destroy');
 Route::get('/Productos/editar/{producto}', [ProductosController::class, 'edit'])->name('Productos.edit');
 Route::put('/Productos/update/{producto}', [ProductosController::class, 'update'])->name('Productos.update');
 

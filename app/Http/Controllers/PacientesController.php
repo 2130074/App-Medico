@@ -35,16 +35,6 @@ class PacientesController extends Controller
         return redirect(route('verPacientes'));
     }
 
-    public function destroy(Paciente $paciente)
-    {
-        try {
-            $paciente->delete();
-            return redirect()->route('verPacientes')->withSuccess("Paciente eliminado");
-        } catch (\Exception $th) {
-            return back()->withErrors(['error' => 'Hubo un problema al eliminar el paciente. Error: ' . $th->getMessage()]);
-        }
-    }
-
     public function edit(Paciente $paciente)
     {
         return view('modificarPacientes', compact('paciente'));
