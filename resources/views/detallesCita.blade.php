@@ -5,9 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
     <title>Detalles de la Cita</title>
+    <style>
+        .scrollable-content {
+            overflow-y: auto;
+            height: 100%;
+        }
+    </style>
 </head>
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
-    <div class="flex h-screen">
+    <div class="flex h-screen overflow-hidden">
         <div class="bg-blue-650 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center mb-8">
@@ -43,7 +49,7 @@
             </button>
         </div>
 
-        <div class="flex items-center justify-center w-3/4 ml-auto">
+        <div class="flex items-center justify-center w-3/4 ml-auto scrollable-content">
             <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-2xl">
                 <h2 class="text-3xl font-bold text-blue-800 text-center mb-4">Detalles de la cita</h2>
                 <form action="{{ route('actualizarCita', ['id' => $cita->id]) }}" method="POST">
