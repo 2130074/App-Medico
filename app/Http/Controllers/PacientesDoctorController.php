@@ -106,7 +106,7 @@ class PacientesDoctorController extends Controller
         $cita->presion_arterial = $request->input('presion_arterial');
         $cita->diagnostico = $request->input('diagnostico');
         $cita->medicamentos = implode(',', $request->input('medicamentos', []));
-        $cita->estudios = $request->input('estudios');
+        $cita->estudios = implode(',', $request->input('estudios', []));
         $cita->total = $request->input('total', 0);
 
         // Guardar los productos y las cantidades como un array JSON
