@@ -144,8 +144,9 @@
                                                 @foreach ($productos as $item)
                                                     <option value="{{ $item->id }}"
                                                         data-stock="{{ $item->stock }}"
+                                                        data-precio="{{ $item->costo }}"
                                                         {{ $producto['id'] == $item->id ? 'selected' : '' }}>
-                                                        {{ $item->nombre }} - {{ $item->costo }}
+                                                        {{ $item->nombre }} - ${{ $item->costo }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -153,8 +154,6 @@
                                                 value="{{ $producto['cantidad'] }}" placeholder="Cantidad"
                                                 class="w-full px-4 py-2 border rounded-md ml-2" min="1"
                                                 onchange="validateQuantity(this)">
-                                            <button type="button" onclick="removeField(this)"
-                                                class="ml-2 text-2xl font-bold text-blue-800">-</button>
                                         </div>
                                     @endforeach
                                 </div>
@@ -200,22 +199,44 @@
     <script>
         function addMedicationField() {
             var container = document.getElementById('medicationFields');
+            var div = document.createElement('div');
+            div.className = 'flex items-center mt-2';
             var input = document.createElement('input');
             input.type = 'text';
             input.name = 'medicamentos[]';
             input.placeholder = 'Medicamento';
-            input.className = 'w-full px-4 py-2 border rounded-md mt-2';
-            container.appendChild(input);
+            input.className = 'w-full px-4 py-2 border rounded-md';
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'ml-2 text-2xl font-bold text-blue-800';
+            button.textContent = '-';
+            button.onclick = function() {
+                removeField(button);
+            };
+            div.appendChild(input);
+            div.appendChild(button);
+            container.appendChild(div);
         }
 
         function addEstudioField() {
             var container = document.getElementById('estudiosFields');
+            var div = document.createElement('div');
+            div.className = 'flex items-center mt-2';
             var input = document.createElement('input');
             input.type = 'text';
             input.name = 'estudios[]';
             input.placeholder = 'Estudio';
-            input.className = 'w-full px-4 py-2 border rounded-md mt-2';
-            container.appendChild(input);
+            input.className = 'w-full px-4 py-2 border rounded-md';
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'ml-2 text-2xl font-bold text-blue-800';
+            button.textContent = '-';
+            button.onclick = function() {
+                removeField(button);
+            };
+            div.appendChild(input);
+            div.appendChild(button);
+            container.appendChild(div);
         }
 
         function addProductField() {
@@ -290,13 +311,14 @@
 
             productSelects.forEach(function(select, index) {
                 var selectedOption = select.options[select.selectedIndex];
-                var productPrice = parseFloat(selectedOption.text.split(' - ')[1]) || 0;
+                var productPrice = parseFloat(selectedOption.getAttribute('data-precio')) || 0;
                 var quantity = parseFloat(productQuantities[index].value) || 0;
                 total += productPrice * quantity;
             });
 
             document.getElementById('total').value = total.toFixed(2);
         }
+
 
         document.addEventListener('DOMContentLoaded', function() {
             updateTotal();

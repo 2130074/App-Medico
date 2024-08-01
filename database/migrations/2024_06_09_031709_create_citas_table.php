@@ -18,12 +18,16 @@ class CreateCitasTable extends Migration
             $table->string('motivos');
             $table->date('fecha');
             $table->time('hora');
+            $table->string('estado')->nullable();  
+            $table->unsignedBigInteger('id_paciente');  
+            $table->unsignedBigInteger('id_servicio');  
             $table->string('medicamentos')->nullable();
             $table->string('estudios')->nullable();
             $table->json('productos')->nullable(); 
             $table->decimal('total', 8, 2)->default(0);
             $table->float('temperatura')->nullable();
             $table->string('presion_arterial')->nullable(); 
+            $table->text('diagnostico')->nullable(); 
             $table->timestamps();
 
             // Definir las llaves foráneas
