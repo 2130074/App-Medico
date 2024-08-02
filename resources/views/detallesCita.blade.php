@@ -302,31 +302,30 @@
         }
 
         function updateTotal() {
-            var servicePrice = parseFloat(document.getElementById('servicePrice').value) || 0;
-            var total = servicePrice;
+        var servicePrice = parseFloat(document.getElementById('servicePrice').value) || 0;
+        var total = servicePrice;
 
-            var productFields = document.getElementById('productFields');
-            var productSelects = productFields.querySelectorAll('select[name="productos[]"]');
-            var productQuantities = productFields.querySelectorAll('input[name="cantidades[]"]');
+        var productFields = document.getElementById('productFields');
+        var productSelects = productFields.querySelectorAll('select[name="productos[]"]');
+        var productQuantities = productFields.querySelectorAll('input[name="cantidades[]"]');
 
-            productSelects.forEach(function(select, index) {
-                var selectedOption = select.options[select.selectedIndex];
-                var productPrice = parseFloat(selectedOption.getAttribute('data-precio')) || 0;
-                var quantity = parseFloat(productQuantities[index].value) || 0;
-                total += productPrice * quantity;
-            });
-
-            document.getElementById('total').value = total.toFixed(2);
-        }
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-            updateTotal();
-            document.querySelectorAll('select[name="productos[]"], input[name="cantidades[]"]').forEach(function(
-                element) {
-                element.addEventListener('change', updateTotal);
-            });
+        productSelects.forEach(function(select, index) {
+            var selectedOption = select.options[select.selectedIndex];
+            var productPrice = parseFloat(selectedOption.getAttribute('data-precio')) || 0;
+            var quantity = parseFloat(productQuantities[index].value) || 0;
+            total += productPrice * quantity;
         });
+
+        document.getElementById('total').value = total.toFixed(2);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updateTotal();
+        document.querySelectorAll('input[name="cantidades[]"], select[name="productos[]"]').forEach(function(element) {
+            element.addEventListener('input', updateTotal);
+            element.addEventListener('change', updateTotal);
+        });
+    });
     </script>
 </body>
 
