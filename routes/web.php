@@ -84,6 +84,7 @@ Route::get('/ventas/max-stock/{id}', [VentaController::class, 'obtenerMaxStock']
 
 Route::resource('recepcionista', CitaController::class)->middleware(['auth','verified']);
 Route::resource('doctor', DoctorController::class)->middleware(['auth','verified']);
+Route::resource('calendario', PacienteController::class)->middleware(['auth','verified']);
 Route::resource('servicios', ServicioController::class)->middleware(['auth','verified']);
 Route::resource('crearServicio', ServiciosDoctorController::class)->middleware(['auth','verified']);
 Route::resource('crearProducto', ProductosDoctorController::class)->middleware(['auth','verified']);
@@ -134,7 +135,6 @@ Route::get('/modificarServicio', function () {
     return view('modificarServicio');
 });
 
-
 Route::get('/modificarPacientesDoc', function () {
     return view('doc.modificarPacientesDoc');
 })->name('modificarPacientesDoc');
@@ -155,14 +155,11 @@ Route::get('/Producto', function () {
     return view('recepcionista.Producto');
 })->name('Producto');
 
-
 Route::get('/registro', function () {
     return view('paciente.registro');
 })->name('registro');
 
-Route::get('/calendario', function () {
-    return view('paciente.calendario');
-})->name('calendario');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -80,7 +80,7 @@
             <h2 class="text-2xl font-bold mb-4">Agendar servicio</h2>
 
             @if (isset($pacientes) && isset($servicios))
-                <form id="appointment-form" method="POST" action="{{ route('doctor.store') }}">
+                <form id="appointment-form" method="POST" action="{{ route('calendario.store') }}">
                     @csrf
                     <div class="mb-4">
                         <label for="patient-name" class="block text-sm font-medium text-gray-700">Nombre del
