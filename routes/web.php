@@ -2,7 +2,6 @@
 
 // Controllers
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\ProductosController;
@@ -22,10 +21,12 @@ Route::get('/', function () {
     return view('login');
 })->name('login');
 
-// POST para los formularios 
-Route::get('logout',[LoginController::class,'logout'])->name('logout');
-Route::post('/validar-registro',[LoginController::class, 'register'])->name('validar-registro');
+use App\Http\Controllers\LoginController;
+
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('/validar-registro', [LoginController::class, 'register'])->name('validar-registro');
 Route::post('/verificar-login', [LoginController::class, 'doLogin'])->name('verificar-login');
+
 Route::post('/registrar', [PacienteController::class, 'registerPatient'])->name('registrar');
 Route::post('/registrar-pacientes', [PacientesController::class, 'registerPatient'])->name('registrar-pacientes');
 Route::post('/registrar-pacientes-doc', [PacientesDoctorController::class, 'registerPatient'])->name('registrar-pacientes-doc');
@@ -89,6 +90,9 @@ Route::resource('servicios', ServicioController::class)->middleware(['auth','ver
 Route::resource('crearServicio', ServiciosDoctorController::class)->middleware(['auth','verified']);
 Route::resource('crearProducto', ProductosDoctorController::class)->middleware(['auth','verified']);
 Route::resource('registrarProducto', ProductosController::class)->middleware(['auth','verified']);
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
 // Vistas para navegación entre ventanas 
 Route::get('/citas', function () {

@@ -56,9 +56,9 @@ class LoginController extends Controller
         // Intentar autenticación en la tabla de pacientes
         $paciente = Paciente::where('correo', $credentials['correo'])->first();
         if ($paciente && Hash::check($credentials['password'], $paciente->password)) {
-            Auth::guard('web')->login($paciente);
+            Auth::guard('paciente')->login($paciente);
             $request->session()->regenerate();
-            return redirect(route('calendario'));
+            return redirect(route('calendario.index'));
         }
 
         // Si la autenticación falla en ambas tablas
