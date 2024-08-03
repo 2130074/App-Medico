@@ -111,7 +111,13 @@
                                 <tr class="hover:bg-blue-600">
                                     <td class="py-2 px-4">{{ $paciente->nombre }}</td>
                                     <td class="py-2 px-4">{{ $paciente->correo }}</td>
-                                    <td class="py-2 px-4 text-center">20/05/2024</td>
+                                    <td class="py-2 px-4 text-center">
+                                        @if($paciente->citas->isNotEmpty())
+                                            {{ $paciente->citas->first()->fecha->format('d/m/Y') }} a las {{ $paciente->citas->first()->formatted_hora }}
+                                        @else
+                                            Sin citas próximas
+                                        @endif
+                                    </td>
                                     <td class="py-2 px-4 text-center">
                                         <button
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"

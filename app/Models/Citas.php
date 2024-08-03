@@ -34,6 +34,11 @@ class Citas extends Model
         'productos' => 'array',
     ];
 
+    public function getFormattedHoraAttribute()
+    {
+        return Carbon::parse($this->hora)->format('H:i');
+    }
+    
     public function paciente()
     {
         return $this->belongsTo(Paciente::class, 'id_paciente');

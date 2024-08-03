@@ -12,7 +12,10 @@ class PacientesDoctorController extends Controller
 {
     public function index()
     {
-        $pacientes = Paciente::all();
+        $pacientes = Paciente::with(['citas' => function($query) {
+            $query->where('fecha', '>=', now())->orderBy('fecha')->orderBy('hora');
+        }])->get();
+
         return view('docPacientes', compact('pacientes'));
     }
 

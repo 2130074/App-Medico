@@ -57,7 +57,8 @@
                 <table class="min-w-full bg-white bg-opacity-10 rounded-lg shadow-xl text-white">
                     <thead>
                         <tr class="bg-blue-500">
-                            <th class="py-2 px-4 text-center">Fecha y hora de la cita</th>
+                            <th class="py-2 px-4 text-center">Fecha de la cita</th>
+                            <th class="py-2 px-4 text-center">Hora de la cita</th>
                             <th class="py-2 px-4 text-center">Más detalles</th>
                         </tr>
                     </thead>
@@ -65,10 +66,11 @@
                         @if($citas->isNotEmpty())
                             @foreach($citas as $cita)
                                 <tr class="hover:bg-blue-600">
-                                    <td class="py-2 px-4 text-center">{{ $cita->hora }}</td> 
+                                    <td class="py-2 px-4 text-center">{{ $cita->fecha->format('Y-m-d') }}</td>
+                                    <td class="py-2 px-4 text-center">{{ $cita->formatted_hora }}</td>
                                     <td class="py-2 px-4 text-center">
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                                            Descargar información
+                                            Ver detalles
                                         </button>
                                     </td>
                                 </tr>
