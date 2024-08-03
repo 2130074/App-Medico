@@ -37,4 +37,9 @@ class Paciente extends Authenticatable
         'altura' => 'decimal:2',
         'peso' => 'decimal:2',
     ];
+
+    public function citas()
+    {
+        return $this->hasMany(Citas::class, 'id_paciente');
+    }
 }

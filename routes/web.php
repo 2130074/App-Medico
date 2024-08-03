@@ -85,7 +85,7 @@ Route::get('/ventas/max-stock/{id}', [VentaController::class, 'obtenerMaxStock']
 
 Route::resource('recepcionista', CitaController::class)->middleware(['auth','verified']);
 Route::resource('doctor', DoctorController::class)->middleware(['auth','verified']);
-Route::resource('calendario', PacienteController::class)->middleware(['auth','verified']);
+Route::get('/perfil', [PacienteController::class, 'showProfile'])->name('paciente.perfil')->middleware(['auth:paciente', 'verified']);
 Route::resource('servicios', ServicioController::class)->middleware(['auth','verified']);
 Route::resource('crearServicio', ServiciosDoctorController::class)->middleware(['auth','verified']);
 Route::resource('crearProducto', ProductosDoctorController::class)->middleware(['auth','verified']);

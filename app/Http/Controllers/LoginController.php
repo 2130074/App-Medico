@@ -58,7 +58,7 @@ class LoginController extends Controller
         if ($paciente && Hash::check($credentials['password'], $paciente->password)) {
             Auth::guard('paciente')->login($paciente);
             $request->session()->regenerate();
-            return redirect(route('calendario.index'));
+            return redirect(route('paciente.perfil')); // Redirigir a la ruta correcta
         }
 
         // Si la autenticación falla en ambas tablas

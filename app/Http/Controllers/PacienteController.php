@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCitaRequest;
 use Illuminate\Http\Request;
 use App\Models\Paciente;
 use App\Models\Citas;
 use App\Models\Servicio;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
-class PacienteController extends Controller{
-    public function registerPatient(Request $request){
+class PacienteController extends Controller
+{
+    public function registerPatient(Request $request)
+    {
         $paciente = new Paciente();
 
         $paciente->nombre = $request->nombre;
@@ -32,27 +34,28 @@ class PacienteController extends Controller{
 
     public function index()
     {
-        $citas = Citas::with('servicio')->get();  
-        return view('paciente.calendario', [
+        $citas = Citas::with('servicio')->get();
+        return view('paciente.perfil', [
             'pacientes' => Paciente::latest()->get(),
             'servicios' => Servicio::latest()->get(),
-            'citas' => $citas,  
+            'citas' => $citas,
         ]);
     }
 
-    public function store(StoreCitaRequest $request)
+    public function showProfile()
     {
-        $existingCita = Citas::where('fecha', $request->fecha)
-                             ->where('hora', $request->hora)
-                             ->first();
+        // Obtiene al paciente autenticado
+        $paciente = Auth::guard('paciente')->user();
 
-        if ($existingCita) {
-            return redirect()->route('calendario.index')
-                ->with('error', 'Ya existe una cita registrada en la misma fecha y hora.');
+        // Verifica si el paciente está autenticado
+        if (!$paciente) {
+            return redirect()->route('login')->withErrors('Debe iniciar sesión para acceder a esta página.');
         }
 
-        Citas::create($request->validated());
+        // Obtener las citas del paciente autenticado
+        $citas = $paciente->citas;
 
-        return redirect()->route('calendario.index')->with('success', 'Cita registrada correctamente');
+        // Pasar el paciente y sus citas a la vista
+        return view('paciente.perfil', compact('paciente', 'citas'));
     }
 }
