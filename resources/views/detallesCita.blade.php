@@ -11,12 +11,19 @@
             overflow-y: auto;
             height: 100%;
         }
+         .flex-row {
+            display: flex;
+            gap: 16px;
+        }
+        .flex-col {
+            flex: 0.56;
+        }
     </style>
 </head>
 
 <body class="bg-gradient-to-r from-[#4CA9DF] to-[#292E91]">
     <div class="flex h-screen overflow-hidden">
-        <div class="bg-blue-650 text-white w-1/5 p-6 flex flex-col justify-between shadow-xl">
+        <div class="bg-blue-650 text-white w-full sm:w-1/4 md:w-1/5 lg:w-1/6 p-6 flex flex-col justify-between shadow-xl">
             <div>
                 <div class="flex items-center mb-8">
                     <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-8 h-8 mr-2">
@@ -45,21 +52,27 @@
                     </li>
                 </ul>
             </div>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit"
-                    class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    Cerrar sesión
-                </button>
-            </form>
+            <button
+                class="w-full flex justify-center py-2 px-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                onclick="location.href='/'">
+                Cerrar sesión
+            </button>
         </div>
 
-        <div class="flex items-center justify-center w-3/4 ml-auto scrollable-content">
-            <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-2xl">
+        <main class="flex-grow overflow-y-auto">
+            <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-2xl mx-auto">
                 <h2 class="text-3xl font-bold text-blue-800 text-center mb-4">Detalles de la cita</h2>
                 <form action="{{ route('actualizarCita', ['id' => $cita->id]) }}" method="POST">
                     @csrf
                     <div class="grid grid-cols-2 gap-4">
+                        <div class="mb-2">
+                            <label class="block font-medium text-blue-800">Nombre:</label>
+                            <input type="text" name="nombre" value="{{ $cita->paciente->nombre}}" class="w-full px-4 py-2 border rounded-md" readonly>
+                        </div>
+                        <div class="mb-2">
+                            <label class="block font-medium text-blue-800">Apellidos:</label>
+                            <input type="text" name="apellidos" value="{{$cita->paciente->apellidos }}" class="w-full px-4 py-2 border rounded-md" readonly>
+                        </div>
                         <div class="mb-2">
                             <label class="block font-medium text-blue-800">Servicio:</label>
                             <input type="text" name="motivos"
@@ -81,6 +94,36 @@
                             <input type="time" name="hora" value="{{ date('H:i', strtotime($cita->hora)) }}"
                                 class="w-full px-4 py-2 border rounded-md">
                         </div>
+                        <div class="col-span-2 flex-row">
+                            <div class="flex-col mb-2">
+                                <label class="block font-medium text-blue-800">Edad:</label>
+                                <input type="number" name="edad" value="{{ $cita->paciente->edad }}" class="w-full px-4 py-2 border rounded-md">
+                            </div>
+                            <div class="flex-col mb-2">
+                                <label class="block font-medium text-blue-800">Género:</label>
+                                <select name="genero" class="w-full px-4 py-2 border rounded-md">
+                                    <option value="Masculino" {{ $cita->paciente->genero == 'Masculino' ? 'selected' : '' }}>Masculino</option>
+                                    <option value="Femenino" {{ $cita->paciente->genero == 'Femenino' ? 'selected' : '' }}>Femenino</option>
+                                    <option value="Otro" {{ $cita->paciente->genero == 'Otro' ? 'selected' : '' }}>Otro</option>
+                                </select>
+                            </div>
+                            <div class="flex-col mb-2">
+                                <label class="block font-medium text-blue-800">Altura (cm):</label>
+                                <input type="number" step="0.01" name="altura" value="{{ number_format($cita->paciente->altura, 2) }}" class="w-full px-4 py-2 border rounded-md">
+                            </div>                            
+                            <div class="flex-col mb-2">
+                                <label class="block font-medium text-blue-800">Peso (kg):</label>
+                                <input type="number" name="peso" value="{{ $cita->paciente->peso }}" class="w-full px-4 py-2 border rounded-md">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="block font-medium text-blue-800">Enfermedades:</label>
+                            <input type="text" name="enfermedades" value="{{ $cita->paciente->enfermedades }}" class="w-full px-4 py-2 border rounded-md">
+                        </div>
+                        <div class="mb-2">
+                            <label class="block font-medium text-blue-800">Alergias:</label>
+                            <input type="text" name="alergias" value="{{ $cita->paciente->alergias }}" class="w-full px-4 py-2 border rounded-md">
+                        </div>
                         <div class="mb-2">
                             <label class="block font-medium text-blue-800">Temperatura:</label>
                             <input type="text" name="temperatura" value="{{ $cita->temperatura }}"
@@ -96,7 +139,7 @@
                             <textarea name="diagnostico" placeholder="Diagnóstico" class="w-full px-4 py-2 border rounded-md">{{ $cita->diagnostico }}</textarea>
                         </div>
 
-
+                        
                         <div class="col-span-2 grid grid-cols-2 gap-4">
                             <div class="mb-4">
                                 <label class="block font-medium text-blue-800">Medicamentos recetados:</label>
@@ -131,36 +174,37 @@
                         </div>
 
                         <div class="col-span-2 grid grid-cols-2 gap-4">
-                            <div class="col-span-2">
-                                <label class="block font-medium text-blue-800">Productos usados:</label>
-                                <div id="productFields" class="space-y-2">
-                                    @php
-                                        $productosData = json_decode($cita->productos, true) ?? [];
-                                    @endphp
-                                    @foreach ($productosData as $producto)
-                                        <div class="flex items-center">
-                                            <select name="productos[]"
-                                                class="w-full px-4 py-2 border rounded-md select2"
-                                                onchange="updateTotal(this)">
-                                                <option value="">Selecciona un producto</option>
-                                                @foreach ($productos as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        data-stock="{{ $item->stock }}"
-                                                        data-precio="{{ $item->costo }}"
-                                                        {{ $producto['id'] == $item->id ? 'selected' : '' }}>
-                                                        {{ $item->nombre }} - ${{ $item->costo }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <input type="number" name="cantidades[]"
-                                                value="{{ $producto['cantidad'] }}" placeholder="Cantidad"
-                                                class="w-full px-4 py-2 border rounded-md ml-2" min="1"
-                                                onchange="validateQuantity(this)">
-                                        </div>
-                                    @endforeach
+                            <div class="col-span-2 grid grid-cols-2 gap-4">
+                                <div class="col-span-2">
+                                    <label class="block font-medium text-blue-800">Productos usados:</label>
+                                    <div id="productFields" class="space-y-2">
+                                        @php
+                                            $productosData = json_decode($cita->productos, true) ?? [];
+                                        @endphp
+                                        @foreach ($productosData as $producto)
+                                            <div class="flex items-center">
+                                                <select name="productos[]"
+                                                    class="w-full px-4 py-2 border rounded-md select2"
+                                                    onchange="updateTotal(this)">
+                                                    <option value="">Selecciona un producto</option>
+                                                    @foreach ($productos as $item)
+                                                        <option value="{{ $item->id }}"
+                                                            data-stock="{{ $item->stock }}"
+                                                            data-precio="{{ $item->costo }}"
+                                                            {{ $producto['id'] == $item->id ? 'selected' : '' }}>
+                                                            {{ $item->nombre }} - ${{ $item->costo }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <input type="number" name="cantidades[]"
+                                                    value="{{ $producto['cantidad'] }}" placeholder="Cantidad"
+                                                    class="w-full px-4 py-2 border rounded-md ml-2" min="1"
+                                                    onchange="validateQuantity(this)">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <button type="button" onclick="addProductField()" class="mt-2 text-blue-800">+ Añadir más</button>
                                 </div>
-                                <button type="button" onclick="addProductField()" class="mt-2 text-blue-800">+
-                                    Añadir más</button>
                             </div>
 
                             <div class="mb-2">
@@ -242,38 +286,39 @@
         }
 
         function addProductField() {
-            var container = document.getElementById('productFields');
-            var div = document.createElement('div');
-            div.className = 'flex items-center mt-2';
+        var container = document.getElementById('productFields');
+        var div = document.createElement('div');
+        div.className = 'flex items-center mt-2';
 
-            var select = document.createElement('select');
-            select.name = 'productos[]';
-            select.className = 'w-full px-4 py-2 border rounded-md';
-            select.setAttribute('onchange', 'updateTotal(this)');
+        var select = document.createElement('select');
+        select.name = 'productos[]';
+        select.className = 'w-full px-4 py-2 border rounded-md';
+        select.setAttribute('onchange', 'updateTotal(this)');
+        var option = document.createElement('option');
+        option.value = '';
+        option.text = 'Selecciona un producto';
+        select.appendChild(option);
+
+        @foreach ($productos as $producto)
             var option = document.createElement('option');
-            option.value = '';
-            option.text = 'Selecciona un producto';
+            option.value = '{{ $producto->id }}';
+            option.text = '{{ $producto->nombre }} - {{ $producto->costo }}';
+            option.setAttribute('data-precio', '{{ $producto->costo }}');
             select.appendChild(option);
+        @endforeach
 
-            @foreach ($productos as $producto)
-                var option = document.createElement('option');
-                option.value = '{{ $producto->id }}';
-                option.text = '{{ $producto->nombre }} - {{ $producto->costo }}';
-                option.setAttribute('data-stock', '{{ $producto->stock }}');
-                select.appendChild(option);
-            @endforeach
+        var input = document.createElement('input');
+        input.type = 'number';
+        input.name = 'cantidades[]';
+        input.placeholder = 'Cantidad';
+        input.className = 'w-full px-4 py-2 border rounded-md ml-2';
+        input.setAttribute('min', 1);
+        input.setAttribute('onchange', 'updateTotal()');
 
-            var input = document.createElement('input');
-            input.type = 'number';
-            input.name = 'cantidades[]';
-            input.placeholder = 'Cantidad';
-            input.className = 'w-full px-4 py-2 border rounded-md';
-            input.setAttribute('onchange', 'validateQuantity(this)');
-
-            div.appendChild(select);
-            div.appendChild(input);
-            container.appendChild(div);
-        }
+        div.appendChild(select);
+        div.appendChild(input);
+        container.appendChild(div);
+    }
 
         function removeField(button) {
             const field = button.parentNode;
