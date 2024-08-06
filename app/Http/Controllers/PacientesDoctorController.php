@@ -122,10 +122,24 @@ class PacientesDoctorController extends Controller
             'cantidades.*' => 'integer|min:1',
             'total' => 'nullable|numeric',
         ]);
-    
+
         // Buscar la cita por ID
         $cita = Citas::findOrFail($id);
-    
+
+        // Formatear medicamentos
+        $medicamentos = $request->input('medicamentos', []);
+        $medicamentosData = [];
+        if (is_array($medicamentos)) {
+            foreach ($medicamentos as $index => $medicamento) {
+                $medicamentosData[] = [
+                    'nombre' => $medicamento['nombre'] ?? '',
+                    'dosis' => $medicamento['dosis'] ?? '',
+                    'frecuencia' => $medicamento['frecuencia'] ?? '',
+                    'duracion' => $medicamento['duracion'] ?? ''
+                ];
+            }
+        }
+
         // Actualizar los datos de la cita
         $cita->update([
             'motivos' => $request->input('motivos'),
@@ -134,11 +148,11 @@ class PacientesDoctorController extends Controller
             'temperatura' => $request->input('temperatura'),
             'presion_arterial' => $request->input('presion_arterial'),
             'diagnostico' => $request->input('diagnostico'),
-            'medicamentos' => implode(',', $request->input('medicamentos', [])), 
+            'medicamentos' => !empty($medicamentosData) ? json_encode($medicamentosData, JSON_UNESCAPED_UNICODE) : null,
             'estudios' => implode(',', $request->input('estudios', [])),
-            'total' => $request->input('total', 0), 
+            'total' => $request->input('total', 0),
         ]);
-    
+
         // Actualizar los datos del paciente
         $paciente = $cita->paciente;
         $paciente->update([
@@ -150,8 +164,20 @@ class PacientesDoctorController extends Controller
             'alergias' => $request->input('alergias'),
         ]);
 
+        $medicamentos = [];
+        if ($request->has('medicamentos')) {
+            foreach ($request->medicamentos as $index => $medicamento) {
+                $medicamentos[] = [
+                    'medicamento' => $medicamento,
+                    'dosis' => $request->dosis[$index] ?? '',
+                    'frecuencia' => $request->frecuencia[$index] ?? '',
+                    'duracion' => $request->duracion[$index] ?? '',
+                ];
+            }
+        }
+        $cita->medicamentos = json_encode($medicamentos);
 
-        // Guardar productos y cantidades
+        // Procesa los productos
         $productos = $request->input('productos', []);
         $cantidades = $request->input('cantidades', []);
         $productosData = [];
@@ -173,5 +199,4 @@ class PacientesDoctorController extends Controller
         // Redirigir con mensaje de éxito
         return redirect()->route('detallesCita', ['id' => $cita->id])->with('success', 'Cita actualizada correctamente.');
     }
-    
 }

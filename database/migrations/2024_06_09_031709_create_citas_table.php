@@ -21,7 +21,7 @@ class CreateCitasTable extends Migration
             $table->string('estado')->nullable();  
             $table->unsignedBigInteger('id_paciente');  
             $table->unsignedBigInteger('id_servicio');  
-            $table->string('medicamentos')->nullable();
+            $table->json('medicamentos')->nullable();
             $table->string('estudios')->nullable();
             $table->json('productos')->nullable(); 
             $table->decimal('total', 8, 2)->default(0);
