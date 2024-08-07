@@ -200,17 +200,26 @@
                                     @endphp
                                     @foreach ($medicamentos as $medicamento)
                                         <div class="medications-row">
-                                            <input type="text" name="medicamentos[]" value="{{ $medicamento['medicamento'] }}" placeholder="Medicamento" class="w-full px-4 py-2 border rounded-md">
-                                            <input type="text" name="dosis[]" value="{{ $medicamento['dosis'] }}" placeholder="Dosis" class="w-full px-4 py-2 border rounded-md">
-                                            <input type="text" name="frecuencia[]" value="{{ $medicamento['frecuencia'] }}" placeholder="Frecuencia" class="w-full px-4 py-2 border rounded-md">
-                                            <input type="text" name="duracion[]" value="{{ $medicamento['duracion'] }}" placeholder="Duración" class="w-full px-4 py-2 border rounded-md">
-                                            <button type="button" onclick="removeField(this)" class="ml-2 text-2xl font-bold text-blue-800">-</button>
+                                            <input type="text" name="medicamentos[]"
+                                                value="{{ $medicamento['medicamento'] }}" placeholder="Medicamento"
+                                                class="w-full px-4 py-2 border rounded-md">
+                                            <input type="text" name="dosis[]" value="{{ $medicamento['dosis'] }}"
+                                                placeholder="Dosis" class="w-full px-4 py-2 border rounded-md">
+                                            <input type="text" name="frecuencia[]"
+                                                value="{{ $medicamento['frecuencia'] }}" placeholder="Frecuencia"
+                                                class="w-full px-4 py-2 border rounded-md">
+                                            <input type="text" name="duracion[]"
+                                                value="{{ $medicamento['duracion'] }}" placeholder="Duración"
+                                                class="w-full px-4 py-2 border rounded-md">
+                                            <button type="button" onclick="removeField(this)"
+                                                class="ml-2 text-2xl font-bold text-blue-800">-</button>
                                         </div>
                                     @endforeach
                                 @endif
                             </div>
-                            <button type="button" onclick="addMedicationField()" class="mt-2 text-blue-800">+ Añadir más</button>
-                        </div>                        
+                            <button type="button" onclick="addMedicationField()" class="mt-2 text-blue-800">+ Añadir
+                                más</button>
+                        </div>
 
                         <div class="col-span-2 grid grid-cols-2 gap-4">
                             <div class="col-span-2">
@@ -265,12 +274,12 @@
                         <button type="button" style="margin-right: 16px;"
                             class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             onclick="location.href='/expediente/{{ $cita->id_paciente }}'">
-                            Regresar al expediente
+                            Ir a expediente
                         </button>
                         <button type="button" style="margin-right: 16px;"
                             class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             onclick="location.href='/docPacientes'">
-                            Regresar al inicio
+                            Ir a pacientes
                         </button>
                         <button type="submit"
                             class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -279,7 +288,6 @@
                     </div>
                 </form>
             </div>
-    </div>
     </div>
 
     <script>
@@ -365,7 +373,7 @@
         function removeField(button) {
             const field = button.parentNode;
             field.parentNode.removeChild(field);
-            updateTotal(); 
+            updateTotal();
         }
 
         function updateQuantityOptions(select) {

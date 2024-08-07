@@ -93,6 +93,7 @@ Route::resource('registrarProducto', ProductosController::class)->middleware(['a
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/doctor/cita/{id}', [PacientesDoctorController::class, 'detallesCita'])->name('detallesCita');
 
 // Vistas para navegación entre ventanas 
 Route::get('/citas', function () {

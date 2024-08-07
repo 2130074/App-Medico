@@ -52,7 +52,7 @@
                 </div>
                 <ul>
                     <li class="flex items-center mb-10">
-                       <img src="img/calendario.png" alt="Agenda Icon" class="w-6 h-6 mr-2">
+                        <img src="img/calendario.png" alt="Agenda Icon" class="w-6 h-6 mr-2">
                         <a href="/doctor" class="text-lg">Agenda</a>
                     </li>
                     <li class="flex items-center mb-10">
@@ -95,26 +95,20 @@
                 <form id="appointment-form" method="POST" action="{{ route('doctor.store') }}">
                     @csrf
                     <div class="mb-4">
-                        <label for="patient-name" class="block text-sm font-medium text-gray-700">Nombre del
-                            paciente</label>
-                        <select id="patient-name" name="id_paciente"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md select2">
+                        <label for="patient-name" class="block text-sm font-medium text-gray-700">Nombre del paciente</label>
+                        <select id="patient-name" name="id_paciente" class="mt-1 p-2 block w-full border border-gray-300 rounded-md select2">
                             @foreach ($pacientes as $paciente)
                                 <option value="{{ $paciente->id }}">{{ $paciente->nombre }} {{ $paciente->apellidos }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-4">
-                        <label for="appointment-reason" class="block text-sm font-medium text-gray-700">Motivo de la
-                            cita</label>
-                        <input type="text" id="motivos" name="motivos"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                        <label for="appointment-reason" class="block text-sm font-medium text-gray-700">Motivo de la cita</label>
+                        <input type="text" id="motivos" name="motivos" class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
                     </div>
                     <div class="mb-4">
-                        <label for="service-type" class="block text-sm font-medium text-gray-700">Tipo de
-                            servicio</label>
-                        <select id="service-type" name="id_servicio"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md select2">
+                        <label for="service-type" class="block text-sm font-medium text-gray-700">Tipo de servicio</label>
+                        <select id="service-type" name="id_servicio" class="mt-1 p-2 block w-full border border-gray-300 rounded-md select2">
                             @foreach ($servicios as $servicio)
                                 <option value="{{ $servicio->id }}">{{ $servicio->nombre }}</option>
                             @endforeach
@@ -122,13 +116,11 @@
                     </div>
                     <div class="mb-4">
                         <label for="selected-date" class="block text-sm font-medium text-gray-700">Fecha</label>
-                        <input type="text" id="selected-date" name="fecha"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md" readonly>
+                        <input type="text" id="selected-date" name="fecha" class="mt-1 p-2 block w-full border border-gray-300 rounded-md" readonly>
                     </div>
                     <div class="mb-4">
                         <label for="selected-time" class="block text-sm font-medium text-gray-700">Hora</label>
-                        <select id="selected-time" name="hora"
-                            class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
+                        <select id="selected-time" name="hora" class="mt-1 p-2 block w-full border border-gray-300 rounded-md">
                             <option value="08:00">08:00 AM</option>
                             <option value="08:30">08:30 AM</option>
                             <option value="09:00">09:00 AM</option>
@@ -168,10 +160,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
-
+    
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialDate: '2023-01-12',
                 initialView: 'timeGridWeek',
+                initialDate: new Date().toISOString().split('T')[0], 
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
@@ -200,43 +192,44 @@
                             backgroundColor: '#007bff',
                             borderColor: '#0056b3',
                             textColor: '#ffffff',
+                            id: '{{ $cita->id }}'
                         },
                     @endforeach
                 ],
+                eventClick: function(info) {
+                    window.location.href = '/doctor/cita/' + info.event.id;
+                },
                 dateClick: function(info) {
                     var today = new Date();
                     var selectedDate = new Date(info.dateStr);
-
+    
                     if (selectedDate < today.setHours(0, 0, 0, 0)) {
                         alert('No puedes seleccionar fechas pasadas.');
-                        return; 
+                        return;
                     }
-
+    
                     var modal = document.getElementById('modal');
                     modal.style.display = 'flex';
-
+    
                     var selectedDateField = document.getElementById('selected-date');
                     selectedDateField.value = info.dateStr;
-
-                    var selectedDateStr = info.dateStr;
-                    var now = new Date();
-                    var selectedDateObj = new Date(selectedDateStr);
                 }
             });
-
+    
             calendar.render();
-
+    
             // Cerrar el modal
             var closeModalBtn = document.getElementById('close-modal');
             closeModalBtn.addEventListener('click', function() {
                 var modal = document.getElementById('modal');
                 modal.style.display = 'none';
             });
-
+    
             // Inicializar select2
             $('.select2').select2();
         });
     </script>
+    
 </body>
 
 </html>
