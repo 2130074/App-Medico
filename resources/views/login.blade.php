@@ -40,7 +40,7 @@
         </form>
 
         <div class="mt-6 text-center text-white text-xs">
-            <span>¿Quieres agendar y aún no tienes cuenta? </span><a href="{{ route('registro') }}" class="font-bold underline">Registrarte</a>.
+            <span>Únete a nuestra comunidad y encuentra el mejor tratamiento médico para ti y tu familia. </span><a href="{{ route('registro') }}" class="font-bold underline">¡Regístrate ahora!</a>.
         </div>
     </div>
 </body>

@@ -181,8 +181,8 @@
             var calendarEl = document.getElementById('calendar');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialDate: '2023-01-12',
                 initialView: 'timeGridWeek',
+                initialDate: new Date().toISOString().split('T')[0],
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
@@ -196,11 +196,12 @@
                 nowIndicator: true,
                 slotDuration: '00:30:00',
                 slotLabelInterval: '00:30',
-                views: {
-                    timeGrid: {
-                        slotDuration: '00:30:00',
-                        slotLabelInterval: '00:30'
-                    }
+                allDaySlot: false,
+                minTime: '08:00:00',
+                maxTime: '18:00:00',
+                validRange: {
+                    start: '2024-01-01',
+                    end: '2024-12-31'
                 },
                 events: [
                     @foreach ($citas as $cita)
@@ -211,16 +212,46 @@
                             backgroundColor: '#007bff',
                             borderColor: '#0056b3',
                             textColor: '#ffffff',
+                            id: '{{ $cita->id }}'
                         },
                     @endforeach
                 ],
+                viewDidMount: function(info) {
+                    // Aplicar restricciones de selección según la vista actual
+                    applyDayRestrictions(info.view.type);
+                },
+                viewDidUpdate: function(info) {
+                    // Aplicar restricciones de selección según la vista actual
+                    applyDayRestrictions(info.view.type);
+                },
                 dateClick: function(info) {
                     var today = new Date();
                     var selectedDate = new Date(info.dateStr);
+                    var dayOfWeek = selectedDate.getDay();
+                    var currentView = calendar.view.type;
 
+                    // Verificar si el día es sábado o domingo según la vista actual
+                    if (currentView === 'dayGridMonth') {
+                        if (dayOfWeek === 6 || dayOfWeek === 5) { // Sábado y domingo en vista de mes
+                            alert('No puedes seleccionar sábados y domingos.');
+                            return;
+                        }
+                    } else if (currentView === 'timeGridWeek') {
+                        if (dayOfWeek === 6 || dayOfWeek === 0) { // Sábado y domingo en vista de semana
+                            alert('No puedes seleccionar sábados y domingos.');
+                            return;
+                        }
+                    } else if (currentView === 'timeGridDay') {
+                        if (dayOfWeek === 6 || dayOfWeek === 0) { // Sábado y domingo en vista de día
+                            alert('No puedes seleccionar sábados y domingos.');
+                            return;
+                        }
+                    }
+
+                    // Verificar si la fecha es en el pasado
                     if (selectedDate < today.setHours(0, 0, 0, 0)) {
                         alert('No puedes seleccionar fechas pasadas.');
-                        return; 
+                        return;
                     }
 
                     var modal = document.getElementById('modal');
@@ -229,9 +260,24 @@
                     var selectedDateField = document.getElementById('selected-date');
                     selectedDateField.value = info.dateStr;
 
-                    var selectedDateStr = info.dateStr;
-                    var now = new Date();
-                    var selectedDateObj = new Date(selectedDateStr);
+                    var selectedTimeField = document.getElementById('selected-time');
+                    var selectedTime = new Date(info.dateStr).toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    selectedTimeField.value = selectedTime;
+                },
+                dayCellDidMount: function(info) {
+                    var dayOfWeek = info.date.getDay();
+                    var viewType = calendar.view.type;
+
+                    // Desactiva la selección de sábados y domingos en la vista de mes
+                    if (viewType === 'dayGridMonth' && (dayOfWeek === 6 || dayOfWeek === 0)) {
+                        info.el.classList.add('fc-day-disabled');
+                    } else if (viewType !== 'dayGridMonth' && (dayOfWeek === 6 || dayOfWeek === 0)) {
+                        // Opcional: Desactiva sábados y domingos en otras vistas si es necesario
+                        info.el.classList.add('fc-day-disabled');
+                    }
                 }
             });
 
@@ -246,6 +292,22 @@
 
             // Inicializar select2
             $('.select2').select2();
+
+            function applyDayRestrictions(viewType) {
+                var daysOfWeek = ['5', '6']; // Domingo y sábado
+                var cells = document.querySelectorAll('.fc-daygrid-day');
+
+                cells.forEach(function(cell) {
+                    var dayOfWeek = cell.getAttribute('data-date') ? new Date(cell.getAttribute(
+                        'data-date')).getDay() : -1;
+
+                    if (viewType === 'dayGridMonth' && daysOfWeek.includes(dayOfWeek.toString())) {
+                        cell.classList.add('fc-day-disabled');
+                    } else {
+                        cell.classList.remove('fc-day-disabled');
+                    }
+                });
+            }
         });
     </script>
 </body>
