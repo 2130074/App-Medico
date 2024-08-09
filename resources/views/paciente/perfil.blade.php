@@ -69,8 +69,8 @@
                                     <td class="py-2 px-4 text-center">{{ $cita->fecha->format('Y-m-d') }}</td>
                                     <td class="py-2 px-4 text-center">{{ $cita->formatted_hora }}</td>
                                     <td class="py-2 px-4 text-center">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                                            Ver detalles
+                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="window.location.href='{{ route('generate.pdf', ['id' => $cita->id]) }}'">
+                                            Descargar cita
                                         </button>
                                     </td>
                                 </tr>

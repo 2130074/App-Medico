@@ -22,6 +22,7 @@ Route::get('/', function () {
 })->name('login');
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PDFController;
 
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/validar-registro', [LoginController::class, 'register'])->name('validar-registro');
@@ -164,6 +165,9 @@ Route::get('/registro', function () {
     return view('paciente.registro');
 })->name('registro');
 
+Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF'])->name('generate.pdf');
+
+//Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
 
 
 Route::middleware('auth')->group(function () {
