@@ -11,16 +11,21 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
-        'doctor' => [
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+        ],
+    
+        'doctor' => [ 
             'driver' => 'session',
-            'provider' => 'doctors',
+            'provider' => 'doctors', 
         ],
 
         'paciente' => [
             'driver' => 'session',
             'provider' => 'pacientes',
         ],
+
     ],
 
     'providers' => [
