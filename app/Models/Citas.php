@@ -18,6 +18,7 @@ class Citas extends Model
         'id_paciente',
         'id_servicio',
         'medicamentos',
+        'enfermera_id',
         'estudios',
         'productos',
         'total',
@@ -31,7 +32,7 @@ class Citas extends Model
         'hora' => 'datetime:H:i',
         'id_paciente' => 'integer',
         'id_servicio' => 'integer',
-        'productos' => 'array',  // Asegúrate de que los productos estén en formato array
+        'productos' => 'array',
     ];
 
     public function getFormattedHoraAttribute()
@@ -49,9 +50,13 @@ class Citas extends Model
         return $this->belongsTo(Servicio::class, 'id_servicio');
     }
 
-     // Relación con Servicio
-     public function servicio()
-     {
-         return $this->belongsTo(Servicio::class, 'id_servicio');
-     }
+    public function servicio()
+    {
+        return $this->belongsTo(Servicio::class, 'id_servicio');
+    }
+
+    public function enfermera()
+    {
+        return $this->belongsTo(Enfermera::class, 'enfermera_id');
+    }
 }

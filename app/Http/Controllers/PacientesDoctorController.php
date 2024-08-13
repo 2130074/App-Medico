@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Paciente;
 use App\Models\Citas;
 use App\Models\Producto;
+use App\Models\Enfermera;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -92,8 +93,9 @@ class PacientesDoctorController extends Controller
 
         $productos = Producto::all();
         $servicio = $cita->tipo_servicio;
+        $enfermeras = Enfermera::all();
 
-        return view('detallesCita', compact('cita', 'productos', 'servicio'));
+        return view('detallesCita', compact('cita', 'productos', 'servicio', 'enfermeras'));
     }
 
     public function actualizarCita(Request $request, $id)
@@ -113,6 +115,8 @@ class PacientesDoctorController extends Controller
             'peso' => 'nullable|numeric|min:0',
             'enfermedades' => 'nullable|string|max:255',
             'alergias' => 'nullable|string|max:255',
+            // Validaciones para enfermera
+            'enfermera_id' => 'nullable|exists:enfermeras,id',
             // Validaciones para medicamentos, estudios y total
             'medicamentos' => 'nullable|array',
             'estudios' => 'nullable|array',
@@ -140,6 +144,18 @@ class PacientesDoctorController extends Controller
             }
         }
 
+        // Obtener el sueldo de la enfermera si se seleccionó
+        $enfermeraSueldo = 0;
+        if ($request->has('enfermera_id')) {
+            $enfermera = Enfermera::find($request->input('enfermera_id'));
+            if ($enfermera) {
+                $enfermeraSueldo = $enfermera->sueldo;
+            }
+        }
+
+        // Actualizar los datos de la cita
+        $total = $request->input('total', 0) + $enfermeraSueldo;
+
         // Actualizar los datos de la cita
         $cita->update([
             'motivos' => $request->input('motivos'),
@@ -148,9 +164,10 @@ class PacientesDoctorController extends Controller
             'temperatura' => $request->input('temperatura'),
             'presion_arterial' => $request->input('presion_arterial'),
             'diagnostico' => $request->input('diagnostico'),
+            'enfermera_id' => $request->input('enfermera_id'),
             'medicamentos' => !empty($medicamentosData) ? json_encode($medicamentosData, JSON_UNESCAPED_UNICODE) : null,
             'estudios' => implode(',', $request->input('estudios', [])),
-            'total' => $request->input('total', 0),
+            'total' => $total,
         ]);
 
         // Actualizar los datos del paciente

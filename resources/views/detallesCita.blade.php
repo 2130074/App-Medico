@@ -174,7 +174,18 @@
                             <label class="block font-medium text-blue-800">Diagnóstico:</label>
                             <textarea name="diagnostico" placeholder="Diagnóstico" class="w-full px-4 py-2 border rounded-md">{{ $cita->diagnostico }}</textarea>
                         </div>
-
+                        <div class="col-span-2 mb-2">
+                            <label class="block font-medium text-blue-800">Enfermera asignada:</label>
+                            <select name="enfermera_id" class="w-full px-4 py-2 border rounded-md select2">
+                                <option value="">Seleccione una enfermera</option>
+                                @foreach ($enfermeras as $enfermera)
+                                    <option value="{{ $enfermera->id }}"
+                                        {{ $cita->enfermera_id == $enfermera->id ? 'selected' : '' }}>
+                                        {{ $enfermera->nombre_completo }} - ${{ $enfermera->sueldo }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="col-span-2 mb-2">
                             <label class="block font-medium text-blue-800">Estudios a realizar:</label>
                             <div id="estudiosFields" class="space-y-2">
@@ -281,9 +292,11 @@
                             onclick="location.href='/docPacientes'">
                             Ir a pacientes
                         </button>
-                        <button type="button" style="margin-right: 16px;" class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="window.location.href='{{ route('generate.pdf', ['id' => $cita->id]) }}'">
+                        <button type="button" style="margin-right: 16px;"
+                            class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            onclick="window.location.href='{{ route('generate.pdf', ['id' => $cita->id]) }}'">
                             Descargar
-                        </button>                                                                                                          
+                        </button>
                         <button type="submit"
                             class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             Guardar
