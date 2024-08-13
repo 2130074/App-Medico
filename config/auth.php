@@ -1,6 +1,6 @@
 <?php
-
 return [
+
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
@@ -11,6 +11,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'doctor' => [
+            'driver' => 'session',
+            'provider' => 'doctors',
+        ],
+
         'paciente' => [
             'driver' => 'session',
             'provider' => 'pacientes',
@@ -22,6 +28,12 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+
+        'doctors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Doctor::class,
+        ],
+
         'pacientes' => [
             'driver' => 'eloquent',
             'model' => App\Models\Paciente::class,
@@ -31,11 +43,17 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_resets',
+            'reset' => 'passwords',
             'expire' => 60,
-            'throttle' => 60,
         ],
     ],
 
-    'password_timeout' => 10800,
+    'passwords' => [
+        'doctors' => [
+            'provider' => 'doctors',
+            'reset' => 'passwords',
+            'expire' => 60,
+        ],
+    ],
+
 ];

@@ -155,6 +155,9 @@ Route::get('/registroEnfermera', function () {
     return view('admin.registroEnfermera');
 })->name('registroEnfermera');
 
+Route::get('/inicioDocColab', function () {
+    return view('docColab.inicioDocColab');
+})->name('inicioDocColab');
 
 Route::get('/modificar', function () {
     return view('modificar');

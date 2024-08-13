@@ -46,19 +46,26 @@ class DoctorColaboradorController extends Controller
         return view('admin.modificarDoctor', compact('doctor'));
     }
 
+
     public function update(Request $request, $id)
     {
-        $doctor = Doctor::findOrFail($id);
+        $usuario = Doctor::findOrFail($id);
+
         $data = $request->validate([
             'nombre_completo' => 'required',
-            'password' => 'nullable',
-            'correo' => 'required|email',
-            'telefono' => 'nullable',
+            'password' => 'nullable|string|min:4',
+            'correo' => 'required|email|max:255',
+            'telefono' => 'nullable|string|max:20',
         ]);
 
-        $doctor->update($data);
+        if (!empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
 
-        return redirect()->route('DoctorColaborador.index')->with('success', 'Doctor actualizado exitosamente.');
+        $usuario->update($data);
+
+        return redirect()->route('DoctorColaborador.index')->with('success', 'Usuario actualizado exitosamente.');
     }
-
 }
