@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
-    <title>Ver Usuarios</title>
+    <title>Ver enfermera</title>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var inputSearch = document.querySelector(
@@ -66,6 +66,7 @@
                 Cerrar sesión
             </button>
         </div>
+
         <div class="flex-1 flex flex-col p-6">
             <div class="flex justify-between mt-6 items-center">
                 <div class="relative w-2/3 max-w-2xl">
@@ -78,38 +79,35 @@
                     </svg>
                 </div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                    onclick="location.href='/registroUsuarios'">
-                    Agregar Usuarios
+                    onclick="location.href='/registroEnfermera'">
+                    Agregar enfermera
                 </button>
             </div>
 
+            
             <div class="overflow-x-auto mt-6">
                 <table class="min-w-full bg-white bg-opacity-10 rounded-lg shadow-xl text-white">
                     <thead>
                         <tr class="bg-blue-500">
                             <th class="py-2 px-4 text-left">Nombre</th>
-                            <th class="py-2 px-4 text-left">Correo</th>
-                            <th class="py-2 px-4 text-center">Número</th>
-                            <th class="py-2 px-4 text-center">Tipo Usuario</th>
+                            <th class="py-2 px-4 text-left">Sueldo</th>
                             <th class="py-2 px-4 text-center">Modificar</th>
                             <th class="py-2 px-4 text-center">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (isset($usuarios))
-                            @foreach ($usuarios as $usuario)
+                        @if (isset($enfermeras))
+                            @foreach ($enfermeras as $enfermera)
                                 <tr class="hover:bg-blue-600">
-                                    <td class="py-2 px-4">{{ $usuario->nombre }}</td>
-                                    <td class="py-2 px-4">{{ $usuario->correo }}</td>
-                                    <td class="py-2 px-4 text-center">{{ $usuario->telefono ?? 'N/A' }}</td>
-                                    <td class="py-2 px-4 text-center">{{ $usuario->tipoUsuario}}</td>
+                                    <td class="py-2 px-4">{{ $enfermera->nombre_completo }}</td>
+                                    <td class="py-2 px-4">{{ $enfermera->sueldo }}</td>
                                     <td class="py-2 px-4 text-center">
                                         <button
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                                            onclick="location.href='/modificar/{{ $usuario->id }}'">Modificar</button>
+                                            onclick="location.href='/modificarEnfermera/{{ $enfermera->id }}'">Modificar</button>
                                     </td>
                                     <td class="py-2 px-4 text-center">
-                                        <form action="{{ route('usuarios.eliminar', $usuario->id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('enfermera.eliminar', $enfermera->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
@@ -118,7 +116,7 @@
                                                 Eliminar
                                             </button>
                                         </form>
-                                    </td>
+                                    </td>                                    
                                 </tr>
                             @endforeach
                         @endif
@@ -130,7 +128,7 @@
 </body>
 <script>
     function confirmDelete() {
-        return confirm('¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer.');
+        return confirm('¿Estás seguro de que deseas eliminar esta enfermera? Esta acción no se puede deshacer.');
     }
 </script>
 

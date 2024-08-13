@@ -33,7 +33,7 @@ class LoginController extends Controller
 
         // Verificar si el correo y la contraseña son los de administrador
         if ($request->correo == 'admin@saludConecta.com' && $request->password == '12345') {
-            return redirect(route('admin'));
+            return redirect(route('verUsuarios'));
         }
 
         // Intentar autenticación en la tabla de usuarios
