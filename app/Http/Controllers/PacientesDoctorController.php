@@ -144,18 +144,6 @@ class PacientesDoctorController extends Controller
             }
         }
 
-        // Obtener el sueldo de la enfermera si se seleccionó
-        $enfermeraSueldo = 0;
-        if ($request->has('enfermera_id')) {
-            $enfermera = Enfermera::find($request->input('enfermera_id'));
-            if ($enfermera) {
-                $enfermeraSueldo = $enfermera->sueldo;
-            }
-        }
-
-        // Actualizar los datos de la cita
-        $total = $request->input('total', 0) + $enfermeraSueldo;
-
         // Actualizar los datos de la cita
         $cita->update([
             'motivos' => $request->input('motivos'),
@@ -167,7 +155,7 @@ class PacientesDoctorController extends Controller
             'enfermera_id' => $request->input('enfermera_id'),
             'medicamentos' => !empty($medicamentosData) ? json_encode($medicamentosData, JSON_UNESCAPED_UNICODE) : null,
             'estudios' => implode(',', $request->input('estudios', [])),
-            'total' => $total,
+            'total' => $request->input('total', 0),
         ]);
 
         // Actualizar los datos del paciente

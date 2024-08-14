@@ -176,16 +176,18 @@
                         </div>
                         <div class="col-span-2 mb-2">
                             <label class="block font-medium text-blue-800">Enfermera asignada:</label>
-                            <select name="enfermera_id" class="w-full px-4 py-2 border rounded-md select2">
+                            <select id="enfermeraSelect" name="enfermera_id" class="w-full px-4 py-2 border rounded-md select2"
+                                onchange="updateTotal()">
                                 <option value="">Seleccione una enfermera</option>
                                 @foreach ($enfermeras as $enfermera)
-                                    <option value="{{ $enfermera->id }}"
+                                    <option value="{{ $enfermera->id }}" data-sueldo="{{ $enfermera->sueldo }}"
                                         {{ $cita->enfermera_id == $enfermera->id ? 'selected' : '' }}>
                                         {{ $enfermera->nombre_completo }} - ${{ $enfermera->sueldo }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="col-span-2 mb-2">
                             <label class="block font-medium text-blue-800">Estudios a realizar:</label>
                             <div id="estudiosFields" class="space-y-2">
@@ -232,7 +234,8 @@
                                 más</button>
                         </div>
 
-                        <div class="col-span-2 grid grid-cols-2 gap-4">
+                         <!-- Productos usados -->
+                         <div class="col-span-2 grid grid-cols-2 gap-4">
                             <div class="col-span-2">
                                 <label class="block font-medium text-blue-800">Productos usados:</label>
                                 <div id="productFields" class="space-y-2">
@@ -241,23 +244,19 @@
                                     @endphp
                                     @foreach ($productosData as $producto)
                                         <div class="flex items-center mt-2">
-                                            <select name="productos[]"
-                                                class="w-full px-4 py-2 border rounded-md select2"
-                                                onchange="updateTotal(this)">
+                                            <select name="productos[]" class="w-full px-4 py-2 border rounded-md select2"
+                                                onchange="updateTotal()">
                                                 <option value="">Selecciona un producto</option>
                                                 @foreach ($productos as $item)
-                                                    <option value="{{ $item->id }}"
-                                                        data-stock="{{ $item->stock }}"
-                                                        data-precio="{{ $item->costo }}"
+                                                    <option value="{{ $item->id }}" data-precio="{{ $item->costo }}"
                                                         {{ $producto['id'] == $item->id ? 'selected' : '' }}>
                                                         {{ $item->nombre }} - ${{ $item->costo }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            <input type="number" name="cantidades[]"
-                                                value="{{ $producto['cantidad'] }}" placeholder="Cantidad"
-                                                class="w-full px-4 py-2 border rounded-md ml-2" min="1"
-                                                onchange="validateQuantity(this)">
+                                            <input type="number" name="cantidades[]" value="{{ $producto['cantidad'] }}"
+                                                placeholder="Cantidad" class="w-full px-4 py-2 border rounded-md ml-2"
+                                                min="1" onchange="updateTotal()">
                                             <button type="button" onclick="removeField(this)"
                                                 class="ml-2 text-2xl font-bold text-blue-800">-</button>
                                         </div>
@@ -266,6 +265,9 @@
                                 <button type="button" onclick="addProductField()" class="mt-2 text-blue-800">+
                                     Añadir más</button>
                             </div>
+
+                            <input type="hidden" id="priceOfNurse" name="priceOfNurse">
+
 
                             <div class="mb-2">
                                 <label class="block font-medium text-blue-800">Precio del servicio:</label>
@@ -416,23 +418,26 @@
         }
 
         function updateTotal() {
-            var servicePrice = parseFloat(document.getElementById('servicePrice').value) || 0;
-            var total = servicePrice;
+            const productFields = document.querySelectorAll('#productFields > div');
+            let total = 0;
 
-            var productFields = document.getElementById('productFields');
-            var productSelects = productFields.querySelectorAll('select[name="productos[]"]');
-            var productQuantities = productFields.querySelectorAll('input[name="cantidades[]"]');
-
-            productSelects.forEach(function(select, index) {
-                var selectedOption = select.options[select.selectedIndex];
-                var productPrice = parseFloat(selectedOption.getAttribute('data-precio')) || 0;
-                var quantity = parseFloat(productQuantities[index].value) || 0;
-                total += productPrice * quantity;
+            productFields.forEach(field => {
+                const selectElement = field.querySelector('select');
+                const price = parseFloat(selectElement.options[selectElement.selectedIndex].dataset.precio || 0);
+                const quantity = parseFloat(field.querySelector('input').value || 0);
+                total += price * quantity;
             });
+
+            const servicePrice = parseFloat(document.getElementById('servicePrice').value || 0);
+            total += servicePrice;
+
+            const selectedEnfermera = document.getElementById('enfermeraSelect');
+            const enfermeraSueldo = parseFloat(selectedEnfermera.options[selectedEnfermera.selectedIndex].dataset.sueldo || 0);
+            total += enfermeraSueldo;
 
             document.getElementById('total').value = total.toFixed(2);
         }
-
+        
         document.addEventListener('DOMContentLoaded', function() {
             updateTotal();
             document.querySelectorAll('input[name="cantidades[]"], select[name="productos[]"]').forEach(function(
