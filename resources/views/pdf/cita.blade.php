@@ -26,6 +26,10 @@
         </div>
 
         <div class="section">
+            <label>Precio del servicio:</label> {{ $precio_servicio }}
+        </div>
+
+        <div class="section">
             <label>Motivo de la cita:</label> {{ $motivo }}
         </div>
 
@@ -71,6 +75,10 @@
 
         <div class="section">
             <label>Diagnóstico:</label> {{ $diagnostico }}
+        </div>
+        
+        <div class="section">
+            <label>Enfermera:</label> {{ $enfermera }} - Sueldo: {{ $sueldo_enfermera }}
         </div>
 
         <div class="section">

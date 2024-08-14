@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -12,8 +11,8 @@ class PDFController extends Controller
 {
     public function generatePDF($citaId)
     {
-        // Obtener la cita con la relación del paciente y servicio
-        $cita = Citas::with(['paciente', 'servicio'])->findOrFail($citaId);
+        // Obtener la cita con la relación del paciente, servicio y enfermera
+        $cita = Citas::with(['paciente', 'servicio', 'enfermera'])->findOrFail($citaId);
 
         // Decodificar los datos JSON
         $medicamentos = json_decode($cita->medicamentos, true) ?? [];
@@ -28,6 +27,7 @@ class PDFController extends Controller
             'subtitulo' => 'Detalles de la Cita',
             'paciente' => $cita->paciente,
             'servicio' => $cita->servicio->nombre ?? 'N/A',
+            'precio_servicio' => $cita->servicio->precio ?? 'N/A',
             'motivo' => $cita->motivos,
             'fecha' => $cita->fecha->format('d/m/Y'),
             'hora' => $cita->hora->format('H:i'),
@@ -52,7 +52,9 @@ class PDFController extends Controller
                     'cantidad' => $cantidadTotal
                 ];
             }),
-            'precio_servicio' => $cita->servicio->costo ?? 'N/A',
+            'enfermera' => $cita->enfermera->nombre_completo ?? 'N/A',
+            'sueldo_enfermera' => $cita->enfermera->sueldo ?? 'N/A',
+            'precio_servicio' => $cita->servicio->precio ?? 'N/A',
             'total' => $cita->total,
         ];
 
@@ -86,4 +88,3 @@ class PDFController extends Controller
         return $dompdf->stream($nombreArchivo);
     }
 }
-
