@@ -205,6 +205,9 @@ Route::get('/registro', function () {
 
 Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF'])->name('generate.pdf');
 
+//doctor colaborador 
+Route::post('/enviar-opinion', [DoctorColaboradorController::class, 'enviarOpinion'])->name('enviar.opinion');
+Route::get('/inicioDocColab', [DoctorColaboradorController::class, 'mostrarInicioDocColab'])->name('inicioDocColab');
 //Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
 
 

@@ -62,14 +62,15 @@ class LoginController extends Controller
             return redirect(route('paciente.perfil')); // Redirigir a la ruta correcta
         }
 
-         // Intentar autenticación en la tabla de doctor
-         $doctor = Doctor::where('correo', $credentials['correo'])->first();
-         if ($doctor && Hash::check($credentials['password'], $doctor->password)) {
-             Auth::guard('doctor')->login($doctor);
-             $request->session()->regenerate();
-             return redirect(route('inicioDocColab')); // Redirigir a la ruta correcta
-         }
- 
+        // Intentar autenticación en la tabla de doctor
+        $doctor = Doctor::where('correo', $credentials['correo'])->first();
+        if ($doctor && Hash::check($credentials['password'], $doctor->password)) {
+            Auth::guard('doctor')->login($doctor);
+            $request->session()->regenerate();
+            return redirect()->route('inicioDocColab'); // Redirigir a la ruta correcta
+        }
+
+
         // Si la autenticación falla en ambas tablas
         return back()->withErrors([
             'correo' => 'Las credenciales proporcionadas no coinciden con nuestros registros.',

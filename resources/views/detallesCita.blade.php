@@ -6,11 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
     <title>Detalles de la Cita</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet" />
     <style>
-        .scrollable-content {
-            overflow-y: auto;
+        html,
+        body {
+            overflow: hidden;
             height: 100%;
         }
+
+        .scrollable-content {
+            overflow-y: scroll;
+            height: 100%;
+            scrollbar-width: thin;
+            /* Para Firefox */
+            scrollbar-color: white transparent;
+            /* Para Firefox */
+        }
+
+        .scrollable-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background-color: white;
+            border-radius: 20px;
+            border: 3px solid transparent;
+        }
+
 
         .flex-row {
             display: flex;
@@ -19,6 +47,10 @@
 
         .flex-col {
             flex: 0.56;
+        }
+
+        .custom-width {
+            max-width: 750px;
         }
 
         .medications-row {
@@ -84,7 +116,7 @@
         </div>
 
         <main class="flex-grow overflow-y-auto">
-            <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full max-w-2xl mx-auto">
+            <div class="bg-white bg-opacity-10 p-8 md:p-10 rounded-lg shadow-xl w-full custom-width mx-auto">
                 <h2 class="text-3xl font-bold text-blue-800 text-center mb-4">Detalles de la cita</h2>
                 <form action="{{ route('actualizarCita', ['id' => $cita->id]) }}" method="POST">
                     @csrf
@@ -176,8 +208,8 @@
                         </div>
                         <div class="col-span-2 mb-2">
                             <label class="block font-medium text-blue-800">Enfermera asignada:</label>
-                            <select id="enfermeraSelect" name="enfermera_id" class="w-full px-4 py-2 border rounded-md select2"
-                                onchange="updateTotal()">
+                            <select id="enfermeraSelect" name="enfermera_id"
+                                class="w-full px-4 py-2 border rounded-md select2" onchange="updateTotal()">
                                 <option value="">Seleccione una enfermera</option>
                                 @foreach ($enfermeras as $enfermera)
                                     <option value="{{ $enfermera->id }}" data-sueldo="{{ $enfermera->sueldo }}"
@@ -234,8 +266,8 @@
                                 más</button>
                         </div>
 
-                         <!-- Productos usados -->
-                         <div class="col-span-2 grid grid-cols-2 gap-4">
+                        <!-- Productos usados -->
+                        <div class="col-span-2 grid grid-cols-2 gap-4">
                             <div class="col-span-2">
                                 <label class="block font-medium text-blue-800">Productos usados:</label>
                                 <div id="productFields" class="space-y-2">
@@ -244,19 +276,22 @@
                                     @endphp
                                     @foreach ($productosData as $producto)
                                         <div class="flex items-center mt-2">
-                                            <select name="productos[]" class="w-full px-4 py-2 border rounded-md select2"
+                                            <select name="productos[]"
+                                                class="w-full px-4 py-2 border rounded-md select2"
                                                 onchange="updateTotal()">
                                                 <option value="">Selecciona un producto</option>
                                                 @foreach ($productos as $item)
-                                                    <option value="{{ $item->id }}" data-precio="{{ $item->costo }}"
+                                                    <option value="{{ $item->id }}"
+                                                        data-precio="{{ $item->costo }}"
                                                         {{ $producto['id'] == $item->id ? 'selected' : '' }}>
                                                         {{ $item->nombre }} - ${{ $item->costo }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            <input type="number" name="cantidades[]" value="{{ $producto['cantidad'] }}"
-                                                placeholder="Cantidad" class="w-full px-4 py-2 border rounded-md ml-2"
-                                                min="1" onchange="updateTotal()">
+                                            <input type="number" name="cantidades[]"
+                                                value="{{ $producto['cantidad'] }}" placeholder="Cantidad"
+                                                class="w-full px-4 py-2 border rounded-md ml-2" min="1"
+                                                onchange="updateTotal()">
                                             <button type="button" onclick="removeField(this)"
                                                 class="ml-2 text-2xl font-bold text-blue-800">-</button>
                                         </div>
@@ -287,17 +322,20 @@
                         <button type="button" style="margin-right: 16px;"
                             class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             onclick="location.href='/expediente/{{ $cita->id_paciente }}'">
-                            Ir a expediente
+                            Expediente
                         </button>
                         <button type="button" style="margin-right: 16px;"
                             class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             onclick="location.href='/docPacientes'">
-                            Ir a pacientes
+                            Pacientes
                         </button>
                         <button type="button" style="margin-right: 16px;"
                             class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             onclick="window.location.href='{{ route('generate.pdf', ['id' => $cita->id]) }}'">
                             Descargar
+                        </button>
+                        <button type="button" id="pedirOpinionBtn" style="margin-right: 16px;" class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Pedir opinión
                         </button>
                         <button type="submit"
                             class="w-2/3 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -306,8 +344,37 @@
                     </div>
                 </form>
             </div>
-    </div>
+            <div id="opinionModal"
+                class="fixed inset-0 z-50 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+                <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+                    <div class="text-center">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Pedir una Opinión</h3>
+                        <p class="text-sm text-gray-500 mb-4">¿A qué doctor deseas pedir una opinión?</p>
+                        <form action="{{ route('enviar.opinion') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="cita_id" value="{{ $cita->id }}">
+                            <select id="doctorSelect" name="doctor_id" class="select2 w-full mb-4 p-2 text-base border rounded-md">
+                                @foreach ($doctores as $doctor)
+                                    <option value="{{ $doctor->id }}">{{ $doctor->nombre_completo }}</option>
+                                @endforeach
+                            </select>                            
 
+                            <!-- Textarea para escribir el mensaje -->
+                            <textarea name="mensaje" class="w-full p-2 border border-gray-300 rounded-md mb-4"
+                                placeholder="Escribe tu mensaje..."></textarea>
+
+                            <!-- Botones -->
+                            <div class="flex justify-between mt-4">
+                                <button type="button" id="closeModal"
+                                    class="w-1/3 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-400">Cerrar</button>
+                                <button type="submit"
+                                    class="w-1/3 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-400">Enviar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
     <script>
         function addMedicationField() {
             var container = document.getElementById('medicationFields');
@@ -432,18 +499,33 @@
             total += servicePrice;
 
             const selectedEnfermera = document.getElementById('enfermeraSelect');
-            const enfermeraSueldo = parseFloat(selectedEnfermera.options[selectedEnfermera.selectedIndex].dataset.sueldo || 0);
+            const enfermeraSueldo = parseFloat(selectedEnfermera.options[selectedEnfermera.selectedIndex].dataset.sueldo ||
+                0);
             total += enfermeraSueldo;
 
             document.getElementById('total').value = total.toFixed(2);
         }
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             updateTotal();
             document.querySelectorAll('input[name="cantidades[]"], select[name="productos[]"]').forEach(function(
                 element) {
                 element.addEventListener('input', updateTotal);
                 element.addEventListener('change', updateTotal);
+            });
+        });
+
+        $(document).ready(function() {
+            $('.select2').select2();
+
+            $('#opinionModal').addClass('hidden');
+
+            $('#pedirOpinionBtn').on('click', function() {
+                $('#opinionModal').removeClass('hidden');
+            });
+
+            $('#closeModal').on('click', function() {
+                $('#opinionModal').addClass('hidden');
             });
         });
     </script>

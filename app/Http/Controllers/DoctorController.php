@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Paciente;
 use App\Models\Producto;
 use App\Models\Servicio;
+use App\Models\Doctor;
 use App\Models\Citas;
 
 class DoctorController extends Controller

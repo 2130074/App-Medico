@@ -6,6 +6,7 @@ use App\Models\Paciente;
 use App\Models\Citas;
 use App\Models\Producto;
 use App\Models\Enfermera;
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -94,9 +95,11 @@ class PacientesDoctorController extends Controller
         $productos = Producto::all();
         $servicio = $cita->tipo_servicio;
         $enfermeras = Enfermera::all();
+        $doctores = Doctor::all();  // Aquí obtienes la lista de doctores
 
-        return view('detallesCita', compact('cita', 'productos', 'servicio', 'enfermeras'));
+        return view('detallesCita', compact('cita', 'productos', 'servicio', 'enfermeras', 'doctores'));
     }
+
 
     public function actualizarCita(Request $request, $id)
     {
@@ -203,5 +206,11 @@ class PacientesDoctorController extends Controller
 
         // Redirigir con mensaje de éxito
         return redirect()->route('detallesCita', ['id' => $cita->id])->with('success', 'Cita actualizada correctamente.');
+    }
+
+    public function mostrarDoctores()
+    {
+        $doctores = Doctor::all(); 
+        return view('detallesCita', compact('doctores'));
     }
 }
