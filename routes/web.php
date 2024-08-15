@@ -17,6 +17,7 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\VentaDocController;
 use App\Http\Controllers\DoctorColaboradorController;
 use App\Http\Controllers\EnfermeraController;
+use App\Http\Controllers\ReplyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -147,6 +148,10 @@ Route::get('/registroPacientesDoc', function () {
     return view('doc.registroPacientesDoc');
 })->name('registroPacientesDoc');
 
+Route::get('/notificaciones', function () {
+    return view('doc.notificaciones');
+})->name('notificaciones');
+
 Route::get('/registroDoctor', function () {
     return view('admin.registroDoctor');
 })->name('registroDoctor');
@@ -208,6 +213,10 @@ Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF'])->name('ge
 //doctor colaborador 
 Route::post('/enviar-opinion', [DoctorColaboradorController::class, 'enviarOpinion'])->name('enviar.opinion');
 Route::get('/inicioDocColab', [DoctorColaboradorController::class, 'mostrarInicioDocColab'])->name('inicioDocColab');
+
+Route::post('inicioDocColab//{id}/replies', [ReplyController::class, 'store'])->name('replies.store');
+Route::get('/notificaciones', [ReplyController::class, 'showNotificationsWithReplies'])->name('doc.notificaciones');
+
 //Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
 
 

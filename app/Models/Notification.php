@@ -30,4 +30,10 @@ class Notification extends Model
     {
         return $this->belongsTo(Doctor::class);
     }
+
+    // Relación con Reply
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
 }

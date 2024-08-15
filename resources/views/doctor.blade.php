@@ -68,6 +68,10 @@
                         <a href="/docProductos" class="text-lg">Productos</a>
                     </li>
                     <li class="flex items-center mb-10">
+                        <img src="{{ asset('img/notificacion.png') }}" alt="Notifcaciones Icon" class="w-6 h-6 mr-2">
+                        <a href="/notificaciones" class="text-lg">Notificaciones</a>
+                    </li>
+                    <li class="flex items-center mb-10">
                         <img src="img/ingresos.png" alt="Ver pacientes Icon" class="w-6 h-6 mr-2">
                         <a href="/docIngresos" class="text-lg">Ingresos</a>
                     </li>

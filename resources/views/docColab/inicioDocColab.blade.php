@@ -21,7 +21,7 @@
 
         .sidebar {
             width: 20%;
-            background:  #4CA9DF;
+            background: #4CA9DF;
             color: white;
             padding: 20px;
             position: fixed;
@@ -49,6 +49,43 @@
 
         .notification-card:hover {
             transform: translateY(-5px);
+        }
+
+        /* Estilo para el modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -88,12 +125,55 @@
                             @if ($notificacion->pdf_path)
                                 <a href="{{ $notificacion->pdf_path }}" target="_blank" class="text-blue-500 hover:underline mt-2 block">Ver PDF</a>
                             @endif
+                            <!-- Enlace para abrir el modal de respuesta -->
+                            <a href="#" class="text-blue-500 hover:underline mt-2 block" onclick="openModal('{{ $notificacion->id }}')">Responder</a>
+                        </div>
+
+                        <!-- Modal de respuesta -->
+                        <div id="modal-{{ $notificacion->id }}" class="modal">
+                            <div class="modal-content">
+                                <span class="close" onclick="closeModal('{{ $notificacion->id }}')">&times;</span>
+                                <h2>{{ $notificacion->message }}</h2>
+                                <p>Enviado el: {{ $notificacion->created_at->format('d/m/Y H:i') }}</p>
+
+                                @if($notificacion->pdf_path)
+                                    <a href="{{ $notificacion->pdf_path }}" target="_blank">Ver PDF</a>
+                                @endif
+
+                                <!-- Formulario para responder -->
+                                <form action="{{ route('replies.store', $notificacion->id) }}" method="POST">
+                                    @csrf
+                                    <textarea name="message" rows="4" class="w-full mt-4 p-2 border rounded" placeholder="Escribe tu respuesta aquí..."></textarea>
+                                    <button type="submit" class="mt-2 bg-blue-500 text-white py-2 px-4 rounded">Enviar Respuesta</button>
+                                </form>
+
+                                <!-- Mostrar respuestas anteriores -->
+                                <div class="mt-6">
+                                    <h3>Respuestas:</h3>
+                                    @foreach($notificacion->replies as $reply)
+                                        <div class="bg-gray-100 p-4 mt-2 rounded">
+                                            <p>{{ $reply->message }}</p>
+                                            <p class="text-sm text-gray-500">Enviado a las {{ $reply->created_at->format('d/m/Y H:i') }}</p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 @endif
             </div>
         </div>
     </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById('modal-' + id).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById('modal-' + id).style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>
